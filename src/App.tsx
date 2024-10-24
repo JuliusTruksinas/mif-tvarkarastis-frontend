@@ -1,7 +1,8 @@
 import React from 'react';
+import Router from './config/Router';
 
 const App = () => {
-  return <div>Initial MIF tvarkarastis App</div>;
+  return <Router />;
 };
 
 export default App;
