@@ -1,9 +1,9 @@
-import react from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 import { routes } from './routes';
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
+import HomePage from '../pages/public/HomePage';
+import LoginPage from '../pages/public/LoginPage';
+import RegisterPage from '../pages/public/RegisterPage';
 
 const getRoutes = () => {
   return (
@@ -23,4 +23,5 @@ const Router = () => {
     </BrowserRouter>
   );
 };
+
 export default Router;
