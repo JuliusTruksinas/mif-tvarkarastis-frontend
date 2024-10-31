@@ -3,4 +3,5 @@ export const routes = {
   loginPage: '/login',
   registerPage: '/register',
   examplePage: '/example',
+  calendar: '/calendar',
 };
