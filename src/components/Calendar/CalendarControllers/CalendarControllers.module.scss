@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .calendarControllersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .calendarTitle {
+    font-size: 28px;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+}
