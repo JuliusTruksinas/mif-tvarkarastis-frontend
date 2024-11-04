@@ -6,10 +6,31 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { events } from '../../development/data/calendarEvents';
 import CalendarControllers from './CalendarControllers/CalendarControllers';
-import './Calendar.scss';
+import './CalendarOverride.scss';
+import styles from './Calendar.module.scss';
+
+const renderHeader = (args) => {
+  if (args.view.type === 'timeGridWeek' || args.view.type === 'timeGridDay') {
+    return (
+      <div className={styles.dayHeaderContainer}>
+        <span className={styles.dayName}>
+          {args.date.toLocaleDateString('en-US', { weekday: 'short' })}
+        </span>
+        <span className={styles.monthDay}>
+          {args.date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          })}
+        </span>
+      </div>
+    );
+  }
+
+  return <span className={styles.defaultText}>{args.text}</span>;
+};
 
 const Calendar = () => {
-  const [areWeekendsShown, setAreWeekendsShown] = useState<boolean>(true);
+  const [areWeekendsShown, setAreWeekendsShown] = useState<boolean>(false);
   const calendarRef = useRef<FullCalendar>(null);
 
   return (
@@ -24,9 +45,21 @@ const Calendar = () => {
         nowIndicator
         editable
         selectable
-        initialView="dayGridMonth"
+        initialView="timeGridWeek"
         eventDisplay="block"
         slotDuration="01:00:00"
+        eventTimeFormat={{
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }}
+        slotLabelFormat={{
+          hour: '2-digit',
+          minute: '2-digit',
+          omitZeroMinute: false,
+          meridiem: false,
+          hour12: false,
+        }}
         firstDay={1}
         rerenderDelay={10}
         weekends={areWeekendsShown}
@@ -35,6 +68,7 @@ const Calendar = () => {
         events={events}
         headerToolbar={false}
         allDaySlot={false}
+        dayHeaderContent={renderHeader}
       />
     </>
   );

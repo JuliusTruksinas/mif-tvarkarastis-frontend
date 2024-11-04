@@ -1,7 +1,9 @@
 import FullCalendar from '@fullcalendar/react';
 import { ReactSVG } from 'react-svg';
-import leftArrowIcon from '../../../../assets/icons/left-arrow.svg';
-import rightArrowIcon from '../../../../assets/icons/right-arrow.svg';
+import classNames from 'classnames';
+import leftIcon from '../../../../assets/icons/left.svg';
+import rightIcon from '../../../../assets/icons/right.svg';
+import styles from './MovementController.module.scss';
 
 type Props = {
   calendarRef: React.RefObject<FullCalendar>;
@@ -34,15 +36,26 @@ const MovementController = ({ calendarRef, setTitle }: Props) => {
   };
 
   return (
-    <div className="join join-horizontal">
-      <button className="btn join-item" onClick={handlePrevClick}>
-        <ReactSVG src={leftArrowIcon} />
+    <div className={styles.movementControllerContainer}>
+      <button
+        className={classNames('btn', styles.movementBtn)}
+        onClick={handlePrevClick}
+      >
+        <ReactSVG src={leftIcon} />
       </button>
-      <button className="btn join-item" onClick={handleTodayClick}>
+
+      <button
+        className={classNames('btn', styles.movementBtn, styles.todayBtn)}
+        onClick={handleTodayClick}
+      >
         Today
       </button>
-      <button className="btn join-item" onClick={handleNextClick}>
-        <ReactSVG src={rightArrowIcon} />
+
+      <button
+        className={classNames('btn', styles.movementBtn)}
+        onClick={handleNextClick}
+      >
+        <ReactSVG src={rightIcon} />
       </button>
     </div>
   );

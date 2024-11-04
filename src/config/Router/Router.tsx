@@ -5,7 +5,7 @@ import HomePage from '../../pages/public/HomePage';
 import LoginPage from '../../pages/public/LoginPage';
 import RegisterPage from '../../pages/public/RegisterPage';
 import ExamplePage from '../../pages/public/ExamplePage';
-import CalendarPage from '../../pages/public/CalendarPage';
+import CalendarPage from '../../pages/public/CalendarPage/CalendarPage';
 
 const getRoutes = () => {
   return (

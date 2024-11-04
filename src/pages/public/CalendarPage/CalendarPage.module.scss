@@ -1,0 +1,46 @@
+@import '../../../styles/variables.scss';
+
+.calendarPageContainer {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 25px;
+
+  .headerContainer {
+    @media (min-width: $breakpoint-md) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .textContainer {
+      .pageTitle {
+        font-size: 32px;
+        color: $primary-color;
+        line-height: 40px;
+      }
+
+      .pageSubtitle {
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 23px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .addEventBtn {
+      display: flex;
+      justify-content: start;
+      color: white;
+      width: 100%;
+      margin-bottom: 19px;
+      font-weight: 600;
+      background-color: $primary-color;
+      border-radius: 100px;
+      text-align: left;
+
+      @media (min-width: $breakpoint-md) {
+        max-width: 142px;
+      }
+    }
+  }
+}

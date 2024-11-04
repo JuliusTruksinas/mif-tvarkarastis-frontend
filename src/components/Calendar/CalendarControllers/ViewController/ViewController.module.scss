@@ -1,0 +1,10 @@
+@import '../../../../styles/variables.scss';
+.viewControllerRoot {
+  color: $primary-color;
+  font-size: 14px;
+  font-weight: 600;
+
+  @media (min-width: $breakpoint-lg) {
+    width: 190px;
+  }
+}

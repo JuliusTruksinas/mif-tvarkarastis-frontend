@@ -5,3 +5,15 @@ export type CalendarViewOption = {
   value: string;
   selected?: boolean;
 };
+
+export type CalendarEventFilterOption = {
+  label: string;
+  value: string;
+  selected?: boolean;
+};
+
+export type UserCalendarOption = {
+  label: string;
+  value: string;
+  selected?: boolean;
+};

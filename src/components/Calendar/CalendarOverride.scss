@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.fc-timegrid-slot {
+  height: 70px !important;
+}
+
+.fc {
+  min-height: 500px !important;
+  max-height: 700px !important;
+}
+
+.fc-day-today {
+  background-color: transparent !important; /* Change background color */
+}
+
+.fc-timegrid-col-today {
+  background-color: transparent !important; /* Change background color */
+}
+
+.fc-col-header-cell.fc-day-today {
+  border-bottom: 3px solid $primary-color !important; /* Add bottom border color */
+}
+
+/* Hide scrollbars */
+.fc-scroller {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.fc-scroller::-webkit-scrollbar {
+  display: none; /* WebKit browsers */
+}
