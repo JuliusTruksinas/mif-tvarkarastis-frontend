@@ -14,7 +14,7 @@ const AreWeekendsIncludedController = ({
       <label>Include weekends?</label>
       <input
         type="checkbox"
-        className="checkbox"
+        className="checkbox checkbox-primary"
         checked={areWeekendsShown}
         onChange={() => {
           setAreWeekendsShown(!areWeekendsShown);

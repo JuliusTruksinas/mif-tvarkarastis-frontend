@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import MovementController from './MovementController/MovementController';
 import ViewController from './ViewController/ViewController';
+import EventFilteringController from './EventFilteringController/EventFilteringController';
+import UserCalendarController from './UserCalendarController/UserCalendarController';
 import AreWeekendsIncludedController from './AreWeekendsIncludedController/AreWeekendsIncludedController';
 import styles from './CalendarControllers.module.scss';
 
@@ -26,16 +28,20 @@ const CalendarControlls = ({
   }, [calendarRef]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.calendarControllersContainer}>
-        <MovementController calendarRef={calendarRef} setTitle={setTitle} />
+    <div className={styles.calendarControllersContainer}>
+      <div className={styles.calendarViewControllers}>
         <ViewController calendarRef={calendarRef} setTitle={setTitle} />
+        <EventFilteringController />
+        <UserCalendarController />
         <AreWeekendsIncludedController
           areWeekendsShown={areWeekendsShown}
           setAreWeekendsShown={setAreWeekendsShown}
         />
       </div>
-      <h1 className={styles.calendarTitle}>{title}</h1>
+      <div className={styles.movementControllers}>
+        <p className={styles.calendarTitle}>{title}</p>
+        <MovementController calendarRef={calendarRef} setTitle={setTitle} />
+      </div>
     </div>
   );
 };

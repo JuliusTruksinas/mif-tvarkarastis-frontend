@@ -1,6 +1,8 @@
 import FullCalendar from '@fullcalendar/react';
 import { CALENDAR_VIEW_OPTIONS } from '../CalendarControllersConstants';
 import { CalendarView } from '../../../../domain/calendar';
+import Select from '../../../../common/Select/Select';
+import styles from './ViewController.module.scss';
 
 type Props = {
   calendarRef: React.RefObject<FullCalendar>;
@@ -17,22 +19,13 @@ const ViewController = ({ calendarRef, setTitle }: Props) => {
   };
 
   return (
-    <select
-      className="select select-bordered"
+    <Select
       onChange={(e) => {
         handleChangeView(e.target.value as CalendarView);
       }}
-    >
-      {CALENDAR_VIEW_OPTIONS.map((viewOption, i) => (
-        <option
-          key={`calendar-view-option-${i}`}
-          selected={viewOption.selected}
-          value={viewOption.value}
-        >
-          {viewOption.label}
-        </option>
-      ))}
-    </select>
+      options={CALENDAR_VIEW_OPTIONS}
+      className={styles.viewControllerRoot}
+    />
   );
 };
 

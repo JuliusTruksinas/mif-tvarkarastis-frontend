@@ -1,17 +1,38 @@
-.container {
-  display: flex;
-  flex-direction: column;
+@import '../../../styles/variables.scss';
 
-  .calendarControllersContainer {
+.calendarControllersContainer {
+  @media (min-width: $breakpoint-lg) {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
   }
 
-  .calendarTitle {
-    font-size: 28px;
-    font-weight: 400;
-    margin-top: 20px;
-    margin-bottom: 15px;
+  .calendarViewControllers {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 24px;
+
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      gap: 15px;
+    }
+  }
+
+  .movementControllers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 21px;
+
+    @media (min-width: $breakpoint-md) {
+      justify-content: right;
+      gap: 20px;
+    }
+
+    .calendarTitle {
+      font-size: 14px;
+      color: $primary-color;
+      font-weight: 600;
+    }
   }
 }

@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.dayHeaderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 19px;
+  padding-bottom: 19px;
+
+  .dayName {
+    font-size: 11px;
+    color: #666666;
+    font-weight: 400;
+  }
+
+  .monthDay {
+    font-size: 17px;
+    color: $primary-color;
+    font-weight: 500;
+  }
+}
+
+.defaultText {
+  color: $primary-color;
+  font-weight: 500;
+}
