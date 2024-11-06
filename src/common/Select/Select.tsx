@@ -10,16 +10,22 @@ type SelectOption = {
 type Props = {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: SelectOption[];
-  className?: string;
+  elementClassName?: string;
+  containerClassName?: string;
 };
 
-const Select = ({ onChange, options, className }: Props) => {
+const Select = ({
+  onChange,
+  options,
+  elementClassName,
+  containerClassName,
+}: Props) => {
   return (
     <select
       className={classNames(
         'select select-bordered',
         styles.selectRoot,
-        className,
+        elementClassName,
       )}
       onChange={onChange}
     >

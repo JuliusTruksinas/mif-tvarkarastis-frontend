@@ -1,0 +1,69 @@
+@import '../../styles/variables.scss';
+
+.modalBody {
+  width: 100%;
+  max-width: 560px;
+}
+
+.customEventModalContentContainer {
+  padding: 0 20px;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 0 40px;
+  }
+
+  .modalTitle {
+    font-weight: 400;
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 32px;
+  }
+
+  .allInputsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: $primary-color;
+    font-weight: 500;
+
+    .timesContainer {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+
+      .timeContainer {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px;
+
+  .eventModalBtn {
+    border-radius: 100px;
+    height: 40px;
+    min-height: 0;
+    font-size: 14px;
+    padding: 0;
+    font-weight: 600;
+  }
+
+  .cancelBtn {
+    width: 96px;
+    color: $primary-color;
+    background-color: $white-color;
+    border: 1px solid #dddddd;
+  }
+
+  .addBtn {
+    width: 76px;
+    color: $white-color;
+    background-color: $primary-color;
+  }
+}

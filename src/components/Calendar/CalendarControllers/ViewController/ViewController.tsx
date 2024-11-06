@@ -24,7 +24,7 @@ const ViewController = ({ calendarRef, setTitle }: Props) => {
         handleChangeView(e.target.value as CalendarView);
       }}
       options={CALENDAR_VIEW_OPTIONS}
-      className={styles.viewControllerRoot}
+      elementClassName={styles.viewControllerRoot}
     />
   );
 };

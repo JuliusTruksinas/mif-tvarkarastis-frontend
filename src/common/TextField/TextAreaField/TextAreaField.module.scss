@@ -1,0 +1,19 @@
+@import '../../../styles/variables.scss';
+
+.textAreaFieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .label {
+    font-size: 16px;
+    font-weight: 400;
+    color: $input-label-color;
+  }
+
+  .inputField {
+    width: 100%;
+    max-height: 300px;
+    height: 150px;
+  }
+}
