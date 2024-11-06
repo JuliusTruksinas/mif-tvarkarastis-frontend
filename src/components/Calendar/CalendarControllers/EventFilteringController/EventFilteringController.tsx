@@ -8,7 +8,7 @@ const EventFilteringController = () => {
     <Select
       onChange={() => {}}
       options={EVENT_FILTER_OPTIONS}
-      className={styles.eventFilteringControllerRoot}
+      elementClassName={styles.eventFilteringControllerRoot}
     />
   );
 };

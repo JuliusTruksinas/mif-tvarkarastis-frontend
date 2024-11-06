@@ -8,7 +8,7 @@ const UserCalendarController = () => {
     <Select
       onChange={() => {}}
       options={USER_CALENDAR_OPTIONS}
-      className={styles.userCalendarControllerRoot}
+      elementClassName={styles.userCalendarControllerRoot}
     />
   );
 };

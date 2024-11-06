@@ -1,0 +1,17 @@
+@import '../../../styles/variables.scss';
+
+.dateTextFieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .label {
+    font-size: 16px;
+    font-weight: 400;
+    color: $input-label-color;
+  }
+
+  .inputField {
+    width: 100%;
+  }
+}
