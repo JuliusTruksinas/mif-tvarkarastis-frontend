@@ -4,6 +4,7 @@
 
 * {
   font-family: 'Inter', serif;
+  box-sizing: border-box;
 }
 
 .checkbox-primary {

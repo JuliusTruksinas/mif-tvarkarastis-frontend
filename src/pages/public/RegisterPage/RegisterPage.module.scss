@@ -1,58 +1,46 @@
-.loginPageContainer {
+.registerPage {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  padding: 50px 0;
 
-  .loginFormContainer {
-    width: 100%;
+  .registerFormContainer {
     max-width: 400px;
-    margin-left: 15px;
-    margin-right: 15px;
+    width: 100%;
+    margin: 0 15px;
 
     .title {
-      color: #273469;
       font-size: 35px;
-      line-height: 32px;
-      margin-bottom: 40px;
+      color: #273468;
+      margin-bottom: 38px;
       font-weight: 400;
+      line-height: 32px;
     }
 
     .inputContainer {
-      .inputLabel {
-        color: #273469;
-        font-size: 14px;
-        margin-top: 16px;
-        margin-bottom: 6px;
-      }
-
-      .inputField {
-        color: #273469;
-        height: 45px;
-        background-color: #fafaff;
-        border-color: #e4d9ff;
-        font-size: 14px;
-      }
+      margin-bottom: 20px;
     }
 
-    .forgotPasswordLabel {
-      display: inline-block;
-      margin: 4px;
-      font-size: 12px;
-      color: #273469;
-      margin-bottom: 28px;
-      border-bottom: 1px solid rgba(39, 52, 105, 0.3);
+    .programDetailsSection {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .selectContainer {
+        flex-basis: 100%;
+      }
+      margin-bottom: 29px;
     }
 
     .ctaContainer {
       .loginBtn {
         font-size: 12px;
-        min-height: 46px;
-        height: 46px;
+        min-height: 40px;
+        height: 40px;
         width: 100%;
         border-radius: 100px;
-        background-color: #273469;
-        color: #fafaff;
+        background-color: #e4d9ff;
+        color: #273469;
       }
 
       .orDivider {
@@ -89,9 +77,26 @@
         height: 40px;
         width: 100%;
         border-radius: 100px;
-        background-color: #e4d9ff;
-        color: #273469;
+        background-color: #273469;
+        color: #fafaff;
       }
     }
   }
+}
+
+.inputLabel {
+  color: #273468;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e4d9ff;
+  border-radius: 6px;
+  background-color: #fafaff;
+  color: #273469;
+  outline: none;
+  font-size: 14px;
 }
