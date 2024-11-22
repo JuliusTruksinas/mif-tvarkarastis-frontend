@@ -4,6 +4,14 @@ import { FormInput } from '../domain/form';
 export const useForm = (inputBlueprints: FormInput[]) => {
   const [inputs, setInputs] = useState<FormInput[]>(inputBlueprints);
 
+  const getSubmitInputs = (submitInputs: Array<FormInput>) =>
+    Object.assign(
+      {},
+      ...submitInputs.map((input) => ({
+        [input.name]: input.value,
+      })),
+    );
+
   const onInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -22,5 +30,6 @@ export const useForm = (inputBlueprints: FormInput[]) => {
   return {
     inputs,
     onInputChange,
+    getSubmitInputs,
   };
 };

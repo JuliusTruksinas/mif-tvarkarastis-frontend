@@ -1,13 +1,14 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { events } from '../../development/data/calendarEvents';
 import CalendarControllers from './CalendarControllers/CalendarControllers';
 import './CalendarOverride.scss';
 import styles from './Calendar.module.scss';
+import { useUserEventStore } from '../../stores/userEvent/userEvent.store';
+import { fetchedUserEventToCalendarEvent } from '../../utils/calendarEventFormatter';
 
 const renderHeader = (args) => {
   if (args.view.type === 'timeGridWeek' || args.view.type === 'timeGridDay') {
@@ -32,6 +33,19 @@ const renderHeader = (args) => {
 const Calendar = () => {
   const [areWeekendsShown, setAreWeekendsShown] = useState<boolean>(false);
   const calendarRef = useRef<FullCalendar>(null);
+
+  const { userEvents, fetchUserEvents, isUserEventsUpdateNeeded } =
+    useUserEventStore();
+
+  useEffect(() => {
+    fetchUserEvents();
+  }, [fetchUserEvents]);
+
+  useEffect(() => {
+    if (isUserEventsUpdateNeeded) {
+      fetchUserEvents();
+    }
+  }, [isUserEventsUpdateNeeded]);
 
   return (
     <>
@@ -65,7 +79,11 @@ const Calendar = () => {
         weekends={areWeekendsShown}
         ref={calendarRef}
         plugins={[listPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        events={events}
+        events={[
+          ...userEvents.map((userEvent) =>
+            fetchedUserEventToCalendarEvent(userEvent),
+          ),
+        ]}
         headerToolbar={false}
         allDaySlot={false}
         dayHeaderContent={renderHeader}
