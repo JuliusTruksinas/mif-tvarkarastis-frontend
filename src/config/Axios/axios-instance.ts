@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+export type HttpError =
+  | null
+  | string
+  | Array<{ [key: string]: string }>
+  | Array<{ field: string; message: string }>;
+
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });

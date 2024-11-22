@@ -4,7 +4,7 @@ import Calendar from '../../../components/Calendar/Calendar';
 import styles from './CalendarPage.module.scss';
 import addIcon from '../../../assets/icons/add.svg';
 import { ReactSVG } from 'react-svg';
-import CustomEventModal from '../../../components/CustomEventModal/CustomEventModal';
+import CustomEventModal from '../../../components/UserEventModal/UserEventModal';
 
 const CalendarPage = () => {
   const [isCustomModalOpen, setIsCustomModalOpen] = useState<boolean>(false);
