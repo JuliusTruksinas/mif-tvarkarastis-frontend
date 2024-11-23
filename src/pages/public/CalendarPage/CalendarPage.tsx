@@ -5,16 +5,21 @@ import styles from './CalendarPage.module.scss';
 import addIcon from '../../../assets/icons/add.svg';
 import { ReactSVG } from 'react-svg';
 import CustomEventModal from '../../../components/UserEventModal/UserEventModal';
+import { useAuthStore } from '../../../stores/auth/auth.store';
 
 const CalendarPage = () => {
   const [isCustomModalOpen, setIsCustomModalOpen] = useState<boolean>(false);
+
+  const { currentUser } = useAuthStore();
 
   return (
     <>
       <div className={styles.calendarPageContainer}>
         <div className={styles.headerContainer}>
           <div className={styles.textContainer}>
-            <h1 className={styles.pageTitle}>Welcome back, Marius</h1>
+            <h1 className={styles.pageTitle}>
+              Welcome back, {currentUser?.firstName}
+            </h1>
             <p className={styles.pageSubtitle}>
               View both your personal and friends’ calendars, and create custom
               events
