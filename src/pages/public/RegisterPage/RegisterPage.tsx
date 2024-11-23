@@ -2,9 +2,236 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../config/Router/routes';
 import styles from './RegisterPage.module.scss';
+import { useForm } from '../../../hooks/useForm';
+import TextField from '../../../common/TextField/TextField';
+import { useStudyOptionsStore } from '../../../stores/study-options/studyOptions.store';
+import { useEffect, useMemo } from 'react';
+import { useAuthStore } from '../../../stores/auth/auth.store';
+
+type formInputs = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  programName: string;
+  course: number;
+  group: number;
+  subgroup: number;
+};
+
+const DEFAULT_OPTIONS = [{ label: 'select', value: '' }];
+
+const INPUTS = [
+  {
+    name: 'firstName',
+    type: 'text',
+    label: 'First Name',
+    value: '',
+  },
+  {
+    name: 'lastName',
+    type: 'text',
+    label: 'Last Name',
+    value: '',
+  },
+  {
+    name: 'email',
+    type: 'text',
+    label: 'Email Address',
+    value: '',
+  },
+  {
+    name: 'password',
+    type: 'password',
+    label: 'Password',
+    value: '',
+  },
+  {
+    name: 'studyType',
+    type: 'select',
+    options: DEFAULT_OPTIONS,
+    label: 'Study type',
+    value: '',
+  },
+  {
+    name: 'programName',
+    type: 'select',
+    options: DEFAULT_OPTIONS,
+    label: 'Program Name',
+    value: '',
+  },
+  {
+    name: 'course',
+    type: 'select',
+    options: DEFAULT_OPTIONS,
+    label: 'Course',
+    value: '',
+  },
+  {
+    name: 'group',
+    type: 'select',
+    options: DEFAULT_OPTIONS,
+    label: 'Group',
+    value: '',
+  },
+  {
+    name: 'subgroup',
+    type: 'select',
+    options: DEFAULT_OPTIONS,
+    label: 'Subgroup',
+    value: '',
+  },
+];
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const {
+    inputs,
+    onInputChange,
+    setNewInputValue,
+    getSubmitInputs,
+    resetInputValues,
+  } = useForm(INPUTS);
+
+  const { register, registerError } = useAuthStore();
+
+  const {
+    getAllStudyTypesOptions,
+    studyTypesOptions,
+    getAllProgramsOptions,
+    programsOptions,
+    coursesOptions,
+    groupsOptions,
+    subgroupsOptions,
+    getAllCoursesOptions,
+    getAllGroupsOptions,
+    getAllSubgroupsOptions,
+  } = useStudyOptionsStore();
+
+  const resetSelectInputs = (inputsNames: string[]) => {
+    inputsNames.forEach((inputName) => {
+      setNewInputValue(inputName, {
+        options: DEFAULT_OPTIONS,
+        value: '',
+      });
+    });
+  };
+
+  const studyTypeInputValue = useMemo(
+    () => inputs.find((input) => input.name === 'studyType')?.value,
+    [inputs],
+  );
+
+  const programNameInputValue = useMemo(
+    () => inputs.find((input) => input.name === 'programName')?.value,
+    [inputs],
+  );
+
+  const courseInputValue = useMemo(
+    () => inputs.find((input) => input.name === 'course')?.value,
+    [inputs],
+  );
+
+  const groupInputValue = useMemo(
+    () => inputs.find((input) => input.name === 'group')?.value,
+    [inputs],
+  );
+
+  useEffect(() => {
+    getAllStudyTypesOptions();
+  }, []);
+
+  useEffect(() => {
+    resetSelectInputs(['programName', 'course', 'group', 'subgroup']);
+    if (studyTypeInputValue) {
+      getAllProgramsOptions({ studyTypeId: +studyTypeInputValue });
+    }
+  }, [studyTypeInputValue]);
+
+  useEffect(() => {
+    resetSelectInputs(['course', 'group', 'subgroup']);
+    if (studyTypeInputValue && programNameInputValue) {
+      getAllCoursesOptions({
+        studyTypeId: +studyTypeInputValue,
+        studyProgramName: programNameInputValue,
+      });
+    }
+  }, [programNameInputValue]);
+
+  useEffect(() => {
+    resetSelectInputs(['group', 'subgroup']);
+    if (studyTypeInputValue && programNameInputValue && courseInputValue) {
+      getAllGroupsOptions({
+        studyTypeId: +studyTypeInputValue,
+        studyProgramName: programNameInputValue,
+        course: +courseInputValue,
+      });
+    }
+  }, [courseInputValue]);
+
+  useEffect(() => {
+    resetSelectInputs(['subgroup']);
+    if (groupInputValue) {
+      getAllSubgroupsOptions();
+    }
+  }, [groupInputValue]);
+
+  useEffect(() => {
+    if (studyTypesOptions?.length) {
+      setNewInputValue('studyType', {
+        options: DEFAULT_OPTIONS.concat(studyTypesOptions),
+      });
+    }
+  }, [studyTypesOptions]);
+
+  useEffect(() => {
+    if (programsOptions?.length) {
+      setNewInputValue('programName', {
+        options: DEFAULT_OPTIONS.concat(programsOptions),
+      });
+    }
+  }, [programsOptions]);
+
+  useEffect(() => {
+    if (coursesOptions?.length) {
+      setNewInputValue('course', {
+        options: DEFAULT_OPTIONS.concat(coursesOptions),
+      });
+    }
+  }, [coursesOptions]);
+
+  useEffect(() => {
+    if (groupsOptions?.length) {
+      setNewInputValue('group', {
+        options: DEFAULT_OPTIONS.concat(groupsOptions),
+      });
+    }
+  }, [groupsOptions]);
+
+  useEffect(() => {
+    if (subgroupsOptions?.length) {
+      setNewInputValue('subgroup', {
+        options: DEFAULT_OPTIONS.concat(subgroupsOptions),
+      });
+    }
+  }, [subgroupsOptions]);
+
+  const handleRegister = () => {
+    const formInputs: formInputs = getSubmitInputs(inputs);
+
+    register({
+      email: formInputs.email,
+      password: formInputs.password,
+      firtsName: formInputs.firstName,
+      lastName: formInputs.lastName,
+      programName: formInputs.programName,
+      course: +formInputs.course,
+      group: +formInputs.group,
+      subgroup: +formInputs.subgroup,
+    });
+
+    resetInputValues();
+  };
 
   return (
     <div className={styles.registerPage}>
@@ -14,114 +241,50 @@ const RegisterPage = () => {
           <br />
           Bug Busters
         </h1>
-
-        <div className={styles.inputContainer}>
-          <p className={styles.inputLabel}>First Name</p>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="first_name"
-            required
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <p className={styles.inputLabel}>Last Name</p>
-          <input
-            className={styles.inputField}
-            type="text"
-            name="last_name"
-            required
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <p className={styles.inputLabel}>Email Address</p>
-          <input
-            className={styles.inputField}
-            type="email"
-            name="email"
-            required
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <p className={styles.inputLabel}>Password</p>
-          <input
-            className={styles.inputField}
-            type="password"
-            name="password"
-            required
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <p className={styles.inputLabel}>Program Name</p>
-          <select
-            className={classNames(
-              'select select-bordered w-full focus:outline-none focus:ring-0',
-              styles.inputField,
-            )}
-            name="program"
-            required
-          >
-            <option disabled selected>
-              Select your program
-            </option>
-            <option value="Informacinių sistemų inžinerija">
-              Informacinių sistemų inžinerija
-            </option>
-          </select>
-        </div>
+        {inputs
+          .filter(
+            (input) => !['course', 'group', 'subgroup'].includes(input.name),
+          )
+          .map((input) => (
+            <TextField
+              key={input.name}
+              name={input.name}
+              value={input.value}
+              type={input.type}
+              label={input.label}
+              onChange={onInputChange}
+              containerClassName={styles.inputContainer}
+              labelClassName={styles.inputLabel}
+              elementClassName={styles.inputField}
+              options={input.options}
+            />
+          ))}
         <div className={styles.programDetailsSection}>
-          <div className={styles.selectContainer}>
-            <p className={styles.inputLabel}>Course</p>
-            <select
-              className={classNames(
-                'select select-bordered w-full focus:outline-none focus:ring-0',
-                styles.inputField,
-              )}
-              name="course"
-              required
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          <div className={styles.selectContainer}>
-            <p className={styles.inputLabel}>Group</p>
-            <select
-              className={classNames(
-                'select select-bordered w-full focus:outline-none focus:ring-0',
-                styles.inputField,
-              )}
-              name="group"
-              required
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
-          </div>
-          <div className={styles.selectContainer}>
-            <p className={styles.inputLabel}>Subgroup</p>
-            <select
-              className={classNames(
-                'select select-bordered w-full focus:outline-none focus:ring-0',
-                styles.inputField,
-              )}
-              name="subgroup"
-              required
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
-          </div>
+          {inputs
+            .filter((input) =>
+              ['course', 'group', 'subgroup'].includes(input.name),
+            )
+            .map((input) => (
+              <TextField
+                key={input.name}
+                name={input.name}
+                value={input.value}
+                type={input.type}
+                label={input.label}
+                onChange={onInputChange}
+                containerClassName={styles.inputContainer}
+                labelClassName={styles.inputLabel}
+                elementClassName={styles.inputField}
+                options={input.options}
+              />
+            ))}
         </div>
 
         <div className={styles.ctaContainer}>
-          <button className={classNames('btn', styles.registerBtn)}>
+          <button
+            onClick={handleRegister}
+            className={classNames('btn', styles.registerBtn)}
+          >
             Register
           </button>
           <div className={styles.orDivider}>

@@ -3,15 +3,20 @@ import DateTextField from './DateTextField/DateTextField';
 import SimpleTextField from './SimpleTextField/SimpleTextField';
 import TextAreaField from './TextAreaField/TextAreaField';
 import TimeTextField from './TimeTextField/TimeTextField';
+import SelectTextField, {
+  SelectOption,
+} from './SelectTextField/SelectTextField';
 
 type Props = {
   value: string;
   type: string;
   name: string;
+  options?: SelectOption[];
   label?: string;
   placeholder?: string;
   elementClassName?: string;
   containerClassName?: string;
+  labelClassName?: string;
   onChange: (e: ChangeEvent) => void;
 };
 
@@ -24,6 +29,8 @@ const TextField = ({
   elementClassName,
   containerClassName,
   onChange,
+  options,
+  labelClassName,
 }: Props) => {
   const TYPES_AND_THEIR_COMPONENTS = {
     text: (
@@ -35,6 +42,7 @@ const TextField = ({
         elementClassName={elementClassName}
         onChange={onChange}
         containerClassName={containerClassName}
+        labelClassName={labelClassName}
       />
     ),
     password: (
@@ -46,6 +54,7 @@ const TextField = ({
         elementClassName={elementClassName}
         onChange={onChange}
         containerClassName={containerClassName}
+        labelClassName={labelClassName}
         isPassword
       />
     ),
@@ -80,6 +89,19 @@ const TextField = ({
         elementClassName={elementClassName}
         onChange={onChange}
         containerClassName={containerClassName}
+      />
+    ),
+    select: (
+      <SelectTextField
+        name={name}
+        value={value}
+        label={label}
+        options={options}
+        placeholder={placeholder}
+        elementClassName={elementClassName}
+        onChange={onChange}
+        containerClassName={containerClassName}
+        labelClassName={labelClassName}
       />
     ),
   };

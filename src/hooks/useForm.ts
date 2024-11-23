@@ -12,8 +12,11 @@ export const useForm = (inputBlueprints: FormInput[]) => {
       })),
     );
 
+  const getInputByName = (name: string) =>
+    inputs.find((input) => input.name === name);
+
   const onInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     setInputs((prevInputs) =>
       prevInputs.map((prevInput) =>
@@ -27,9 +30,31 @@ export const useForm = (inputBlueprints: FormInput[]) => {
     );
   };
 
+  const setNewInputValue = (name: string, newValue: any) => {
+    setInputs((prevInputs) =>
+      prevInputs.map((prevInput) =>
+        prevInput.name === name
+          ? {
+              ...prevInput,
+              ...newValue,
+            }
+          : { ...prevInput },
+      ),
+    );
+  };
+
+  const resetInputValues = () => {
+    setInputs((prevInputs) =>
+      prevInputs.map((prevInput) => ({ ...prevInput, value: '' })),
+    );
+  };
+
   return {
     inputs,
     onInputChange,
     getSubmitInputs,
+    getInputByName,
+    setNewInputValue,
+    resetInputValues,
   };
 };

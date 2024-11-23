@@ -10,6 +10,7 @@ type Props = {
   elementClassName?: string;
   containerClassName?: string;
   isPassword?: boolean;
+  labelClassName?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -22,6 +23,7 @@ const SimpleTextField = ({
   containerClassName,
   onChange,
   isPassword,
+  labelClassName,
 }: Props) => {
   return (
     <div
@@ -30,14 +32,14 @@ const SimpleTextField = ({
         containerClassName,
       )}
     >
-      <p className={styles.label}>{label}</p>
+      <p className={classNames(styles.label, labelClassName)}>{label}</p>
       <input
         value={value}
         type={isPassword ? 'password' : 'text'}
         name={name}
         placeholder={placeholder}
         className={classNames(
-          'input input-bordered',
+          'input input-bordered focus:outline-none focus:ring-0',
           styles.inputField,
           elementClassName,
         )}
