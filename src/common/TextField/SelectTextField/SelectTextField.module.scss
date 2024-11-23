@@ -1,0 +1,19 @@
+@import '../../../styles/variables.scss';
+
+.selectTextFieldContainerRoot {
+}
+
+.selectRoot {
+  display: block;
+  width: 100%;
+
+  &:active {
+    border: none;
+  }
+}
+
+.labelRoot {
+  font-size: 16px;
+  font-weight: 400;
+  color: $input-label-color;
+}

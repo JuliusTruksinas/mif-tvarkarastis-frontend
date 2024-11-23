@@ -26,7 +26,7 @@ const TextAreaField = ({
       <p className={styles.label}>{label}</p>
       <textarea
         className={classNames(
-          'textarea textarea-bordered',
+          'textarea textarea-bordered focus:outline-none focus:ring-0',
           styles.inputField,
           elementClassName,
         )}

@@ -32,7 +32,7 @@ const TimeTextField = ({
         name={name}
         placeholder={placeholder}
         className={classNames(
-          'input input-bordered',
+          'input input-bordered focus:outline-none focus:ring-0',
           styles.inputField,
           elementClassName,
         )}

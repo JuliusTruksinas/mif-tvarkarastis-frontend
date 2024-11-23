@@ -40,7 +40,7 @@ export const events = [
   //     title: 'Kompiuterių architektūra',
   //     lecturer: 'Marius Liutvinavičius, J. Asist.',
   //     groups: [1],
-  //     subGroups: [2],
+  //     subgroups: [2],
   //     location: 'Saltiniai',
   //     room: 'S-204',
   //     start: '2024-10-29T10:15:00',

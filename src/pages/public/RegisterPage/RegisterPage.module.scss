@@ -19,16 +19,13 @@
 
     .inputContainer {
       margin-bottom: 20px;
+      flex-basis: 100%;
     }
 
     .programDetailsSection {
       display: flex;
       align-items: center;
       gap: 20px;
-
-      .selectContainer {
-        flex-basis: 100%;
-      }
       margin-bottom: 29px;
     }
 
@@ -82,21 +79,21 @@
       }
     }
   }
-}
 
-.inputLabel {
-  color: #273468;
-  font-size: 14px;
-  margin-bottom: 6px;
-}
+  .inputLabel {
+    color: #273468;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
 
-.inputField {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e4d9ff;
-  border-radius: 6px;
-  background-color: #fafaff;
-  color: #273469;
-  outline: none;
-  font-size: 14px;
+  .inputField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e4d9ff;
+    border-radius: 6px;
+    background-color: #fafaff;
+    color: #273469;
+    outline: none;
+    font-size: 14px;
+  }
 }

@@ -3,21 +3,21 @@ import axios from '../../config/Axios/axios-instance';
 
 const API_URL = '/user-events';
 
-export type CreateUserRequestDto = {
+export interface CreateUserRequestDto {
   startDateTime: string;
   endDateTime: string;
   title: string;
   notes?: string;
   location?: string;
-};
+}
 
-export type UpdateUserRequestDto = {
-  startDateTime: string;
-  endDateTime: string;
-  title: string;
+export interface UpdateUserRequestDto {
+  startDateTime?: string;
+  endDateTime?: string;
+  title?: string;
   notes?: string;
   location?: string;
-};
+}
 
 export const fetchUserEvents = async (set: any, get: any): Promise<void> => {
   set({
@@ -30,7 +30,7 @@ export const fetchUserEvents = async (set: any, get: any): Promise<void> => {
     set({ userEvents: responseData });
   } catch (error) {
     set({
-      userEventsFetchError: error?.response?.data?.message,
+      userEventsFetchError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
   } finally {
@@ -55,7 +55,7 @@ export const createUserEvent = async (
     showToast('Successfully created a new event', 'success');
   } catch (error) {
     set({
-      userEventCreateError: error?.response?.data?.message,
+      userEventCreateError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
   } finally {
@@ -81,7 +81,7 @@ export const updateUserEvent = async (
     showToast('Successfully updated a new event', 'success');
   } catch (error) {
     set({
-      userEventUpdateError: error?.response?.data?.message,
+      userEventUpdateError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
   } finally {
@@ -105,7 +105,7 @@ export const deleteUserEvent = async (
     showToast('Successfully deleted the event', 'success');
   } catch (error) {
     set({
-      userEventDeleteError: error?.response?.data?.message,
+      userEventDeleteError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
   } finally {
