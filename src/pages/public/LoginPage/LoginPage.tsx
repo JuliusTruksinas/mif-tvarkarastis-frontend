@@ -33,6 +33,8 @@ const LoginPage = () => {
   const { login, isUserAuthenticated } = useAuthStore();
   const { inputs, onInputChange, getSubmitInputs } = useForm(INPUTS);
 
+  console.log(import.meta.env.VITE_API_URL); // TODO: remove this after testing
+
   useEffect(() => {
     if (isUserAuthenticated) {
       navigate(routes.calendar);
