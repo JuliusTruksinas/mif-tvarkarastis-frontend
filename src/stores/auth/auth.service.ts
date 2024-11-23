@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { User } from 'src/domain/common';
 import axios from '../../config/Axios/axios-instance';
 import { showToast } from '../../utils/toast';
-import { routes } from '../../config/Router/routes';
 
 const API_URL = '/auth';
 
@@ -11,7 +10,7 @@ export interface LoginRequestDto {
 }
 
 export interface RegisterRequestDto extends LoginRequestDto {
-  firtsName: string;
+  firstName: string;
   lastName: string;
   programName: string;
   course: number;
@@ -19,13 +18,15 @@ export interface RegisterRequestDto extends LoginRequestDto {
   subgroup: number;
 }
 
+export interface GetCurrentUserDto {
+  token: string;
+}
+
 export const login = async (
   set: any,
   get: any,
   inputs: LoginRequestDto,
 ): Promise<void> => {
-  const navigate = useNavigate();
-
   set({
     loginIsLoading: true,
     loginError: null,
@@ -35,7 +36,7 @@ export const login = async (
     const responseData = response.data?.data;
 
     localStorage.setItem('token', responseData.token);
-    navigate(routes.calendar);
+
     set({ isUserAuthenticated: true });
   } catch (error) {
     set({
@@ -70,13 +71,55 @@ export const register = async (
 };
 
 export const logout = (set: any, get: any): void => {
-  const navigate = useNavigate();
-
   localStorage.removeItem('token');
 
   set({
     isUserAuthenticated: false,
   });
+};
 
-  navigate(routes.loginPage);
+export const getCurrentUser = async (
+  set: any,
+  get: any,
+  inputs: GetCurrentUserDto,
+): Promise<User | null> => {
+  set({
+    currentUserIsLoading: true,
+    currentUserError: null,
+  });
+  try {
+    const response = await axios.post(`${API_URL}/me`, { ...inputs });
+    const responseData: User | null = response.data?.data;
+
+    set({
+      currentUser: responseData,
+    });
+
+    return responseData;
+  } catch (error) {
+    set({
+      currentUserError: error?.response?.data?.data,
+    });
+
+    return null;
+  } finally {
+    set({ currentUserIsLoading: false });
+  }
+};
+
+export const tryAutoLogin = async (set: any, get: any) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    logout(set, get);
+    return;
+  }
+
+  const currentUser = await getCurrentUser(set, get, { token });
+
+  if (!currentUser) {
+    logout(set, get);
+    return;
+  }
+
+  set({ isUserAuthenticated: true });
 };

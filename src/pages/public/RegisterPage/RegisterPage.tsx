@@ -7,6 +7,7 @@ import TextField from '../../../common/TextField/TextField';
 import { useStudyOptionsStore } from '../../../stores/study-options/studyOptions.store';
 import { useEffect, useMemo } from 'react';
 import { useAuthStore } from '../../../stores/auth/auth.store';
+import AuthPageWrapper from '../../../components/AuthPageWrapper/AuthPageWrapper';
 
 type formInputs = {
   firstName: string;
@@ -93,7 +94,7 @@ const RegisterPage = () => {
     resetInputValues,
   } = useForm(INPUTS);
 
-  const { register, registerError } = useAuthStore();
+  const { register } = useAuthStore();
 
   const {
     getAllStudyTypesOptions,
@@ -222,7 +223,7 @@ const RegisterPage = () => {
     register({
       email: formInputs.email,
       password: formInputs.password,
-      firtsName: formInputs.firstName,
+      firstName: formInputs.firstName,
       lastName: formInputs.lastName,
       programName: formInputs.programName,
       course: +formInputs.course,
@@ -234,35 +235,17 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className={styles.registerPage}>
-      <div className={styles.registerFormContainer}>
-        <h1 className={styles.title}>
-          Welcome to
-          <br />
-          Bug Busters
-        </h1>
-        {inputs
-          .filter(
-            (input) => !['course', 'group', 'subgroup'].includes(input.name),
-          )
-          .map((input) => (
-            <TextField
-              key={input.name}
-              name={input.name}
-              value={input.value}
-              type={input.type}
-              label={input.label}
-              onChange={onInputChange}
-              containerClassName={styles.inputContainer}
-              labelClassName={styles.inputLabel}
-              elementClassName={styles.inputField}
-              options={input.options}
-            />
-          ))}
-        <div className={styles.programDetailsSection}>
+    <AuthPageWrapper>
+      <div className={styles.registerPage}>
+        <div className={styles.registerFormContainer}>
+          <h1 className={styles.title}>
+            Welcome to
+            <br />
+            Bug Busters
+          </h1>
           {inputs
-            .filter((input) =>
-              ['course', 'group', 'subgroup'].includes(input.name),
+            .filter(
+              (input) => !['course', 'group', 'subgroup'].includes(input.name),
             )
             .map((input) => (
               <TextField
@@ -278,27 +261,47 @@ const RegisterPage = () => {
                 options={input.options}
               />
             ))}
-        </div>
-
-        <div className={styles.ctaContainer}>
-          <button
-            onClick={handleRegister}
-            className={classNames('btn', styles.registerBtn)}
-          >
-            Register
-          </button>
-          <div className={styles.orDivider}>
-            <span>or</span>
+          <div className={styles.programDetailsSection}>
+            {inputs
+              .filter((input) =>
+                ['course', 'group', 'subgroup'].includes(input.name),
+              )
+              .map((input) => (
+                <TextField
+                  key={input.name}
+                  name={input.name}
+                  value={input.value}
+                  type={input.type}
+                  label={input.label}
+                  onChange={onInputChange}
+                  containerClassName={styles.inputContainer}
+                  labelClassName={styles.inputLabel}
+                  elementClassName={styles.inputField}
+                  options={input.options}
+                />
+              ))}
           </div>
-          <button
-            onClick={() => navigate(routes.loginPage)}
-            className={classNames('btn', styles.loginBtn)}
-          >
-            Log in
-          </button>
+
+          <div className={styles.ctaContainer}>
+            <button
+              onClick={handleRegister}
+              className={classNames('btn', styles.registerBtn)}
+            >
+              Register
+            </button>
+            <div className={styles.orDivider}>
+              <span>or</span>
+            </div>
+            <button
+              onClick={() => navigate(routes.loginPage)}
+              className={classNames('btn', styles.loginBtn)}
+            >
+              Log in
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthPageWrapper>
   );
 };
 

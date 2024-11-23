@@ -7,6 +7,7 @@ import RegisterPage from '../../pages/public/RegisterPage/RegisterPage';
 import ExamplePage from '../../pages/public/ExamplePage';
 import CalendarPage from '../../pages/public/CalendarPage/CalendarPage';
 import { useAuthStore } from '../../stores/auth/auth.store';
+import { useEffect } from 'react';
 
 const getProtectedRoutes = () => {
   return (
@@ -29,9 +30,11 @@ const getRoutes = () => {
 };
 
 const Router = () => {
-  const isUserAuthenticated = useAuthStore(
-    (state) => state.isUserAuthenticated,
-  );
+  const { isUserAuthenticated, tryAutoLogin } = useAuthStore();
+
+  useEffect(() => {
+    tryAutoLogin();
+  }, []);
 
   return (
     <BrowserRouter basename="/">

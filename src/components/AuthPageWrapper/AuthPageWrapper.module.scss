@@ -1,0 +1,15 @@
+.authPageWrapperContainer {
+  display: flex;
+
+  .authSideBar {
+    padding-top: 15px;
+    padding-left: 7px;
+    padding-right: 7px;
+    max-width: 72px;
+    border-right: 1px solid #dddddd;
+  }
+
+  .childrenContainer {
+    flex-basis: 100%;
+  }
+}
