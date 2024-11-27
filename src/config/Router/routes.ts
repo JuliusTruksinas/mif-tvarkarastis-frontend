@@ -4,4 +4,5 @@ export const routes = {
   registerPage: '/register',
   examplePage: '/example',
   calendar: '/calendar',
+  friendsPage: '/friends',
 };

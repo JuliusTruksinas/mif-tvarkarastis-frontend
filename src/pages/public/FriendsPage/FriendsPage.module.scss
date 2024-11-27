@@ -1,0 +1,115 @@
+.friendsPageContainer {
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  margin-right: 35px;
+  height: 20vh;
+
+  .friendsFormContainer {
+    margin: 0 20px;
+    width: 100%;
+    max-width: 1100px;
+    height: 237px;
+
+    .title {
+      color: #273469;
+      font-size: 35px;
+      line-height: 32px;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+
+    .pageSubtitle {
+      font-size: 14px;
+      line-height: 20px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      color: #273469;
+    }
+
+    .tabListElement {
+      width: 200px;
+      margin-bottom: 10px;
+
+      .tab {
+        font-size: 12px;
+        min-height: 40px;
+        height: 40px;
+        border-color: #ffffff;
+        color: #273469;
+      }
+
+      .selectedTab {
+        border-color: #e4d9ff;
+        font-weight: bold;
+      }
+    }
+
+    .inputField {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #e4d9ff;
+      border-radius: 6px;
+      background-color: #fafaff;
+      color: #273469;
+      outline: none;
+      font-size: 14px;
+    }
+  }
+
+  .friendsTable {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: 15px;
+    margin-right: 15px;
+    color: #273469;
+
+    .tableHeader {
+      padding-left: 30px;
+      width: 100%;
+
+      th {
+        font-weight: 700;
+        color: #273469;
+      }
+    }
+
+    .tableRow {
+      border-color: #e4d9ff;
+
+      .tableData {
+        vertical-align: middle;
+        height: 73px;
+      }
+    }
+
+    .addBtnContainer {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+
+      .addBtn {
+        color: #ffffff;
+        font-weight: 500;
+        background-color: #273469;
+        border-color: #ffffff;
+      }
+    }
+
+    .alignTdRight {
+      padding-right: 0;
+    }
+  }
+
+  .threeDotsIconContainer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+
+  .courseElement {
+    color: #273469;
+    background-color: #e4d9ff;
+    border-color: #e4d9ff;
+  }
+}
