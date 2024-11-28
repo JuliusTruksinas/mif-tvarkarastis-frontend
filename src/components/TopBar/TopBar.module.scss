@@ -1,0 +1,99 @@
+@import '../../styles/variables.scss';
+
+.topBarContainer {
+  user-select: none;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  border-bottom: 1px solid #dddddd;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 15px 40px;
+  }
+
+  .ctaContainer {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: flex-end;
+    flex-basis: 100%;
+  }
+
+  .notificationsDropdownContainer {
+    .indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      .indicatorItem {
+        background-color: #e4d9ff;
+        border-color: #e4d9ff;
+        color: #273469;
+        font-weight: 600;
+        padding-top: 7px;
+        padding-bottom: 7px;
+      }
+    }
+
+    .notificationsDropdownContentContainer {
+      display: flex;
+      flex-direction: column;
+      max-height: 300px;
+      overflow-y: auto;
+      gap: 10px;
+
+      .notificationItem {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        justify-content: center;
+        gap: 20px;
+
+        .ctaNameContainer {
+          .fullName {
+            font-weight: 500;
+          }
+
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          .notificationCtaContainer {
+            display: flex;
+            gap: 10px;
+
+            .notificationCtaBtn {
+              padding: 5px 5px;
+              border-radius: 5px;
+              font-size: 12px;
+            }
+
+            .acceptBtn {
+              background-color: #273469;
+              color: #ffffff;
+            }
+            .dismissBtn {
+              background-color: #e4d9ff;
+              color: #273469;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .userMenuDropdownContainer {
+    cursor: pointer;
+  }
+}
+.menuDropdown {
+  width: 250px;
+  max-height: 200px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  border-radius: 16px;
+}

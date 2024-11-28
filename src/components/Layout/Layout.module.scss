@@ -1,0 +1,27 @@
+@import '../../styles/variables.scss';
+
+.layoutContainer {
+  min-height: 100vh;
+  display: flex;
+
+  .mainContentContainer {
+    flex-basis: 100%;
+
+    .childrenContainer {
+      min-height: 100vh;
+      padding: 40px 20px 100px 20px;
+
+      @media (min-width: $breakpoint-sm) {
+        padding: 40px 40px 100px 40px;
+      }
+    }
+  }
+
+  .menuDropdown {
+    width: 250px;
+    max-height: 200px;
+    background-color: #ffffff;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+}

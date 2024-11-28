@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import styles from './AuthPageWrapper.module.scss';
 import logoSvg from '../../assets/images/logo.svg';
 import { ReactSVG } from 'react-svg';
