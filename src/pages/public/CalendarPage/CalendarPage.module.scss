@@ -1,10 +1,6 @@
 @import '../../../styles/variables.scss';
 
 .calendarPageContainer {
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 25px;
-
   .headerContainer {
     @media (min-width: $breakpoint-md) {
       display: flex;
