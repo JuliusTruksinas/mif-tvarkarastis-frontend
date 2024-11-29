@@ -37,6 +37,8 @@ export const login = async (
 
     localStorage.setItem('token', responseData.token);
 
+    getCurrentUser(set, get, { token: responseData.token });
+
     set({ isUserAuthenticated: true });
   } catch (error) {
     set({
@@ -75,6 +77,7 @@ export const logout = (set: any, get: any): void => {
 
   set({
     isUserAuthenticated: false,
+    currentUser: null,
   });
 };
 

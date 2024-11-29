@@ -1,13 +1,4 @@
-export interface FetchedUserEvent {
-  startDateTime: string;
-  endDateTime: string;
-  id: string;
-  title: string;
-  location?: string;
-  note?: string;
-}
-
-export interface FetchedLectureEvent {
+export interface LectureEvent {
   id: string;
   startDateTime: string;
   endDateTime: string;

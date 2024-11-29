@@ -49,7 +49,7 @@ export const TopBar = () => {
               <div className={styles.notificationItem}>
                 <img src={userImage} alt="" tabIndex={0} />
                 <div className={styles.ctaNameContainer}>
-                  <p className={styles.fullName}>Julius Truksinas</p>
+                  <p className={styles.fullName}>Name Surname</p>
                   <div className={styles.notificationCtaContainer}>
                     <button
                       className={classNames(

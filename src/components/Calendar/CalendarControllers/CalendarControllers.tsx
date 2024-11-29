@@ -8,16 +8,10 @@ import AreWeekendsIncludedController from './AreWeekendsIncludedController/AreWe
 import styles from './CalendarControllers.module.scss';
 
 type Props = {
-  areWeekendsShown: boolean;
-  setAreWeekendsShown: (boolean) => void;
   calendarRef: React.RefObject<FullCalendar>;
 };
 
-const CalendarControlls = ({
-  areWeekendsShown,
-  setAreWeekendsShown,
-  calendarRef,
-}: Props) => {
+const CalendarControlls = ({ calendarRef }: Props) => {
   const [title, setTitle] = useState<string>('');
 
   useEffect(() => {
@@ -33,10 +27,7 @@ const CalendarControlls = ({
         <ViewController calendarRef={calendarRef} setTitle={setTitle} />
         <EventFilteringController />
         <UserCalendarController />
-        <AreWeekendsIncludedController
-          areWeekendsShown={areWeekendsShown}
-          setAreWeekendsShown={setAreWeekendsShown}
-        />
+        <AreWeekendsIncludedController />
       </div>
       <div className={styles.movementControllers}>
         <p className={styles.calendarTitle}>{title}</p>

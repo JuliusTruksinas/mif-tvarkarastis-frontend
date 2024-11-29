@@ -1,23 +1,18 @@
+import { useCalendarControlStore } from '../../../../stores/calendar-control/calendarControl.store';
 import styles from './AreWeekendsIncludedController.module.scss';
 
-type Props = {
-  areWeekendsShown: boolean;
-  setAreWeekendsShown: (boolean) => void;
-};
+const AreWeekendsIncludedController = () => {
+  const { includeWeekends, setIncludeWeekends } = useCalendarControlStore();
 
-const AreWeekendsIncludedController = ({
-  areWeekendsShown,
-  setAreWeekendsShown,
-}: Props) => {
   return (
     <div className={styles.areWeekendsIncludedContainer}>
       <label>Include weekends?</label>
       <input
         type="checkbox"
         className="checkbox checkbox-primary"
-        checked={areWeekendsShown}
+        checked={includeWeekends}
         onChange={() => {
-          setAreWeekendsShown(!areWeekendsShown);
+          setIncludeWeekends(!includeWeekends);
         }}
       />
     </div>
