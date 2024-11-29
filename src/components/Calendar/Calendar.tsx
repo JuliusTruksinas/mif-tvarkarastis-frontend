@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -7,8 +7,11 @@ import listPlugin from '@fullcalendar/list';
 import CalendarControllers from './CalendarControllers/CalendarControllers';
 import './CalendarOverride.scss';
 import styles from './Calendar.module.scss';
-import { useUserEventStore } from '../../stores/userEvent/userEvent.store';
-import { fetchedUserEventToCalendarEvent } from '../../utils/calendarEventFormatter';
+import { useUserEventStore } from '../../stores/user-event/userEvent.store';
+import { fetchedEventToCalendarEvent } from '../../utils/calendarEventFormatter';
+import { useLectureEventStore } from '../../stores/lecture-event/lectureEvent.store';
+import { useCalendarControlStore } from '../../stores/calendar-control/calendarControl.store';
+import { UserEvent } from '../../domain/userEvent';
 
 const renderHeader = (args) => {
   if (args.view.type === 'timeGridWeek' || args.view.type === 'timeGridDay') {
@@ -30,16 +33,71 @@ const renderHeader = (args) => {
   return <span className={styles.defaultText}>{args.text}</span>;
 };
 
-const Calendar = () => {
-  const [areWeekendsShown, setAreWeekendsShown] = useState<boolean>(false);
+type Props = {
+  setSelectedUserEvent: (userEvent: UserEvent) => void;
+  setIsUserEventModalOpen: (isUserEventModalOpen: boolean) => void;
+};
+
+const Calendar = ({ setSelectedUserEvent, setIsUserEventModalOpen }: Props) => {
+  const { updateUserEvent } = useUserEventStore();
+
+  const handleEventClick = (info) => {
+    const clickedEvent = info.event;
+    const { eventData } = clickedEvent._def.extendedProps;
+
+    if (clickedEvent.startEditable) {
+      // user event
+      setSelectedUserEvent({
+        ...eventData,
+        startDateTime: clickedEvent.start,
+        endDateTime: clickedEvent.end,
+      });
+      setIsUserEventModalOpen(true);
+      return;
+    }
+
+    // lecture event
+  };
+
+  const handleEventChange = (info) => {
+    const droppedEvent = info.event;
+    const { eventData } = droppedEvent._def.extendedProps;
+
+    updateUserEvent(eventData.id, {
+      startDateTime: droppedEvent.start.toISOString(),
+      endDateTime: droppedEvent.end.toISOString(),
+    });
+  };
+
   const calendarRef = useRef<FullCalendar>(null);
 
   const { userEvents, fetchUserEvents, isUserEventsUpdateNeeded } =
     useUserEventStore();
 
+  const { includeWeekends, calendarView, calendarEventFilter } =
+    useCalendarControlStore();
+
+  const { fetchLectureEvents, lectureEvents } = useLectureEventStore();
+
+  const calendarEvents = useMemo(() => {
+    if (calendarEventFilter == 'Lectures') {
+      return lectureEvents.map((event) => fetchedEventToCalendarEvent(event));
+    }
+
+    if (calendarEventFilter == 'Created events') {
+      return userEvents.map((event) => fetchedEventToCalendarEvent(event));
+    }
+
+    return [
+      ...lectureEvents.map((event) => fetchedEventToCalendarEvent(event)),
+      ...userEvents.map((event) => fetchedEventToCalendarEvent(event)),
+    ];
+  }, [lectureEvents, userEvents, calendarEventFilter]);
+
   useEffect(() => {
+    fetchLectureEvents();
     fetchUserEvents();
-  }, [fetchUserEvents]);
+  }, []);
 
   useEffect(() => {
     if (isUserEventsUpdateNeeded) {
@@ -49,17 +107,13 @@ const Calendar = () => {
 
   return (
     <>
-      <CalendarControllers
-        areWeekendsShown={areWeekendsShown}
-        setAreWeekendsShown={setAreWeekendsShown}
-        calendarRef={calendarRef}
-      />
+      <CalendarControllers calendarRef={calendarRef} />
       <FullCalendar
         eventResizableFromStart
         nowIndicator
         editable
         selectable
-        initialView="timeGridWeek"
+        initialView={calendarView}
         eventDisplay="block"
         slotDuration="01:00:00"
         eventTimeFormat={{
@@ -76,17 +130,15 @@ const Calendar = () => {
         }}
         firstDay={1}
         rerenderDelay={10}
-        weekends={areWeekendsShown}
+        weekends={includeWeekends}
         ref={calendarRef}
         plugins={[listPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        events={[
-          ...userEvents.map((userEvent) =>
-            fetchedUserEventToCalendarEvent(userEvent),
-          ),
-        ]}
+        events={calendarEvents}
         headerToolbar={false}
         allDaySlot={false}
         dayHeaderContent={renderHeader}
+        eventClick={handleEventClick}
+        eventChange={handleEventChange}
       />
     </>
   );

@@ -1,31 +1,25 @@
-import { useForm } from '../../../../hooks/useForm';
 import SelectTextField from '../../../../common/TextField/SelectTextField/SelectTextField';
 import styles from './EventFilteringController.module.scss';
 import { EVENT_FILTER_OPTIONS } from '../CalendarControllersConstants';
-
-const INPUTS = [
-  {
-    name: 'eventFilteringController',
-    type: 'select',
-    value: '',
-  },
-];
+import { useCalendarControlStore } from '../../../../stores/calendar-control/calendarControl.store';
+import { CalendarEventFilter } from 'src/domain/calendar';
 
 const EventFilteringController = () => {
-  const { inputs, onInputChange } = useForm(INPUTS);
+  const { setCalendarEventFilter, calendarEventFilter } =
+    useCalendarControlStore();
 
   return (
     <>
-      {inputs.map((input) => (
-        <SelectTextField
-          key={input.name}
-          name={input.name}
-          value={input.value}
-          options={EVENT_FILTER_OPTIONS}
-          onChange={onInputChange}
-          elementClassName={styles.eventFilteringControllerRoot}
-        />
-      ))}
+      <SelectTextField
+        key={'eventFilteringController'}
+        name={'eventFilteringController'}
+        value={calendarEventFilter}
+        options={EVENT_FILTER_OPTIONS}
+        onChange={(e) => {
+          setCalendarEventFilter(e.target.value as CalendarEventFilter);
+        }}
+        elementClassName={styles.eventFilteringControllerRoot}
+      />
     </>
   );
 };

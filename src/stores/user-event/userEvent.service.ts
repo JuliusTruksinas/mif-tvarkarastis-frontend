@@ -7,7 +7,7 @@ export interface CreateUserRequestDto {
   startDateTime: string;
   endDateTime: string;
   title: string;
-  notes?: string;
+  note?: string;
   location?: string;
 }
 
@@ -15,7 +15,7 @@ export interface UpdateUserRequestDto {
   startDateTime?: string;
   endDateTime?: string;
   title?: string;
-  notes?: string;
+  note?: string;
   location?: string;
 }
 
@@ -27,7 +27,7 @@ export const fetchUserEvents = async (set: any, get: any): Promise<void> => {
   try {
     const response = await axios.get(`${API_URL}`);
     const responseData = response.data?.data;
-    set({ userEvents: responseData });
+    set({ userEvents: responseData, isUserEventsUpdateNeeded: false });
   } catch (error) {
     set({
       userEventsFetchError: error?.response?.data?.data,
@@ -78,7 +78,7 @@ export const updateUserEvent = async (
     const responseData = response.data?.data;
 
     set({ userEvent: responseData, isUserEventsUpdateNeeded: true });
-    showToast('Successfully updated a new event', 'success');
+    showToast('Successfully updated an event', 'success');
   } catch (error) {
     set({
       userEventUpdateError: error?.response?.data?.data,

@@ -1,5 +1,7 @@
 export type CalendarView = 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay';
 
+export type CalendarEventFilter = 'All events' | 'Lectures' | 'Created events';
+
 export type CalendarViewOption = {
   label: string;
   value: string;

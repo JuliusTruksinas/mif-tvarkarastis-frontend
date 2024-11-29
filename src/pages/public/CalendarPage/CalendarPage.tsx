@@ -4,11 +4,17 @@ import Calendar from '../../../components/Calendar/Calendar';
 import styles from './CalendarPage.module.scss';
 import addIcon from '../../../assets/icons/add.svg';
 import { ReactSVG } from 'react-svg';
-import CustomEventModal from '../../../components/UserEventModal/UserEventModal';
+import UserEventModal from '../../../components/UserEventModal/UserEventModal';
 import { useAuthStore } from '../../../stores/auth/auth.store';
+import { UserEvent } from '../../../domain/userEvent';
 
 const CalendarPage = () => {
-  const [isCustomModalOpen, setIsCustomModalOpen] = useState<boolean>(false);
+  const [isUserEventModalOpen, setIsUserEventModalOpen] =
+    useState<boolean>(false);
+
+  const [selectedUserEvent, setSelectedUserEvent] = useState<UserEvent | null>(
+    null,
+  );
 
   const { currentUser } = useAuthStore();
 
@@ -27,16 +33,23 @@ const CalendarPage = () => {
           </div>
           <button
             className={classNames('btn', styles.addEventBtn)}
-            onClick={() => setIsCustomModalOpen(true)}
+            onClick={() => setIsUserEventModalOpen(true)}
           >
             <ReactSVG src={addIcon} />
             <p>Add event</p>
           </button>
         </div>
-        <Calendar />
+        <Calendar
+          setSelectedUserEvent={setSelectedUserEvent}
+          setIsUserEventModalOpen={setIsUserEventModalOpen}
+        />
       </div>
-      {isCustomModalOpen && (
-        <CustomEventModal onClose={() => setIsCustomModalOpen(false)} />
+      {isUserEventModalOpen && (
+        <UserEventModal
+          onClose={() => setIsUserEventModalOpen(false)}
+          userEvent={selectedUserEvent}
+          setSelectedUserEvent={setSelectedUserEvent}
+        />
       )}
     </>
   );
