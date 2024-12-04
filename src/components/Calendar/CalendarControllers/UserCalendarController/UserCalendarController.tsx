@@ -3,6 +3,10 @@ import SelectTextField from '../../../../common/TextField/SelectTextField/Select
 import styles from './UserCalendarController.module.scss';
 import { USER_CALENDAR_OPTIONS } from '../CalendarControllersConstants';
 
+type FormInputs = {
+  userCalendarController: string;
+};
+
 const INPUTS = [
   {
     name: 'userCalendarController',
@@ -12,7 +16,7 @@ const INPUTS = [
 ];
 
 const UserCalendarController = () => {
-  const { inputs, onInputChange } = useForm(INPUTS);
+  const { inputs, onInputChange } = useForm<FormInputs>(INPUTS);
 
   return (
     <>

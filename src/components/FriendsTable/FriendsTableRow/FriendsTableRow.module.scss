@@ -1,0 +1,43 @@
+.tableRow {
+  border-color: #e4d9ff;
+
+  .tableData {
+    vertical-align: middle;
+    height: 73px;
+  }
+}
+
+.addBtnContainer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  .addBtn {
+    color: #ffffff;
+    font-weight: 500;
+    background-color: #273469;
+    border-color: #ffffff;
+  }
+}
+
+.alignTdRight {
+  padding-right: 16px;
+}
+
+.threeDotsIconContainer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.courseElement {
+  color: #273469;
+  background-color: #e4d9ff;
+  border-color: #e4d9ff;
+}
+
+.alignRight {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}

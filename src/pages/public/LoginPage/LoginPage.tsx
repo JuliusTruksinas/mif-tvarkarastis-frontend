@@ -31,7 +31,8 @@ const INPUTS = [
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login, isUserAuthenticated } = useAuthStore();
-  const { inputs, onInputChange, getSubmitInputs } = useForm(INPUTS);
+  const { inputs, onInputChange, getSubmitInputs } =
+    useForm<FormInputs>(INPUTS);
 
   useEffect(() => {
     if (isUserAuthenticated) {

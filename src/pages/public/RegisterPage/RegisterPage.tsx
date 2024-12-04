@@ -9,7 +9,7 @@ import { useEffect, useMemo } from 'react';
 import { useAuthStore } from '../../../stores/auth/auth.store';
 import AuthPageWrapper from '../../../components/AuthPageWrapper/AuthPageWrapper';
 
-type formInputs = {
+type FormInputs = {
   firstName: string;
   lastName: string;
   email: string;
@@ -92,7 +92,7 @@ const RegisterPage = () => {
     setNewInputValue,
     getSubmitInputs,
     resetInputValues,
-  } = useForm(INPUTS);
+  } = useForm<FormInputs>(INPUTS);
 
   const { register } = useAuthStore();
 
@@ -218,7 +218,7 @@ const RegisterPage = () => {
   }, [subgroupsOptions]);
 
   const handleRegister = () => {
-    const formInputs: formInputs = getSubmitInputs(inputs);
+    const formInputs: FormInputs = getSubmitInputs(inputs);
 
     register({
       email: formInputs.email,

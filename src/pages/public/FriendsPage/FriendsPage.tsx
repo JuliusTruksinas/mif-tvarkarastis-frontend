@@ -1,9 +1,93 @@
+import { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import styles from './FriendsPage.module.scss';
-import threeDotsIcon from '../../../assets/icons/threedots.svg';
-import { ReactSVG } from 'react-svg';
+import { useForm } from '../../../hooks/useForm';
+import TextField from '../../../common/TextField/TextField';
+import { useUserStore } from '../../../stores/user/user.store';
+import FriendsTable from '../../../components/FriendsTable/FriendsTable';
+import { Tab } from '../../../domain/common';
+
+type FormInputs = {
+  userFriendSearch: string;
+};
+
+const INPUTS = [
+  {
+    name: 'userFriendSearch',
+    type: 'text',
+    value: '',
+  },
+];
+
+const TABS: Tab[] = [
+  {
+    name: 'allFriends',
+    label: 'All friends',
+  },
+  {
+    name: 'addFriends',
+    label: 'Add friends',
+  },
+];
 
 const FriendsPage = () => {
+  const { findUsers, foundUsers, getFriends, friends, resetUserStore } =
+    useUserStore();
+  const { foundUsersIsUpdateNeeded } = useUserStore();
+  const [selectedTab, setSelectedTab] = useState<string>(TABS[0].name);
+
+  useEffect(() => {
+    resetUserStore();
+    if (selectedTab === 'allFriends') {
+      getFriends();
+    }
+  }, [selectedTab]);
+
+  useEffect(() => {
+    return () => resetUserStore();
+  }, []);
+
+  const handleSubmit = (submitInputs: FormInputs) => {
+    if (selectedTab === 'addFriends') {
+      findUsers({
+        searchQuery: submitInputs.userFriendSearch,
+      });
+    }
+  };
+
+  const { inputs, onInputChange, setNewInputValue, getSubmitInputs } =
+    useForm<FormInputs>(INPUTS, handleSubmit, {
+      submitOnChange: true,
+    });
+
+  const searchFieldValue = useMemo(() => {
+    const foundInput = inputs.find(
+      (input) => input.name === 'userFriendSearch',
+    );
+    return foundInput?.value;
+  }, [inputs]);
+
+  const filteredFriends = useMemo(() => {
+    return friends.filter((friend) =>
+      `${friend.firstName} ${friend.lastName}`
+        .toLowerCase()
+        .includes(searchFieldValue.toLowerCase()),
+    );
+  }, [friends, searchFieldValue]);
+
+  useEffect(() => {
+    if (foundUsersIsUpdateNeeded) {
+      handleSubmit(getSubmitInputs(inputs));
+    }
+  }, [foundUsersIsUpdateNeeded]);
+
+  const handleTabChange = (tab: Tab) => {
+    setSelectedTab(tab.name);
+    setNewInputValue('userFriendSearch', {
+      value: '',
+    });
+  };
+
   return (
     <div className={styles.friendsPageContainer}>
       <div className={styles.friendsFormContainer}>
@@ -17,90 +101,40 @@ const FriendsPage = () => {
           role="tablist"
           className={classNames('tabs tabs-bordered', styles.tabListElement)}
         >
-          <a
-            role="tab"
-            className={classNames('tab', styles.tab, styles.selectedTab)}
-          >
-            All friends
-          </a>
-          <a role="tab" className={classNames('tab', styles.tab)}>
-            Add friends
-          </a>
+          {TABS.map((tab) => (
+            <p
+              key={tab.name}
+              role="tab"
+              className={classNames('tab', styles.tab, {
+                [styles.selectedTab]: tab.name === selectedTab,
+              })}
+              onClick={() => handleTabChange(tab)}
+            >
+              {tab.label}
+            </p>
+          ))}
         </div>
-        <input
-          className={classNames(
-            'input input-bordered w-full focus:outline-none focus:ring-0',
-            styles.inputField,
-          )}
-          type="name"
-        />
+        {inputs.map((input) => (
+          <TextField
+            key={input.name}
+            name={input.name}
+            value={input.value}
+            type={input.type}
+            label={input.label}
+            onChange={onInputChange}
+            elementClassName={classNames(
+              'input input-bordered w-full focus:outline-none focus:ring-0',
+              styles.inputField,
+            )}
+          />
+        ))}
       </div>
-      <div className={styles.friendsTable}>
-        <table className="table">
-          <thead className={styles.tableHeader}>
-            <tr className={styles.tableRow}>
-              <th>Full name</th>
-              <th>Program name</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className={styles.tableRow}>
-              <td className={styles.tableData}>
-                <div
-                  className={classNames(
-                    'flex items-center gap-3',
-                    styles.avatarNameContainer,
-                  )}
-                >
-                  <div className={classNames('avatar', styles.avatar)}>
-                    <div
-                      className={classNames(
-                        'mask mask-squircle h-12 w-12',
-                        styles.imageContainer,
-                      )}
-                    >
-                      <img
-                        src="https://img.daisyui.com/images/profile/demo/5@94.webp"
-                        alt="Avatar Tailwind CSS Component"
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.nameContainer}>
-                    <div className="font-bold">Yancy Tear</div>
-                  </div>
-                </div>
-              </td>
-              <td className={styles.tableData}>
-                Programų sistemos
-                <br />
-                <span
-                  className={classNames(
-                    'badge badge-ghost badge-sm',
-                    styles.courseElement,
-                  )}
-                >
-                  3 kursas
-                </span>
-              </td>
-              {/* <td className={classNames(styles.tableData, styles.alignTdRight)}>
-                <div className={styles.addBtnContainer}>
-                  <button className={classNames('btn', styles.addBtn)}>
-                    Add
-                  </button>
-                </div>
-              </td> */}
-              <td className={classNames(styles.tableData, styles.alignTdRight)}>
-                <div className={styles.threeDotsIconContainer}>
-                  <button>
-                    <ReactSVG src={threeDotsIcon} />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {selectedTab === 'allFriends' && filteredFriends?.length > 0 && (
+        <FriendsTable users={filteredFriends} selectedTab={selectedTab} />
+      )}
+      {selectedTab === 'addFriends' && foundUsers?.length > 0 && (
+        <FriendsTable users={foundUsers} selectedTab={selectedTab} />
+      )}
     </div>
   );
 };
