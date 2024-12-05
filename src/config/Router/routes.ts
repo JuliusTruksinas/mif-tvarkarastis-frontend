@@ -5,4 +5,5 @@ export const routes = {
   examplePage: '/example',
   calendar: '/calendar',
   friendsPage: '/friends',
+  userPage: '/user-page',
 };
