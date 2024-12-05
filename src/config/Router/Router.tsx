@@ -7,6 +7,7 @@ import { routes } from './routes';
 // import HomePage from '../../pages/public/HomePage'; TODO: create HomePage
 import LoginPage from '../../pages/public/LoginPage/LoginPage';
 import RegisterPage from '../../pages/public/RegisterPage/RegisterPage';
+import UserPage from '../../pages/public/UserPage/UserPage';
 import CalendarPage from '../../pages/public/CalendarPage/CalendarPage';
 import FriendsPage from '../../pages/public/FriendsPage/FriendsPage';
 
@@ -15,6 +16,7 @@ const getProtectedRoutes = () => {
     <Route element={<ProtectedRoute />}>
       <Route path={routes.calendar} element={<CalendarPage />} />;
       <Route path={routes.friendsPage} element={<FriendsPage />} />
+      <Route path={routes.userPage} element={<UserPage />} />
     </Route>
   );
 };
