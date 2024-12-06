@@ -10,3 +10,7 @@ export interface FormInput {
   containerClassName?: string;
   options?: SelectOption[];
 }
+
+export type FormBehavior = {
+  submitOnChange?: boolean;
+};

@@ -1,7 +1,11 @@
 import { ChangeEvent, useState } from 'react';
-import { FormInput } from '../domain/form';
+import { FormInput, FormBehavior } from '../domain/form';
 
-export const useForm = (inputBlueprints: FormInput[]) => {
+export const useForm = <T>(
+  inputBlueprints: FormInput[],
+  onFormSubmit?: (inputs: T) => void,
+  formBehavior?: FormBehavior,
+) => {
   const [inputs, setInputs] = useState<FormInput[]>(inputBlueprints);
 
   const getSubmitInputs = (submitInputs: Array<FormInput>) =>
@@ -18,16 +22,22 @@ export const useForm = (inputBlueprints: FormInput[]) => {
   const onInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
-    setInputs((prevInputs) =>
-      prevInputs.map((prevInput) =>
+    setInputs((prevInputs) => {
+      const inputs = prevInputs.map((prevInput) =>
         prevInput.name == e.target.name
           ? {
               ...prevInput,
               value: e.target.value,
             }
           : { ...prevInput },
-      ),
-    );
+      );
+
+      formBehavior?.submitOnChange &&
+        onFormSubmit &&
+        onFormSubmit(getSubmitInputs(inputs));
+
+      return inputs;
+    });
   };
 
   const setNewInputValue = (name: string, newValue: any) => {

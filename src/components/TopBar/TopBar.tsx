@@ -1,15 +1,35 @@
-import classNames from 'classnames';
+import { useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
+import classNames from 'classnames';
 import notificationsIcon from '../../assets/icons/notification.svg';
 import userImage from '../../assets/images/user.png';
 import { useAuthStore } from '../../stores/auth/auth.store';
 import logoSvg from '../../assets/images/logo.svg';
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
 import styles from './TopBar.module.scss';
+import { useNotificationStore } from '../../stores/notification/notification.store';
+import Notification from '../Notification/Notification';
 
 export const TopBar = () => {
-  const { logout } = useAuthStore();
+  const {
+    fetchUnseenNotifications,
+    unseenNotifications,
+    unseenNotificationsIsUpdateNeeded,
+  } = useNotificationStore();
+  const { logout, currentUser } = useAuthStore();
   const { width } = useWindowSize();
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUnseenNotifications();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (unseenNotificationsIsUpdateNeeded) {
+      fetchUnseenNotifications();
+    }
+  }, [unseenNotificationsIsUpdateNeeded]);
 
   return (
     <div className={styles.topBarContainer}>
@@ -35,43 +55,24 @@ export const TopBar = () => {
                 styles.indicatorItem,
               )}
             >
-              4
+              {unseenNotifications?.length ?? 0}
             </span>
           </div>
-          <div
-            tabIndex={0}
-            className={classNames(
-              'menu menu-sm dropdown-content z-[1] shadow',
-              styles.menuDropdown,
-            )}
-          >
-            <div className={styles.notificationsDropdownContentContainer}>
-              <div className={styles.notificationItem}>
-                <img src={userImage} alt="" tabIndex={0} />
-                <div className={styles.ctaNameContainer}>
-                  <p className={styles.fullName}>Name Surname</p>
-                  <div className={styles.notificationCtaContainer}>
-                    <button
-                      className={classNames(
-                        styles.notificationCtaBtn,
-                        styles.acceptBtn,
-                      )}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className={classNames(
-                        styles.notificationCtaBtn,
-                        styles.dismissBtn,
-                      )}
-                    >
-                      Dismiss
-                    </button>
-                  </div>
-                </div>
+          {unseenNotifications?.length !== 0 && (
+            <div
+              tabIndex={0}
+              className={classNames(
+                'menu menu-sm dropdown-content z-[1] shadow',
+                styles.menuDropdown,
+              )}
+            >
+              <div className={styles.notificationsDropdownContentContainer}>
+                {unseenNotifications.map((unseenNotification) => (
+                  <Notification notification={unseenNotification} />
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div
           className={classNames(

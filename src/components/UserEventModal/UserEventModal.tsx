@@ -75,7 +75,8 @@ const UserEventModal = ({
     },
   ];
 
-  const { inputs, onInputChange, getSubmitInputs } = useForm(INPUTS);
+  const { inputs, onInputChange, getSubmitInputs } =
+    useForm<formInputs>(INPUTS);
 
   const { createUserEvent, updateUserEvent, deleteUserEvent } =
     useUserEventStore();
