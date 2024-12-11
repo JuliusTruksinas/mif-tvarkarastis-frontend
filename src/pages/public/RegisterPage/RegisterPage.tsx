@@ -8,6 +8,7 @@ import { useStudyOptionsStore } from '../../../stores/study-options/studyOptions
 import { useEffect, useMemo } from 'react';
 import { useAuthStore } from '../../../stores/auth/auth.store';
 import AuthPageWrapper from '../../../components/AuthPageWrapper/AuthPageWrapper';
+import Loader from '../../../components/Loader/Loader';
 
 type FormInputs = {
   firstName: string;
@@ -53,6 +54,7 @@ const INPUTS = [
     options: DEFAULT_OPTIONS,
     label: 'Study type',
     value: '',
+    fieldsToClearOnChange: ['programName', 'course', 'group', 'subgroup'],
   },
   {
     name: 'programName',
@@ -60,6 +62,7 @@ const INPUTS = [
     options: DEFAULT_OPTIONS,
     label: 'Program Name',
     value: '',
+    fieldsToClearOnChange: ['course', 'group', 'subgroup'],
   },
   {
     name: 'course',
@@ -67,6 +70,7 @@ const INPUTS = [
     options: DEFAULT_OPTIONS,
     label: 'Course',
     value: '',
+    fieldsToClearOnChange: ['group', 'subgroup'],
   },
   {
     name: 'group',
@@ -74,6 +78,7 @@ const INPUTS = [
     options: DEFAULT_OPTIONS,
     label: 'Group',
     value: '',
+    fieldsToClearOnChange: ['subgroup'],
   },
   {
     name: 'subgroup',
@@ -94,7 +99,7 @@ const RegisterPage = () => {
     resetInputValues,
   } = useForm<FormInputs>(INPUTS);
 
-  const { register } = useAuthStore();
+  const { register, registerIsLoading } = useAuthStore();
 
   const {
     getAllStudyTypesOptions,
@@ -107,16 +112,8 @@ const RegisterPage = () => {
     getAllCoursesOptions,
     getAllGroupsOptions,
     getAllSubgroupsOptions,
+    resetStudyOptionsStore,
   } = useStudyOptionsStore();
-
-  const resetSelectInputs = (inputsNames: string[]) => {
-    inputsNames.forEach((inputName) => {
-      setNewInputValue(inputName, {
-        options: DEFAULT_OPTIONS,
-        value: '',
-      });
-    });
-  };
 
   const studyTypeInputValue = useMemo(
     () => inputs.find((input) => input.name === 'studyType')?.value,
@@ -143,27 +140,24 @@ const RegisterPage = () => {
   }, []);
 
   useEffect(() => {
-    resetSelectInputs(['programName', 'course', 'group', 'subgroup']);
     if (studyTypeInputValue) {
-      getAllProgramsOptions({ studyTypeId: +studyTypeInputValue });
+      getAllProgramsOptions({ studyType: +studyTypeInputValue });
     }
   }, [studyTypeInputValue]);
 
   useEffect(() => {
-    resetSelectInputs(['course', 'group', 'subgroup']);
     if (studyTypeInputValue && programNameInputValue) {
       getAllCoursesOptions({
-        studyTypeId: +studyTypeInputValue,
+        studyType: +studyTypeInputValue,
         studyProgramName: programNameInputValue,
       });
     }
   }, [programNameInputValue]);
 
   useEffect(() => {
-    resetSelectInputs(['group', 'subgroup']);
     if (studyTypeInputValue && programNameInputValue && courseInputValue) {
       getAllGroupsOptions({
-        studyTypeId: +studyTypeInputValue,
+        studyType: +studyTypeInputValue,
         studyProgramName: programNameInputValue,
         course: +courseInputValue,
       });
@@ -171,7 +165,6 @@ const RegisterPage = () => {
   }, [courseInputValue]);
 
   useEffect(() => {
-    resetSelectInputs(['subgroup']);
     if (groupInputValue) {
       getAllSubgroupsOptions();
     }
@@ -225,6 +218,7 @@ const RegisterPage = () => {
       password: formInputs.password,
       firstName: formInputs.firstName,
       lastName: formInputs.lastName,
+      studyType: 1,
       programName: formInputs.programName,
       course: +formInputs.course,
       group: +formInputs.group,
@@ -233,6 +227,10 @@ const RegisterPage = () => {
 
     resetInputValues();
   };
+
+  useEffect(() => {
+    return () => resetStudyOptionsStore();
+  }, []);
 
   return (
     <AuthPageWrapper>
@@ -287,7 +285,7 @@ const RegisterPage = () => {
               onClick={handleRegister}
               className={classNames('btn', styles.registerBtn)}
             >
-              Register
+              {registerIsLoading ? <Loader /> : 'Register'}
             </button>
             <div className={styles.orDivider}>
               <span>or</span>

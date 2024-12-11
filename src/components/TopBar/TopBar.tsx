@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
+import { useNavigate } from 'react-router';
 import classNames from 'classnames';
 import notificationsIcon from '../../assets/icons/notification.svg';
 import userImage from '../../assets/images/user.png';
@@ -9,6 +10,7 @@ import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
 import styles from './TopBar.module.scss';
 import { useNotificationStore } from '../../stores/notification/notification.store';
 import Notification from '../Notification/Notification';
+import { routes } from '../../config/Router/routes';
 
 export const TopBar = () => {
   const {
@@ -16,6 +18,7 @@ export const TopBar = () => {
     unseenNotifications,
     unseenNotificationsIsUpdateNeeded,
   } = useNotificationStore();
+  const navigate = useNavigate();
   const { logout, currentUser } = useAuthStore();
   const { width } = useWindowSize();
 
@@ -89,7 +92,7 @@ export const TopBar = () => {
             )}
           >
             <li>
-              <p>Profile</p>
+              <p onClick={() => navigate(routes.userPage)}>Settings</p>
             </li>
             <li>
               <p onClick={logout}>Logout</p>

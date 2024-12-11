@@ -31,10 +31,15 @@ const TABS: Tab[] = [
 ];
 
 const FriendsPage = () => {
-  const { findUsers, foundUsers, getFriends, friends, resetUserStore } =
-    useUserStore();
-  const { foundUsersIsUpdateNeeded } = useUserStore();
   const [selectedTab, setSelectedTab] = useState<string>(TABS[0].name);
+  const {
+    findUsers,
+    foundUsers,
+    getFriends,
+    friends,
+    resetUserStore,
+    foundUsersIsUpdateNeeded,
+  } = useUserStore();
 
   useEffect(() => {
     resetUserStore();
@@ -42,10 +47,6 @@ const FriendsPage = () => {
       getFriends();
     }
   }, [selectedTab]);
-
-  useEffect(() => {
-    return () => resetUserStore();
-  }, []);
 
   const handleSubmit = (submitInputs: FormInputs) => {
     if (selectedTab === 'addFriends') {
@@ -87,6 +88,10 @@ const FriendsPage = () => {
       value: '',
     });
   };
+
+  useEffect(() => {
+    return () => resetUserStore();
+  }, []);
 
   return (
     <div className={styles.friendsPageContainer}>

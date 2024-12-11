@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import styles from './SelectTextField.module.scss';
 import { ChangeEvent } from 'react';
+import Loader from '../../../components/Loader/Loader';
 
 export type SelectOption = {
   label: string;
@@ -18,6 +19,7 @@ type Props = {
   label?: string;
   placeholder?: string;
   labelClassName?: string;
+  isLoading?: boolean;
 };
 
 const SelectTextField = ({
@@ -30,6 +32,7 @@ const SelectTextField = ({
   label,
   placeholder,
   labelClassName,
+  isLoading,
 }: Props) => {
   return (
     <div
@@ -39,22 +42,26 @@ const SelectTextField = ({
       )}
     >
       <p className={classNames(styles.labelRoot, labelClassName)}>{label}</p>
-      <select
-        className={classNames(
-          'select select-bordered focus:outline-none focus:ring-0',
-          styles.selectRoot,
-          elementClassName,
-        )}
-        onChange={onChange}
-        name={name}
-        value={value}
-      >
-        {options.map((option, i) => (
-          <option key={`${option.label}-${i}`} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <select
+          className={classNames(
+            'select select-bordered focus:outline-none focus:ring-0',
+            styles.selectRoot,
+            elementClassName,
+          )}
+          onChange={onChange}
+          name={name}
+          value={value}
+        >
+          {options.map((option, i) => (
+            <option key={`${option.label}-${i}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 };

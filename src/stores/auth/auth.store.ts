@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { HttpError } from '../../config/Axios/axios-instance';
 import {
   getCurrentUser,
-  GetCurrentUserDto,
   login,
   LoginRequestDto,
   logout,
@@ -14,16 +13,20 @@ import { User } from '../../domain/common';
 
 export interface AuthStore {
   isUserAuthenticated: boolean;
+  isUserAuthenticationLoading: boolean;
   loginIsLoading: boolean;
+  loginIsSuccess: boolean;
   loginError: HttpError;
   login: (inputs: LoginRequestDto) => void;
   registerIsLoading: boolean;
+  registerIsSuccess: boolean;
   registerError: HttpError;
   register: (inputs: RegisterRequestDto) => void;
   currentUser: User | null;
   currentUserIsLoading: boolean;
+  currentUserIsSuccess: boolean;
   currentUserError: HttpError;
-  getCurrentUser: (inputs: GetCurrentUserDto) => void;
+  getCurrentUser: () => void;
   tryAutoLogin: () => void;
   logout: () => void;
   resetAuthStore: () => void;
@@ -31,12 +34,16 @@ export interface AuthStore {
 
 const initialDataState = {
   isUserAuthenticated: false,
+  isUserAuthenticationLoading: true,
   loginIsLoading: false,
+  loginIsSuccess: false,
   loginError: null,
   registerIsLoading: false,
+  registerIsSuccess: false,
   registerError: null,
   currentUser: null,
   currentUserIsLoading: false,
+  currentUserIsSuccess: false,
   currentUserError: null,
 };
 
@@ -45,8 +52,7 @@ const getInitialState = (set, get) => ({
   register: (inputs: RegisterRequestDto) => register(set, get, inputs),
   login: (inputs: LoginRequestDto) => login(set, get, inputs),
   logout: () => logout(set, get),
-  getCurrentUser: (inputs: GetCurrentUserDto) =>
-    getCurrentUser(set, get, inputs),
+  getCurrentUser: () => getCurrentUser(set, get),
   tryAutoLogin: () => tryAutoLogin(set, get),
   resetAuthStore: () => set(initialDataState),
 });

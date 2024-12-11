@@ -4,7 +4,7 @@ import { showToast } from '../../utils/toast';
 const API_URL = '/study-options';
 
 export interface GetAllProgramsOptionsDto {
-  studyTypeId: number;
+  studyType: number;
 }
 
 export interface GetAllCoursesOptionsDto extends GetAllProgramsOptionsDto {
@@ -21,15 +21,17 @@ export const getAllStudyTypesOptions = async (
 ): Promise<void> => {
   set({
     studyTypesOptionsIsLoading: true,
+    studyTypesOptionsIsSuccess: false,
     studyTypesOptionsError: null,
   });
   try {
     const response = await axios.get(`${API_URL}/types-options`);
     const responseData = response.data?.data;
 
-    set({ studyTypesOptions: responseData });
+    set({ studyTypesOptionsIsSuccess: true, studyTypesOptions: responseData });
   } catch (error) {
     set({
+      studyTypesOptionsIsSuccess: false,
       studyTypesOptionsError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -45,6 +47,7 @@ export const getAllProgramsOptions = async (
 ): Promise<void> => {
   set({
     programsOptionsIsLoading: true,
+    programsOptionsIsSuccess: false,
     programsOptionsError: null,
   });
   try {
@@ -53,9 +56,10 @@ export const getAllProgramsOptions = async (
     });
     const responseData = response.data?.data;
 
-    set({ programsOptions: responseData });
+    set({ programsOptionsIsSuccess: true, programsOptions: responseData });
   } catch (error) {
     set({
+      programsOptionsIsSuccess: false,
       programsOptionsError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -71,6 +75,7 @@ export const getAllCoursesOptions = async (
 ): Promise<void> => {
   set({
     coursesOptionsIsLoading: true,
+    coursesOptionsIsSuccess: false,
     coursesOptionsError: null,
   });
   try {
@@ -79,9 +84,10 @@ export const getAllCoursesOptions = async (
     });
     const responseData = response.data?.data;
 
-    set({ coursesOptions: responseData });
+    set({ coursesOptionsIsSuccess: true, coursesOptions: responseData });
   } catch (error) {
     set({
+      coursesOptionsIsSuccess: false,
       coursesOptionsError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -97,6 +103,7 @@ export const getAllGroupsOptions = async (
 ): Promise<void> => {
   set({
     groupsOptionsIsLoading: true,
+    groupsOptionsIsSuccess: false,
     groupsOptionsError: null,
   });
   try {
@@ -105,9 +112,10 @@ export const getAllGroupsOptions = async (
     });
     const responseData = response.data?.data;
 
-    set({ groupsOptions: responseData });
+    set({ groupsOptionsIsSuccess: true, groupsOptions: responseData });
   } catch (error) {
     set({
+      groupsOptionsIsSuccess: false,
       groupsOptionsError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -122,15 +130,17 @@ export const getAllSubgroupsOptions = async (
 ): Promise<void> => {
   set({
     subgroupsOptionsIsLoading: true,
+    subgroupsOptionsIsSuccess: false,
     subgroupsOptionsError: null,
   });
   try {
     const response = await axios.get(`${API_URL}/subgroups-options`);
     const responseData = response.data?.data;
 
-    set({ subgroupsOptions: responseData });
+    set({ subgroupsOptionsIsSuccess: true, subgroupsOptions: responseData });
   } catch (error) {
     set({
+      subgroupsOptionsIsSuccess: false,
       subgroupsOptionsError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');

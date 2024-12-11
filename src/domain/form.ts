@@ -9,6 +9,8 @@ export interface FormInput {
   elementClassName?: string;
   containerClassName?: string;
   options?: SelectOption[];
+  isLoading?: boolean;
+  fieldsToClearOnChange?: string[];
 }
 
 export type FormBehavior = {

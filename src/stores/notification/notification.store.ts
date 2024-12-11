@@ -9,6 +9,7 @@ import {
 export interface NotificationStore {
   unseenNotifications: Notification[];
   unseenNotificationsIsLoading: boolean;
+  unseenNotificationsIsSuccess: boolean;
   unseenNotificationsError: HttpError;
   unseenNotificationsIsUpdateNeeded: boolean;
   fetchUnseenNotifications: () => void;
@@ -23,6 +24,7 @@ export interface NotificationStore {
 const initialDataState = {
   unseenNotifications: [],
   unseenNotificationsIsLoading: false,
+  unseenNotificationsIsSuccess: false,
   unseenNotificationsError: null,
   unseenNotificationsIsUpdateNeeded: false,
   setNotificationToSeenIsLoading: false,

@@ -39,7 +39,19 @@ type Props = {
 };
 
 const Calendar = ({ setSelectedUserEvent, setIsUserEventModalOpen }: Props) => {
-  const { updateUserEvent } = useUserEventStore();
+  const { fetchLectureEvents, lectureEvents, resetLectureEventStore } =
+    useLectureEventStore();
+
+  const {
+    userEvents,
+    fetchUserEvents,
+    isUserEventsUpdateNeeded,
+    updateUserEvent,
+    resetUserEventStore,
+  } = useUserEventStore();
+
+  const { includeWeekends, calendarView, calendarEventFilter } =
+    useCalendarControlStore();
 
   const handleEventClick = (info) => {
     const clickedEvent = info.event;
@@ -71,14 +83,6 @@ const Calendar = ({ setSelectedUserEvent, setIsUserEventModalOpen }: Props) => {
 
   const calendarRef = useRef<FullCalendar>(null);
 
-  const { userEvents, fetchUserEvents, isUserEventsUpdateNeeded } =
-    useUserEventStore();
-
-  const { includeWeekends, calendarView, calendarEventFilter } =
-    useCalendarControlStore();
-
-  const { fetchLectureEvents, lectureEvents } = useLectureEventStore();
-
   const calendarEvents = useMemo(() => {
     if (calendarEventFilter == 'Lectures') {
       return lectureEvents.map((event) => fetchedEventToCalendarEvent(event));
@@ -104,6 +108,13 @@ const Calendar = ({ setSelectedUserEvent, setIsUserEventModalOpen }: Props) => {
       fetchUserEvents();
     }
   }, [isUserEventsUpdateNeeded]);
+
+  useEffect(() => {
+    return () => {
+      resetUserEventStore();
+      resetLectureEventStore();
+    };
+  }, []);
 
   return (
     <>
