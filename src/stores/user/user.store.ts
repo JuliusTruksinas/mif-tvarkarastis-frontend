@@ -24,9 +24,11 @@ export interface UserStore {
   userUpdateInfoIsSuccess: boolean;
   userUpdateInfoIsError: HttpError;
   updateUserInfo: (inputs: UpdateUserInfoRequestDto) => void;
-  resetUserStore: () => void;
   foundUsersIsUpdateNeeded: boolean;
   setFoundUsersIsUpdateNeeded: (value: boolean) => void;
+  friendsIsUpdateNeeded: boolean;
+  setFriendsIsUpdateNeeded: (value: boolean) => void;
+  resetUserStore: () => void;
 }
 
 const initialDataState = {
@@ -42,6 +44,7 @@ const initialDataState = {
   userUpdateInfoIsLoading: false,
   userUpdateInfoIsSuccess: false,
   userUpdateInfoIsError: null,
+  friendsIsUpdateNeeded: false,
 };
 
 const getInitialState = (set, get) => ({
@@ -52,6 +55,8 @@ const getInitialState = (set, get) => ({
     set({ foundUsersIsUpdateNeeded: value }),
   updateUserInfo: (inputs: UpdateUserInfoRequestDto) =>
     updateUserInfo(set, get, inputs),
+  setFriendsIsUpdateNeeded: (value: boolean) =>
+    set({ friendsIsUpdateNeeded: value }),
   resetUserStore: () => set(initialDataState),
 });
 

@@ -3,6 +3,7 @@ import { HttpError } from '../../config/Axios/axios-instance';
 import {
   acceptFriendRequest,
   declineFriendRequest,
+  removeFriend,
   sendFriendRequest,
 } from './friend.service';
 
@@ -19,6 +20,10 @@ export interface FriendStore {
   declineFriendRequestIsSuccess: boolean;
   declineFriendRequestError: HttpError;
   declineFriendRequest: (senderId: string) => void;
+  removeFriendIsLoading: boolean;
+  removeFriendIsSuccess: boolean;
+  removeFriendError: HttpError;
+  removeFriend: (senderId: string) => void;
   resetFriendStore: () => void;
 }
 
@@ -32,6 +37,9 @@ const initialDataState = {
   declineFriendRequestIsLoading: false,
   declineFriendRequestIsSuccess: false,
   declineFriendRequestError: null,
+  removeFriendIsLoading: false,
+  removeFriendIsSuccess: false,
+  removeFriendError: null,
 };
 
 const getInitialState = (set, get) => ({
@@ -41,6 +49,7 @@ const getInitialState = (set, get) => ({
     acceptFriendRequest(set, get, senderId),
   declineFriendRequest: (senderId: string) =>
     declineFriendRequest(set, get, senderId),
+  removeFriend: (senderId: string) => removeFriend(set, get, senderId),
   resetFriendStore: () => set(initialDataState),
 });
 

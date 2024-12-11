@@ -39,7 +39,7 @@ export const login = async (
 
     localStorage.setItem('token', responseData.token);
 
-    getCurrentUser(set, get);
+    await getCurrentUser(set, get);
 
     set({ isUserAuthenticated: true, loginIsSuccess: true });
   } catch (error) {
@@ -103,7 +103,11 @@ export const getCurrentUser = async (
     }
 
     const response = await axios.post(`${API_URL}/me`, { token });
-    return response.data?.data;
+    const currentUser = response.data?.data;
+
+    set({ currentUser });
+
+    return currentUser;
   } catch (error) {
     return error?.response?.data?.data ?? null;
   }
@@ -120,18 +124,12 @@ export const tryAutoLogin = async (set: any, get: any) => {
     return;
   }
 
-  const currentUser = await getCurrentUser(set, get);
-
-  if (!currentUser) {
-    logout(set, get);
-    return;
-  }
+  await getCurrentUser(set, get);
 
   set((state) => ({
     ...state,
     isUserAuthenticated: true,
     isUserAuthenticationLoading: false,
-    currentUser: currentUser,
     currentUserIsLoading: false,
     currentUserIsSuccess: true,
   }));

@@ -217,6 +217,8 @@ const UserPage = () => {
       subgroup: +submitInputs.subgroup,
       ...(submitInputs?.password && { password: submitInputs.password }),
     });
+
+    setNewInputValue('password', { value: '' });
   };
 
   const handleCancel = () => {
