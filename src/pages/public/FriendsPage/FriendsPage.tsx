@@ -39,7 +39,14 @@ const FriendsPage = () => {
     friends,
     resetUserStore,
     foundUsersIsUpdateNeeded,
+    friendsIsUpdateNeeded,
   } = useUserStore();
+
+  useEffect(() => {
+    if (friendsIsUpdateNeeded) {
+      getFriends();
+    }
+  }, [friendsIsUpdateNeeded]);
 
   useEffect(() => {
     resetUserStore();

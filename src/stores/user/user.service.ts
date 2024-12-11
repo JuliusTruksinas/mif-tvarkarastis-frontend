@@ -63,6 +63,7 @@ export const getFriends = async (set: any, get: any): Promise<void> => {
     set({
       friendsIsSuccess: true,
       friends: responseData,
+      friendsIsUpdateNeeded: false,
     });
   } catch (error) {
     set({

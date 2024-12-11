@@ -11,7 +11,12 @@ type Props = {
 };
 
 const FriendsTableRow = ({ userInfo, action }: Props) => {
-  const { sendFriendRequest } = useFriendStore();
+  const { sendFriendRequest, removeFriend } = useFriendStore();
+
+  const handleRemove = (friendToRemoveId: string) => {
+    removeFriend(friendToRemoveId);
+  };
+
   return (
     <tr className={styles.tableRow} key={userInfo.id}>
       <td className={styles.tableData}>
@@ -83,8 +88,8 @@ const FriendsTableRow = ({ userInfo, action }: Props) => {
               tabIndex={0}
               className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
             >
-              <li>
-                <p>Delete</p>
+              <li onClick={() => handleRemove(userInfo.id)}>
+                <p>Remove</p>
               </li>
               <li>
                 <p>View Calendar</p>

@@ -98,3 +98,34 @@ export const declineFriendRequest = async (
     set({ declineFriendRequestIsLoading: false });
   }
 };
+
+export const removeFriend = async (
+  set: any,
+  get: any,
+  friendToRemoveId: string,
+): Promise<void> => {
+  const setFriendsIsUpdateNeeded =
+    useUserStore.getState().setFriendsIsUpdateNeeded;
+  set({
+    removeFriendIsLoading: true,
+    removeFriendIsSuccess: false,
+    removeFriendError: null,
+  });
+  try {
+    await axios.delete(`${API_URL}/remove/${friendToRemoveId}`);
+
+    set({
+      removeFriendIsSuccess: true,
+    });
+    setFriendsIsUpdateNeeded(true);
+    showToast('friend removed successfully', 'success');
+  } catch (error) {
+    set({
+      removeFriendIsSuccess: false,
+      removeFriendError: error?.response?.data?.data,
+    });
+    showToast(error?.response?.data?.message, 'error');
+  } finally {
+    set({ removeFriendIsLoading: false });
+  }
+};
