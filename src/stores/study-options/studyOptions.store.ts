@@ -15,22 +15,27 @@ import {
 export interface StudyOptionsStore {
   studyTypesOptions: SimpleOption[];
   studyTypesOptionsIsLoading: boolean;
+  studyTypesOptionsIsSuccess: boolean;
   studyTypesOptionsError: HttpError;
   getAllStudyTypesOptions: () => void;
   programsOptions: SimpleOption[];
   programsOptionsIsLoading: boolean;
+  programsOptionsIsSuccess: boolean;
   programsOptionsError: HttpError;
   getAllProgramsOptions: (inputs: GetAllProgramsOptionsDto) => void;
   coursesOptions: SimpleOption[];
   coursesOptionsIsLoading: boolean;
+  coursesOptionsIsSuccess: boolean;
   coursesOptionsError: HttpError;
   getAllCoursesOptions: (inputs: GetAllCoursesOptionsDto) => void;
   groupsOptions: SimpleOption[];
   groupsOptionsIsLoading: boolean;
+  groupsOptionsIsSuccess: boolean;
   groupsOptionsError: HttpError;
   getAllGroupsOptions: (inputs: GetAllGroupsOptionsDto) => void;
   subgroupsOptions: SimpleOption[];
   subgroupsOptionsIsLoading: boolean;
+  subgroupsOptionsIsSuccess: boolean;
   subgroupsOptionsError: HttpError;
   getAllSubgroupsOptions: () => void;
   resetStudyOptionsStore: () => void;
@@ -39,18 +44,23 @@ export interface StudyOptionsStore {
 const initialDataState = {
   studyTypesOptions: [],
   studyTypesOptionsIsLoading: false,
+  studyTypesOptionsIsSuccess: false,
   studyTypesOptionsError: null,
   programsOptions: [],
   programsOptionsIsLoading: false,
+  programsOptionsIsSuccess: false,
   programsOptionsError: null,
   coursesOptions: [],
   coursesOptionsIsLoading: false,
+  coursesOptionsIsSuccess: false,
   coursesOptionsError: null,
   groupsOptions: [],
   groupsOptionsIsLoading: false,
+  groupsOptionsIsSuccess: false,
   groupsOptionsError: null,
   subgroupsOptions: [],
   subgroupsOptionsIsLoading: false,
+  subgroupsOptionsIsSuccess: false,
   subgroupsOptionsError: null,
 };
 

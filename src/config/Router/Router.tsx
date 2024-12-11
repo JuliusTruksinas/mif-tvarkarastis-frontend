@@ -10,40 +10,48 @@ import RegisterPage from '../../pages/public/RegisterPage/RegisterPage';
 import UserPage from '../../pages/public/UserPage/UserPage';
 import CalendarPage from '../../pages/public/CalendarPage/CalendarPage';
 import FriendsPage from '../../pages/public/FriendsPage/FriendsPage';
+import LoadingPage from '../../pages/public/LoadingPage/LoadingPage';
 
-const getProtectedRoutes = () => {
+const getAuthenticatedRoutes = () => {
   return (
     <Route element={<ProtectedRoute />}>
       <Route path={routes.calendar} element={<CalendarPage />} />;
       <Route path={routes.friendsPage} element={<FriendsPage />} />
       <Route path={routes.userPage} element={<UserPage />} />
+      <Route path={'*'} element={<Navigate to={routes.calendar} replace />} />
     </Route>
   );
 };
 
-const getRoutes = () => {
+const getUnauthenticatedRoutes = () => {
   return (
     <>
       <Route path={routes.homePage} element={<LoginPage />} />
       <Route path={routes.loginPage} element={<LoginPage />} />
       <Route path={routes.registerPage} element={<RegisterPage />} />
-      <Route path={'*'} element={<Navigate to={routes.homePage} />} />
+      <Route path={'*'} element={<Navigate to={routes.loginPage} replace />} />
     </>
   );
 };
 
 const Router = () => {
-  const { isUserAuthenticated, tryAutoLogin } = useAuthStore();
+  const { isUserAuthenticated, tryAutoLogin, isUserAuthenticationLoading } =
+    useAuthStore();
 
   useEffect(() => {
     tryAutoLogin();
   }, []);
 
+  if (isUserAuthenticationLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <BrowserRouter basename="/">
       <Routes>
-        {getRoutes()}
-        {isUserAuthenticated && getProtectedRoutes()}
+        {isUserAuthenticated
+          ? getAuthenticatedRoutes()
+          : getUnauthenticatedRoutes()}
       </Routes>
     </BrowserRouter>
   );

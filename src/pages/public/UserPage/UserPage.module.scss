@@ -1,14 +1,12 @@
 @import '../../../styles/variables.scss';
 
-.registerPage {
+.userPage {
   width: 100%;
-  padding: 0 15px;
 
   .title {
     color: #273469;
     font-size: 35px;
     line-height: 32px;
-    margin-top: 80px;
     margin-bottom: 5px;
     font-weight: 400;
   }
@@ -26,7 +24,7 @@
       width: 100%;
       margin-bottom: 10px;
 
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 1000px) {
         margin-bottom: 0;
         border-radius: 16px 16px 0 0;
         padding: 10px;
@@ -42,7 +40,7 @@
         font-weight: 400;
         text-align: center;
 
-        @media (min-width: $breakpoint-md) {
+        @media (min-width: 1000px) {
           text-align: left;
           padding: 12px;
         }
@@ -55,7 +53,7 @@
       width: 100%;
       gap: 32px;
 
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 1000px) {
         border: 1px solid #dddddd;
         flex-direction: row;
         border-top: none;
@@ -68,7 +66,7 @@
         justify-content: center;
         min-width: 250px;
 
-        @media (min-width: $breakpoint-md) {
+        @media (min-width: 1000px) {
           align-items: center;
         }
 
@@ -87,7 +85,7 @@
       flex-basis: 100%;
       gap: 32px;
 
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 1000px) {
         padding: 12px;
         padding-top: 0;
       }
@@ -125,7 +123,6 @@
 .inputLabel {
   color: #273468;
   font-size: 14px;
-  margin-bottom: 6px;
 }
 
 .inputField,

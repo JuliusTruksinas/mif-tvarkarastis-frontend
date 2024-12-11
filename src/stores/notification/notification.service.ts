@@ -8,6 +8,7 @@ export const fetchUnseenNotifications = async (
 ): Promise<void> => {
   set({
     unseenNotificationsIsLoading: true,
+    unseenNotificationsIsSuccess: false,
     unseenNotificationsError: null,
   });
   try {
@@ -15,11 +16,13 @@ export const fetchUnseenNotifications = async (
     const responseData = response.data?.data;
 
     set({
+      unseenNotificationsIsSuccess: true,
       unseenNotifications: responseData,
       unseenNotificationsIsUpdateNeeded: false,
     });
   } catch (error) {
     set({
+      unseenNotificationsIsSuccess: false,
       unseenNotificationsError: error?.response?.data?.data,
     });
   } finally {
@@ -34,6 +37,7 @@ export const setNotificationToSeen = async (
 ): Promise<void> => {
   set({
     setNotificationToSeenIsLoading: true,
+    setNotificationToSeenIsSuccess: false,
     setNotificationToSeenError: null,
   });
   try {
@@ -45,6 +49,7 @@ export const setNotificationToSeen = async (
     });
   } catch (error) {
     set({
+      setNotificationToSeenIsSuccess: false,
       setNotificationToSeenError: error?.response?.data?.data,
     });
   } finally {

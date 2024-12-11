@@ -7,8 +7,8 @@ import {
 } from './friend.service';
 
 export interface FriendStore {
-  friendRequestIsSuccess: boolean;
   friendRequestIsLoading: boolean;
+  friendRequestIsSuccess: boolean;
   friendRequestError: HttpError;
   sendFriendRequest: (id: string) => void;
   acceptFriendRequestIsLoading: boolean;

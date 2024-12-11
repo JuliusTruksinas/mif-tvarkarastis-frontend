@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../config/Router/routes';
@@ -7,6 +6,7 @@ import { useForm } from '../../../hooks/useForm';
 import TextField from '../../../common/TextField/TextField';
 import { useAuthStore } from '../../../stores/auth/auth.store';
 import AuthPageWrapper from '../../../components/AuthPageWrapper/AuthPageWrapper';
+import Loader from '../../../components/Loader/Loader';
 
 type FormInputs = {
   email: string;
@@ -30,15 +30,9 @@ const INPUTS = [
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, isUserAuthenticated } = useAuthStore();
+  const { login, loginIsLoading } = useAuthStore();
   const { inputs, onInputChange, getSubmitInputs } =
     useForm<FormInputs>(INPUTS);
-
-  useEffect(() => {
-    if (isUserAuthenticated) {
-      navigate(routes.calendar);
-    }
-  }, [isUserAuthenticated]);
 
   const handleLogin = () => {
     const submitInputs: FormInputs = getSubmitInputs(inputs);
@@ -78,7 +72,7 @@ const LoginPage = () => {
               onClick={handleLogin}
               className={classNames('btn', styles.loginBtn)}
             >
-              Log in
+              {loginIsLoading ? <Loader /> : 'Log in'}
             </button>
             <p className={styles.orDivider}>
               <span>or</span>

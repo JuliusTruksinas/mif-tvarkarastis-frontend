@@ -22,14 +22,20 @@ export interface UpdateUserRequestDto {
 export const fetchUserEvents = async (set: any, get: any): Promise<void> => {
   set({
     userEventsIsLoading: true,
+    userEventsIsSuccess: false,
     userEventsFetchError: null,
   });
   try {
     const response = await axios.get(`${API_URL}`);
     const responseData = response.data?.data;
-    set({ userEvents: responseData, isUserEventsUpdateNeeded: false });
+    set({
+      userEventsIsSuccess: true,
+      userEvents: responseData,
+      isUserEventsUpdateNeeded: false,
+    });
   } catch (error) {
     set({
+      userEventsIsSuccess: false,
       userEventsFetchError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -45,16 +51,22 @@ export const createUserEvent = async (
 ): Promise<void> => {
   set({
     userEventCreateIsLoading: true,
+    userEventCreateIsSuccess: false,
     userEventCreateError: null,
   });
   try {
     const response = await axios.post(`${API_URL}`, { ...inputs });
     const responseData = response.data?.data;
 
-    set({ userEvent: responseData, isUserEventsUpdateNeeded: true });
+    set({
+      userEventCreateIsSuccess: true,
+      userEvent: responseData,
+      isUserEventsUpdateNeeded: true,
+    });
     showToast('Successfully created a new event', 'success');
   } catch (error) {
     set({
+      userEventCreateIsSuccess: false,
       userEventCreateError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -71,16 +83,22 @@ export const updateUserEvent = async (
 ): Promise<void> => {
   set({
     userEventUpdateIsLoading: true,
+    userEventUpdateIsSuccess: false,
     userEventUpdateError: null,
   });
   try {
     const response = await axios.patch(`${API_URL}/${id}`, { ...inputs });
     const responseData = response.data?.data;
 
-    set({ userEvent: responseData, isUserEventsUpdateNeeded: true });
+    set({
+      userEventUpdateIsSuccess: true,
+      userEvent: responseData,
+      isUserEventsUpdateNeeded: true,
+    });
     showToast('Successfully updated an event', 'success');
   } catch (error) {
     set({
+      userEventUpdateIsSuccess: false,
       userEventUpdateError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -96,15 +114,17 @@ export const deleteUserEvent = async (
 ): Promise<void> => {
   set({
     userEventDeleteIsLoading: true,
+    userEventDeleteIsSuccess: false,
     userEventDeleteError: null,
   });
   try {
     await axios.delete(`${API_URL}/${id}`);
 
-    set({ isUserEventsUpdateNeeded: true });
+    set({ userEventDeleteIsSuccess: true, isUserEventsUpdateNeeded: true });
     showToast('Successfully deleted the event', 'success');
   } catch (error) {
     set({
+      userEventDeleteIsSuccess: false,
       userEventDeleteError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');

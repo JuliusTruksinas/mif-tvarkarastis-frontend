@@ -15,15 +15,16 @@ export const sendFriendRequest = async (
 
   set({
     friendRequestIsLoading: true,
+    friendRequestIsSuccess: false,
     friendRequestError: null,
   });
   try {
     await axios.post(`${API_URL}/request/${friendId}`);
 
-    showToast('friend request sent successfully', 'success');
     set({
       friendRequestIsSuccess: true,
     });
+    showToast('friend request sent successfully', 'success');
     setFoundUsersIsUpdateNeeded(true);
   } catch (error) {
     set({
@@ -45,16 +46,17 @@ export const acceptFriendRequest = async (
     useNotificationStore.getState().setUnseenNotificationsIsUpdateNeeded;
   set({
     acceptFriendRequestIsLoading: true,
+    declineFriendRequestIsSuccess: false,
     acceptFriendRequestError: null,
   });
   try {
     await axios.post(`${API_URL}/accept/${senderId}`);
 
-    showToast('friend request accepted successfully', 'success');
     set({
       acceptFriendRequestIsSuccess: true,
     });
     setUnseenNotificationsIsUpdateNeeded(true);
+    showToast('friend request accepted successfully', 'success');
   } catch (error) {
     set({
       acceptFriendRequestIsSuccess: false,
@@ -75,16 +77,17 @@ export const declineFriendRequest = async (
     useNotificationStore.getState().setUnseenNotificationsIsUpdateNeeded;
   set({
     declineFriendRequestIsLoading: true,
+    declineFriendRequestIsSuccess: false,
     declineFriendRequestError: null,
   });
   try {
     await axios.post(`${API_URL}/decline/${senderId}`);
 
-    showToast('friend request declined successfully', 'success');
     set({
       declineFriendRequestIsSuccess: true,
     });
     setUnseenNotificationsIsUpdateNeeded(true);
+    showToast('friend request declined successfully', 'success');
   } catch (error) {
     set({
       declineFriendRequestIsSuccess: false,

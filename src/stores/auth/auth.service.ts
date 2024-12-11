@@ -1,5 +1,5 @@
 import { User } from 'src/domain/common';
-import axios from '../../config/Axios/axios-instance';
+import axios, { HttpError } from '../../config/Axios/axios-instance';
 import { showToast } from '../../utils/toast';
 
 const API_URL = '/auth';
@@ -12,6 +12,7 @@ export interface LoginRequestDto {
 export interface RegisterRequestDto extends LoginRequestDto {
   firstName: string;
   lastName: string;
+  studyType: number;
   programName: string;
   course: number;
   group: number;
@@ -29,6 +30,7 @@ export const login = async (
 ): Promise<void> => {
   set({
     loginIsLoading: true,
+    loginIsSuccess: false,
     loginError: null,
   });
   try {
@@ -37,11 +39,12 @@ export const login = async (
 
     localStorage.setItem('token', responseData.token);
 
-    getCurrentUser(set, get, { token: responseData.token });
+    getCurrentUser(set, get);
 
-    set({ isUserAuthenticated: true });
+    set({ isUserAuthenticated: true, loginIsSuccess: true });
   } catch (error) {
     set({
+      loginIsSuccess: false,
       loginError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -57,13 +60,16 @@ export const register = async (
 ): Promise<void> => {
   set({
     registerIsLoading: true,
+    registerIsSuccess: false,
     registerError: null,
   });
   try {
     await axios.post(`${API_URL}/register`, { ...inputs });
+    set({ registerIsSuccess: true });
     showToast('successfully registered', 'success');
   } catch (error) {
     set({
+      registerIsSuccess: false,
       registerError: error?.response?.data?.data,
     });
     showToast(error?.response?.data?.message, 'error');
@@ -78,51 +84,55 @@ export const logout = (set: any, get: any): void => {
   set({
     isUserAuthenticated: false,
     currentUser: null,
+    isUserAuthenticationLoading: false,
+    currentUserIsLoading: false,
+    currentUserIsSuccess: false,
+    currentUserError: null,
   });
 };
 
 export const getCurrentUser = async (
   set: any,
   get: any,
-  inputs: GetCurrentUserDto,
-): Promise<User | null> => {
-  set({
-    currentUserIsLoading: true,
-    currentUserError: null,
-  });
+): Promise<User | HttpError> => {
   try {
-    const response = await axios.post(`${API_URL}/me`, { ...inputs });
-    const responseData: User | null = response.data?.data;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      logout(set, get);
+      return;
+    }
 
-    set({
-      currentUser: responseData,
-    });
-
-    return responseData;
+    const response = await axios.post(`${API_URL}/me`, { token });
+    return response.data?.data;
   } catch (error) {
-    set({
-      currentUserError: error?.response?.data?.data,
-    });
-
-    return null;
-  } finally {
-    set({ currentUserIsLoading: false });
+    return error?.response?.data?.data ?? null;
   }
 };
 
 export const tryAutoLogin = async (set: any, get: any) => {
+  set({
+    currentUserIsLoading: true,
+  });
+
   const token = localStorage.getItem('token');
   if (!token) {
     logout(set, get);
     return;
   }
 
-  const currentUser = await getCurrentUser(set, get, { token });
+  const currentUser = await getCurrentUser(set, get);
 
   if (!currentUser) {
     logout(set, get);
     return;
   }
 
-  set({ isUserAuthenticated: true });
+  set((state) => ({
+    ...state,
+    isUserAuthenticated: true,
+    isUserAuthenticationLoading: false,
+    currentUser: currentUser,
+    currentUserIsLoading: false,
+    currentUserIsSuccess: true,
+  }));
 };

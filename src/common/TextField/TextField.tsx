@@ -17,6 +17,7 @@ type Props = {
   elementClassName?: string;
   containerClassName?: string;
   labelClassName?: string;
+  isLoading?: boolean;
   onChange: (e: ChangeEvent) => void;
 };
 
@@ -31,6 +32,7 @@ const TextField = ({
   onChange,
   options,
   labelClassName,
+  isLoading,
 }: Props) => {
   const TYPES_AND_THEIR_COMPONENTS = {
     text: (
@@ -102,6 +104,7 @@ const TextField = ({
         onChange={onChange}
         containerClassName={containerClassName}
         labelClassName={labelClassName}
+        isLoading={isLoading}
       />
     ),
   };

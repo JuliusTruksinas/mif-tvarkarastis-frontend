@@ -19,24 +19,41 @@ export const useForm = <T>(
   const getInputByName = (name: string) =>
     inputs.find((input) => input.name === name);
 
+  const updateInputValue = (inputs, name, value) => {
+    return inputs.map((input) =>
+      input.name === name ? { ...input, value } : input,
+    );
+  };
+
+  const clearDependentFields = (inputs, fieldsToClearOnChange) => {
+    return inputs.map((input) =>
+      fieldsToClearOnChange.includes(input.name)
+        ? { ...input, value: '' }
+        : input,
+    );
+  };
+
   const onInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
+    const { name, value } = e.target;
+
     setInputs((prevInputs) => {
-      const inputs = prevInputs.map((prevInput) =>
-        prevInput.name == e.target.name
-          ? {
-              ...prevInput,
-              value: e.target.value,
-            }
-          : { ...prevInput },
-      );
+      let updatedInputs = updateInputValue(prevInputs, name, value);
 
-      formBehavior?.submitOnChange &&
-        onFormSubmit &&
-        onFormSubmit(getSubmitInputs(inputs));
+      const changedInput = prevInputs.find((input) => input.name === name);
+      if (changedInput?.fieldsToClearOnChange) {
+        updatedInputs = clearDependentFields(
+          updatedInputs,
+          changedInput.fieldsToClearOnChange,
+        );
+      }
 
-      return inputs;
+      if (formBehavior?.submitOnChange && onFormSubmit) {
+        onFormSubmit(getSubmitInputs(updatedInputs));
+      }
+
+      return updatedInputs;
     });
   };
 
