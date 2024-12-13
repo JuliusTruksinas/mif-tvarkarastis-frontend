@@ -9,6 +9,23 @@ const isFetchedLectureEvent = (
   return (event as FetchedLectureEvent).lecturer !== undefined;
 };
 
+const getColor = (fetchedEvent: FetchedUserEvent | FetchedLectureEvent) => {
+  // exam color
+  if (
+    isFetchedLectureEvent(fetchedEvent) &&
+    fetchedEvent.lectureTypes.includes('egzaminas')
+  ) {
+    return '#bf0a30';
+  }
+
+  // regular lecture event
+  if (isFetchedLectureEvent(fetchedEvent)) {
+    return '#273469';
+  }
+
+  return '#e063ae';
+};
+
 export const fetchedEventToCalendarEvent = (
   fetchedEvent: FetchedUserEvent | FetchedLectureEvent,
 ) => {
@@ -17,10 +34,8 @@ export const fetchedEventToCalendarEvent = (
     end: fetchedEvent.endDateTime,
     title: fetchedEvent.title,
     editable: !isFetchedLectureEvent(fetchedEvent),
-    backgroundColor: isFetchedLectureEvent(fetchedEvent)
-      ? '#273469'
-      : '#e063ae',
-    borderColor: isFetchedLectureEvent(fetchedEvent) ? '#273469' : '#e063ae',
+    backgroundColor: getColor(fetchedEvent),
+    borderColor: getColor(fetchedEvent),
     textColor: '#ffffff',
     eventData: fetchedEvent,
   };

@@ -7,14 +7,20 @@ import { ReactSVG } from 'react-svg';
 import UserEventModal from '../../../components/UserEventModal/UserEventModal';
 import { useAuthStore } from '../../../stores/auth/auth.store';
 import { UserEvent } from '../../../domain/userEvent';
+import { LectureEvent } from '../../../domain/lectureEvent';
+import LectureEventModal from '../../../components/LectureEventModal/LectureEventModal';
 
 const CalendarPage = () => {
   const [isUserEventModalOpen, setIsUserEventModalOpen] =
+    useState<boolean>(false);
+  const [isLectureEventModalOpen, setIsLectureEventModalOpen] =
     useState<boolean>(false);
 
   const [selectedUserEvent, setSelectedUserEvent] = useState<UserEvent | null>(
     null,
   );
+  const [selectedLectureEvent, setSelectedLectureEvent] =
+    useState<LectureEvent | null>(null);
 
   const { currentUser } = useAuthStore();
 
@@ -42,6 +48,8 @@ const CalendarPage = () => {
         <Calendar
           setSelectedUserEvent={setSelectedUserEvent}
           setIsUserEventModalOpen={setIsUserEventModalOpen}
+          setSelectedLectureEvent={setSelectedLectureEvent}
+          setIsLectureEventModalOpen={setIsLectureEventModalOpen}
         />
       </div>
       {isUserEventModalOpen && (
@@ -49,6 +57,13 @@ const CalendarPage = () => {
           onClose={() => setIsUserEventModalOpen(false)}
           userEvent={selectedUserEvent}
           setSelectedUserEvent={setSelectedUserEvent}
+        />
+      )}
+      {isLectureEventModalOpen && selectedLectureEvent && (
+        <LectureEventModal
+          onClose={() => setIsLectureEventModalOpen(false)}
+          lectureEvent={selectedLectureEvent}
+          setSelectedLectureEvent={setSelectedLectureEvent}
         />
       )}
     </>

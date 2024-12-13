@@ -12,6 +12,7 @@ import { fetchedEventToCalendarEvent } from '../../utils/calendarEventFormatter'
 import { useLectureEventStore } from '../../stores/lecture-event/lectureEvent.store';
 import { useCalendarControlStore } from '../../stores/calendar-control/calendarControl.store';
 import { UserEvent } from '../../domain/userEvent';
+import { LectureEvent } from 'src/domain/lectureEvent';
 
 const renderHeader = (args) => {
   if (args.view.type === 'timeGridWeek' || args.view.type === 'timeGridDay') {
@@ -36,9 +37,16 @@ const renderHeader = (args) => {
 type Props = {
   setSelectedUserEvent: (userEvent: UserEvent) => void;
   setIsUserEventModalOpen: (isUserEventModalOpen: boolean) => void;
+  setSelectedLectureEvent: (lectureEvent: LectureEvent) => void;
+  setIsLectureEventModalOpen: (isLectureEventModalOpen: boolean) => void;
 };
 
-const Calendar = ({ setSelectedUserEvent, setIsUserEventModalOpen }: Props) => {
+const Calendar = ({
+  setSelectedUserEvent,
+  setIsUserEventModalOpen,
+  setSelectedLectureEvent,
+  setIsLectureEventModalOpen,
+}: Props) => {
   const { fetchLectureEvents, lectureEvents, resetLectureEventStore } =
     useLectureEventStore();
 
@@ -68,7 +76,8 @@ const Calendar = ({ setSelectedUserEvent, setIsUserEventModalOpen }: Props) => {
       return;
     }
 
-    // lecture event
+    setSelectedLectureEvent(eventData);
+    setIsLectureEventModalOpen(true);
   };
 
   const handleEventChange = (info) => {
