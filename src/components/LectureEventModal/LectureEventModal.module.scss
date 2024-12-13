@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+
+.modalBody {
+  width: 100%;
+  max-width: 560px;
+}
+
+.lectureEventModalContentContainer {
+  padding: 0 20px;
+  padding-bottom: 40px;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 0 40px;
+    padding-bottom: 40px;
+  }
+
+  .modalTitle {
+    font-weight: 400;
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 32px;
+  }
+
+  .lectureInfoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .infoContainer {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
+      .label {
+        font-weight: 500;
+      }
+
+      .value {
+      }
+    }
+  }
+}

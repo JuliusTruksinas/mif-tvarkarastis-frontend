@@ -9,8 +9,8 @@ import { UserEvent } from '../../domain/userEvent';
 
 type Props = {
   onClose: () => void;
-  userEvent?: UserEvent;
-  setSelectedUserEvent?: (userEvent: UserEvent | null) => void;
+  userEvent: UserEvent;
+  setSelectedUserEvent: (userEvent: UserEvent | null) => void;
 };
 
 type formInputs = {
