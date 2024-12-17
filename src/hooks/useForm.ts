@@ -12,7 +12,8 @@ export const useForm = <T>(
     Object.assign(
       {},
       ...submitInputs.map((input) => ({
-        [input.name]: input.value,
+        [input.name]:
+          typeof input.value === 'string' ? input.value.trim() : input.value,
       })),
     );
 

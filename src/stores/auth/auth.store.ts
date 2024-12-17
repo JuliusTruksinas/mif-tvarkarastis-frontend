@@ -25,7 +25,9 @@ export interface AuthStore {
   currentUser: User | null;
   currentUserIsLoading: boolean;
   currentUserIsSuccess: boolean;
+  currentUserIsUpdateNeeded: boolean;
   currentUserError: HttpError;
+  setCurrentUserIsUpdateNeeded: (value: boolean) => void;
   getCurrentUser: () => void;
   tryAutoLogin: () => void;
   logout: () => void;
@@ -45,6 +47,7 @@ const initialDataState = {
   currentUserIsLoading: false,
   currentUserIsSuccess: false,
   currentUserError: null,
+  currentUserIsUpdateNeeded: false,
 };
 
 const getInitialState = (set, get) => ({
@@ -54,6 +57,8 @@ const getInitialState = (set, get) => ({
   logout: () => logout(set, get),
   getCurrentUser: () => getCurrentUser(set, get),
   tryAutoLogin: () => tryAutoLogin(set, get),
+  setCurrentUserIsUpdateNeeded: (value: boolean) =>
+    set({ currentUserIsUpdateNeeded: value }),
   resetAuthStore: () => set(initialDataState),
 });
 

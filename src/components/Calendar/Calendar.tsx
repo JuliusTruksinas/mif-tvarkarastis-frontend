@@ -87,6 +87,7 @@ const Calendar = ({
     updateUserEvent(eventData.id, {
       startDateTime: droppedEvent.start.toISOString(),
       endDateTime: droppedEvent.end.toISOString(),
+      title: eventData.title,
     });
   };
 

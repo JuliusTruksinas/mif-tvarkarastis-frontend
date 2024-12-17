@@ -21,7 +21,8 @@ type FormInputs = {
 };
 
 const UserPage = () => {
-  const { currentUser, getCurrentUser } = useAuthStore();
+  const { currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
+    useAuthStore();
   const {
     programsOptionsIsLoading,
     coursesOptionsIsLoading,
@@ -126,7 +127,7 @@ const UserPage = () => {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [currentUserIsUpdateNeeded]);
 
   useEffect(() => {
     if (currentUser?.studyType) {

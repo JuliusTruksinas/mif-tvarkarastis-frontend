@@ -105,7 +105,7 @@ export const getCurrentUser = async (
     const response = await axios.post(`${API_URL}/me`, { token });
     const currentUser = response.data?.data;
 
-    set({ currentUser });
+    set({ currentUser, currentUserIsUpdateNeeded: false });
 
     return currentUser;
   } catch (error) {
