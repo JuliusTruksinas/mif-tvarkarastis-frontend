@@ -24,18 +24,16 @@ const ViewController = ({ calendarRef, setTitle }: Props) => {
   };
 
   return (
-    <>
-      <SelectTextField
-        key={'viewController'}
-        name={'viewController'}
-        value={calendarView}
-        options={CALENDAR_VIEW_OPTIONS}
-        onChange={(e) => {
-          handleChangeView(e.target.value as CalendarView);
-        }}
-        elementClassName={styles.viewControllerRoot}
-      />
-    </>
+    <SelectTextField
+      key={'viewController'}
+      name={'viewController'}
+      value={calendarView}
+      options={CALENDAR_VIEW_OPTIONS}
+      onChange={(e) => {
+        handleChangeView(e.target.value as CalendarView);
+      }}
+      elementClassName={styles.viewControllerRoot}
+    />
   );
 };
 

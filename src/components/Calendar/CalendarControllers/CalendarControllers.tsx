@@ -27,7 +27,10 @@ const CalendarControlls = ({ calendarRef }: Props) => {
         <ViewController calendarRef={calendarRef} setTitle={setTitle} />
         <EventFilteringController />
         <UserCalendarController />
-        <AreWeekendsIncludedController />
+        <AreWeekendsIncludedController
+          calendarRef={calendarRef}
+          setTitle={setTitle}
+        />
       </div>
       <div className={styles.movementControllers}>
         <p className={styles.calendarTitle}>{title}</p>
