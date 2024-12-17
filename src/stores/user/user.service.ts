@@ -1,5 +1,6 @@
 import axios from '../../config/Axios/axios-instance';
 import { showToast } from '../../utils/toast';
+import { useAuthStore } from '../auth/auth.store';
 
 const API_URL = '/users';
 
@@ -80,6 +81,9 @@ export const updateUserInfo = async (
   get: any,
   inputs: UpdateUserInfoRequestDto,
 ): Promise<void> => {
+  const setCurrentUserIsUpdateNeeded =
+    useAuthStore.getState().setCurrentUserIsUpdateNeeded;
+
   set({
     userUpdateInfoIsLoading: true,
     userUpdateInfoIsSuccess: false,
@@ -94,6 +98,7 @@ export const updateUserInfo = async (
       userUpdateInfoIsSuccess: true,
     });
     showToast('successfully updated user info', 'success');
+    setCurrentUserIsUpdateNeeded(true);
   } catch (error) {
     set({
       userUpdateInfoIsSuccess: false,
