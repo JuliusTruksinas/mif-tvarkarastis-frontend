@@ -93,11 +93,11 @@ const Calendar = ({
   const calendarRef = useRef<FullCalendar>(null);
 
   const calendarEvents = useMemo(() => {
-    if (calendarEventFilter == 'Lectures') {
+    if (calendarEventFilter === 'Lectures') {
       return lectureEvents.map((event) => fetchedEventToCalendarEvent(event));
     }
 
-    if (calendarEventFilter == 'Created events') {
+    if (calendarEventFilter === 'Created events') {
       return userEvents.map((event) => fetchedEventToCalendarEvent(event));
     }
 
@@ -159,6 +159,7 @@ const Calendar = ({
         dayHeaderContent={renderHeader}
         eventClick={handleEventClick}
         eventChange={handleEventChange}
+        timeZone="local"
       />
     </>
   );
