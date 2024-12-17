@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import moment from 'moment-timezone';
+import { useAuthStore } from '../../stores/auth/auth.store';
 
 export type HttpError =
   | null
@@ -21,5 +22,18 @@ instance.interceptors.request.use((config) => {
 
   return config;
 });
+
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (
+      error.response &&
+      error.response.status === HttpStatusCode.Unauthorized
+    ) {
+      const { logout } = useAuthStore.getState();
+      logout();
+    }
+  },
+);
 
 export default instance;
