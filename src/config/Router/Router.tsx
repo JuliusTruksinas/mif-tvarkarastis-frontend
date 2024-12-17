@@ -11,6 +11,8 @@ import UserPage from '../../pages/public/UserPage/UserPage';
 import CalendarPage from '../../pages/public/CalendarPage/CalendarPage';
 import FriendsPage from '../../pages/public/FriendsPage/FriendsPage';
 import LoadingPage from '../../pages/public/LoadingPage/LoadingPage';
+import ForgotPasswordPage from '../../pages/public/ForgotPasswordPage/ForgotPasswordPage';
+import ResetPasswordPage from '../../pages/public/ResetPasswordPage/ResetPasswordPage';
 
 const getAuthenticatedRoutes = () => {
   return (
@@ -29,6 +31,12 @@ const getUnauthenticatedRoutes = () => {
       <Route path={routes.homePage} element={<LoginPage />} />
       <Route path={routes.loginPage} element={<LoginPage />} />
       <Route path={routes.registerPage} element={<RegisterPage />} />
+      <Route path={routes.resetPasswordPage} element={<ResetPasswordPage />} />
+      <Route
+        path={routes.forgotPasswordPage}
+        element={<ForgotPasswordPage />}
+      />
+
       <Route path={'*'} element={<Navigate to={routes.loginPage} replace />} />
     </>
   );

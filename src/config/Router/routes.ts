@@ -6,4 +6,6 @@ export const routes = {
   calendar: '/calendar',
   friendsPage: '/friends',
   userPage: '/user-page',
+  forgotPasswordPage: '/forgot-password',
+  resetPasswordPage: '/reset-password',
 };
