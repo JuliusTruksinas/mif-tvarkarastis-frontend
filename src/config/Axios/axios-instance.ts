@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment-timezone';
 
 export type HttpError =
   | null
@@ -15,6 +16,7 @@ instance.interceptors.request.use((config) => {
 
   if (token && config.headers) {
     config.headers['Authorization'] = `Bearer ${token}`;
+    config.headers['x-timezone'] = moment.tz.guess();
   }
 
   return config;

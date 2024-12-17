@@ -58,7 +58,7 @@ export const TopBar = () => {
                 styles.indicatorItem,
               )}
             >
-              {unseenNotifications?.length ?? 0}
+              {unseenNotifications?.length || 0}
             </span>
           </div>
           {unseenNotifications?.length !== 0 && (

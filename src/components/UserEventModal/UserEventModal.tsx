@@ -1,5 +1,5 @@
-import moment from 'moment';
 import classNames from 'classnames';
+import moment from 'moment-timezone';
 import Modal from '../../common/Modal/Modal';
 import TextField from '../../common/TextField/TextField';
 import { useForm } from '../../hooks/useForm';
@@ -30,20 +30,23 @@ const UserEventModal = ({
   const extractDate = (isoString: string) =>
     moment(isoString).format('YYYY-MM-DD');
 
-  const extractTime = (isoString: string) => moment(isoString).format('HH:mm');
+  const extractTime = (isoString: string) => {
+    const userTimeZone = moment.tz.guess();
+    return moment.utc(isoString).tz(userTimeZone).format('HH:mm');
+  };
 
   const INPUTS = [
     {
       name: 'title',
       type: 'text',
       label: 'Title',
-      value: userEvent?.title ?? '',
+      value: userEvent?.title || '',
     },
     {
       name: 'location',
       type: 'text',
       label: 'Location',
-      value: userEvent?.location ?? '',
+      value: userEvent?.location || '',
     },
     {
       name: 'date',
@@ -71,7 +74,7 @@ const UserEventModal = ({
       name: 'note',
       type: 'textArea',
       label: 'Notes',
-      value: userEvent?.note ?? '',
+      value: userEvent?.note || '',
     },
   ];
 
@@ -86,21 +89,33 @@ const UserEventModal = ({
 
     if (userEvent) {
       updateUserEvent(userEvent.id, {
-        startDateTime: `${submitInputs.date}T${submitInputs.startTime}:00`,
-        endDateTime: `${submitInputs.date}T${submitInputs.endTime}:00`,
+        startDateTime:
+          submitInputs.date && submitInputs.startTime
+            ? `${submitInputs.date}T${submitInputs.startTime}:00`
+            : null,
+        endDateTime:
+          submitInputs.date && submitInputs.endTime
+            ? `${submitInputs.date}T${submitInputs.endTime}:00`
+            : null,
         title: submitInputs.title,
-        note: submitInputs.note ?? null,
-        location: submitInputs.location ?? null,
+        note: submitInputs.note || null,
+        location: submitInputs.location || null,
       });
       return;
     }
 
     createUserEvent({
-      startDateTime: `${submitInputs.date}T${submitInputs.startTime}:00`,
-      endDateTime: `${submitInputs.date}T${submitInputs.endTime}:00`,
+      startDateTime:
+        submitInputs.date && submitInputs.startTime
+          ? `${submitInputs.date}T${submitInputs.startTime}:00`
+          : null,
+      endDateTime:
+        submitInputs.date && submitInputs.endTime
+          ? `${submitInputs.date}T${submitInputs.endTime}:00`
+          : null,
       title: submitInputs.title,
-      note: submitInputs.note ?? null,
-      location: submitInputs.location ?? null,
+      note: submitInputs.note || null,
+      location: submitInputs.location || null,
     });
   };
 

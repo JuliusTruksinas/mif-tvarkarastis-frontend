@@ -36,19 +36,19 @@ const UserPage = () => {
       name: 'firstName',
       type: 'text',
       label: 'First Name',
-      value: currentUser?.firstName ?? '',
+      value: currentUser?.firstName || '',
     },
     {
       name: 'lastName',
       type: 'text',
       label: 'Last Name',
-      value: currentUser?.lastName ?? '',
+      value: currentUser?.lastName || '',
     },
     {
       name: 'email',
       type: 'text',
       label: 'Email Address',
-      value: currentUser?.email ?? '',
+      value: currentUser?.email || '',
     },
     {
       name: 'password',
@@ -62,7 +62,7 @@ const UserPage = () => {
       options: DEFAULT_OPTIONS,
       isLoading: programsOptionsIsLoading,
       label: 'Program Name',
-      value: currentUser?.programName ?? '',
+      value: currentUser?.programName || '',
       fieldsToClearOnChange: ['course', 'group', 'subgroup'],
     },
     {
@@ -71,7 +71,7 @@ const UserPage = () => {
       options: DEFAULT_OPTIONS,
       isLoading: coursesOptionsIsLoading,
       label: 'Course',
-      value: currentUser?.course?.toString() ?? '',
+      value: currentUser?.course?.toString() || '',
       fieldsToClearOnChange: ['group', 'subgroup'],
     },
     {
@@ -80,7 +80,7 @@ const UserPage = () => {
       options: DEFAULT_OPTIONS,
       isLoading: groupsOptionsIsLoading,
       label: 'Group',
-      value: currentUser?.group?.toString() ?? '',
+      value: currentUser?.group?.toString() || '',
       fieldsToClearOnChange: ['subgroup'],
     },
     {
@@ -89,7 +89,7 @@ const UserPage = () => {
       options: DEFAULT_OPTIONS,
       isLoading: subgroupsOptionsIsLoading,
       label: 'Subgroup',
-      value: currentUser?.subgroup?.toString() ?? '',
+      value: currentUser?.subgroup?.toString() || '',
     },
   ];
 
