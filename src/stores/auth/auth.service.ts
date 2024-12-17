@@ -109,7 +109,7 @@ export const getCurrentUser = async (
 
     return currentUser;
   } catch (error) {
-    return error?.response?.data?.data ?? null;
+    return error?.response?.data?.data || null;
   }
 };
 

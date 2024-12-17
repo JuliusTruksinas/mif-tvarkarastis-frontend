@@ -109,7 +109,7 @@ const TextField = ({
     ),
   };
 
-  return TYPES_AND_THEIR_COMPONENTS[type] ?? TYPES_AND_THEIR_COMPONENTS.text;
+  return TYPES_AND_THEIR_COMPONENTS[type] || TYPES_AND_THEIR_COMPONENTS.text;
 };
 
 export default TextField;
