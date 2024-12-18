@@ -1,10 +1,10 @@
 import { ReactSVG } from 'react-svg';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import logoSvg from '../../assets/images/logo.svg';
 import searchIcon from '../../assets/icons/search-icon.svg';
 import calendarIcon from '../../assets/icons/calendar-icon.svg';
 import { routes } from '../../config/Router/routes';
-import { NavLink } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
 import styles from './SideBar.module.scss';
 
@@ -30,7 +30,11 @@ const SideBar = () => {
         [styles.bottomNavbar]: width < 800,
       })}
     >
-      {width > 800 && <ReactSVG src={logoSvg} className={styles.logo} />}
+      {width > 800 && (
+        <NavLink to={routes.calendar}>
+          <ReactSVG src={logoSvg} className={styles.logo} />
+        </NavLink>
+      )}
       <div className={styles.sideBarItemsContainer}>
         {SIDEBAR_ITEMS.map((sideBarItem) => (
           <NavLink to={sideBarItem.navLink}>

@@ -2,14 +2,23 @@ import axios from '../../config/Axios/axios-instance';
 
 const API_URL = '/lecture-events';
 
-export const fetchLectureEvents = async (set: any, get: any): Promise<void> => {
+export interface GetUserLectureEventsRequestDto {
+  startDateTime: string;
+  endDateTime: string;
+}
+
+export const fetchLectureEvents = async (
+  set: any,
+  get: any,
+  inputs: GetUserLectureEventsRequestDto,
+): Promise<void> => {
   set({
     lectureEventsIsLoading: true,
     lectureEventsIsSuccess: false,
     lectureEventsError: null,
   });
   try {
-    const response = await axios.get(`${API_URL}`);
+    const response = await axios.post(`${API_URL}`, { ...inputs });
     const responseData = response.data?.data;
 
     set({ lectureEventsIsSuccess: true, lectureEvents: responseData });

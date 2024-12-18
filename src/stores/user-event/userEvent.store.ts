@@ -5,6 +5,7 @@ import {
   CreateUserRequestDto,
   deleteUserEvent,
   fetchUserEvents,
+  FetchUserEventsRequestDto,
   updateUserEvent,
   UpdateUserRequestDto,
 } from './userEvent.service';
@@ -15,7 +16,7 @@ export interface UserEventStore {
   userEventsFetchIsLoading: boolean;
   userEventsFetchIsSuccess: boolean;
   userEventsFetchError: HttpError;
-  fetchUserEvents: () => Promise<void>;
+  fetchUserEvents: (inputs: FetchUserEventsRequestDto) => Promise<void>;
   userEvent: UserEvent | null;
   userEventCreateIsLoading: boolean;
   userEventCreateIsSuccess: boolean;
@@ -53,7 +54,8 @@ const initialDataState = {
 
 const getInitialState = (set, get) => ({
   ...initialDataState,
-  fetchUserEvents: () => fetchUserEvents(set, get),
+  fetchUserEvents: (inputs: FetchUserEventsRequestDto) =>
+    fetchUserEvents(set, get, inputs),
   createUserEvent: (inputs: CreateUserRequestDto) =>
     createUserEvent(set, get, inputs),
   updateUserEvent: (id: string, inputs: UpdateUserRequestDto) =>

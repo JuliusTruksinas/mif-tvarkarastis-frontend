@@ -15,13 +15,11 @@ const CalendarPage = () => {
     useState<boolean>(false);
   const [isLectureEventModalOpen, setIsLectureEventModalOpen] =
     useState<boolean>(false);
-
   const [selectedUserEvent, setSelectedUserEvent] = useState<UserEvent | null>(
     null,
   );
   const [selectedLectureEvent, setSelectedLectureEvent] =
     useState<LectureEvent | null>(null);
-
   const { currentUser } = useAuthStore();
 
   return (

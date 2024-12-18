@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -13,6 +13,7 @@ import { useLectureEventStore } from '../../stores/lecture-event/lectureEvent.st
 import { useCalendarControlStore } from '../../stores/calendar-control/calendarControl.store';
 import { UserEvent } from '../../domain/userEvent';
 import { LectureEvent } from 'src/domain/lectureEvent';
+import { DatesSetArg, EventChangeArg } from '@fullcalendar/core';
 
 const renderHeader = (args) => {
   if (args.view.type === 'timeGridWeek' || args.view.type === 'timeGridDay') {
@@ -41,12 +42,20 @@ type Props = {
   setIsLectureEventModalOpen: (isLectureEventModalOpen: boolean) => void;
 };
 
+interface ShownInterval {
+  startDateTime: string;
+  endDateTime: string;
+}
+
 const Calendar = ({
   setSelectedUserEvent,
   setIsUserEventModalOpen,
   setSelectedLectureEvent,
   setIsLectureEventModalOpen,
 }: Props) => {
+  const [shownInterval, setShownInterval] = useState<ShownInterval | null>(
+    null,
+  );
   const { fetchLectureEvents, lectureEvents, resetLectureEventStore } =
     useLectureEventStore();
 
@@ -80,7 +89,7 @@ const Calendar = ({
     setIsLectureEventModalOpen(true);
   };
 
-  const handleEventChange = (info) => {
+  const handleEventChange = (info: EventChangeArg) => {
     const droppedEvent = info.event;
     const { eventData } = droppedEvent._def.extendedProps;
 
@@ -88,6 +97,13 @@ const Calendar = ({
       startDateTime: droppedEvent.start.toISOString(),
       endDateTime: droppedEvent.end.toISOString(),
       title: eventData.title,
+    });
+  };
+
+  const handleDatesSet = (info: DatesSetArg) => {
+    setShownInterval({
+      startDateTime: info.startStr,
+      endDateTime: info.endStr,
     });
   };
 
@@ -109,15 +125,26 @@ const Calendar = ({
   }, [lectureEvents, userEvents, calendarEventFilter]);
 
   useEffect(() => {
-    fetchLectureEvents();
-    fetchUserEvents();
-  }, []);
+    if (shownInterval) {
+      fetchLectureEvents({
+        startDateTime: shownInterval.startDateTime,
+        endDateTime: shownInterval.endDateTime,
+      });
+      fetchUserEvents({
+        startDateTime: shownInterval.startDateTime,
+        endDateTime: shownInterval.endDateTime,
+      });
+    }
+  }, [shownInterval]);
 
   useEffect(() => {
-    if (isUserEventsUpdateNeeded) {
-      fetchUserEvents();
+    if (isUserEventsUpdateNeeded && shownInterval) {
+      fetchUserEvents({
+        startDateTime: shownInterval.startDateTime,
+        endDateTime: shownInterval.endDateTime,
+      });
     }
-  }, [isUserEventsUpdateNeeded]);
+  }, [isUserEventsUpdateNeeded, shownInterval]);
 
   useEffect(() => {
     return () => {
@@ -161,6 +188,7 @@ const Calendar = ({
         eventClick={handleEventClick}
         eventChange={handleEventChange}
         timeZone="local"
+        datesSet={handleDatesSet}
       />
     </>
   );

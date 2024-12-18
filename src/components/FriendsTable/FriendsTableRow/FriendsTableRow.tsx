@@ -78,7 +78,7 @@ const FriendsTableRow = ({ userInfo, action }: Props) => {
             styles.alignRight,
           )}
         >
-          <div className="dropdown dropdown-top">
+          <div className="dropdown dropdown-left">
             <div className={styles.threeDotsIconContainer}>
               <button>
                 <ReactSVG src={threeDotsIcon} />
