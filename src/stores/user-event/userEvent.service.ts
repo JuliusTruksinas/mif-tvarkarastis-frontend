@@ -22,6 +22,7 @@ export interface UpdateUserRequestDto {
 export interface FetchUserEventsRequestDto {
   startDateTime: string;
   endDateTime: string;
+  userId: string;
 }
 
 export const fetchUserEvents = async (
@@ -47,7 +48,6 @@ export const fetchUserEvents = async (
       userEventsIsSuccess: false,
       userEventsFetchError: error?.response?.data?.data,
     });
-    showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ userEventsIsLoading: false });
   }

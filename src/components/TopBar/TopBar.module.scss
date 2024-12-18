@@ -49,6 +49,11 @@
 
   .userMenuDropdownContainer {
     cursor: pointer;
+
+    img {
+      max-width: 45px;
+      border-radius: 100px;
+    }
   }
 }
 .menuDropdown {

@@ -141,14 +141,14 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (studyTypeInputValue) {
-      getAllProgramsOptions({ studyType: +studyTypeInputValue });
+      getAllProgramsOptions({ studyType: +studyTypeInputValue || null });
     }
   }, [studyTypeInputValue]);
 
   useEffect(() => {
     if (studyTypeInputValue && programNameInputValue) {
       getAllCoursesOptions({
-        studyType: +studyTypeInputValue,
+        studyType: +studyTypeInputValue || null,
         studyProgramName: programNameInputValue,
       });
     }
@@ -157,9 +157,9 @@ const RegisterPage = () => {
   useEffect(() => {
     if (studyTypeInputValue && programNameInputValue && courseInputValue) {
       getAllGroupsOptions({
-        studyType: +studyTypeInputValue,
+        studyType: +studyTypeInputValue || null,
         studyProgramName: programNameInputValue,
-        course: +courseInputValue,
+        course: +courseInputValue || null,
       });
     }
   }, [courseInputValue]);
@@ -220,9 +220,9 @@ const RegisterPage = () => {
       lastName: formInputs.lastName,
       studyType: 1,
       programName: formInputs.programName,
-      course: +formInputs.course,
-      group: +formInputs.group,
-      subgroup: +formInputs.subgroup,
+      course: +formInputs.course || null,
+      group: +formInputs.group || null,
+      subgroup: +formInputs.subgroup || null,
     });
 
     resetInputValues();

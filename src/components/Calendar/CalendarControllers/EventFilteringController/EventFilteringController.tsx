@@ -9,18 +9,15 @@ const EventFilteringController = () => {
     useCalendarControlStore();
 
   return (
-    <>
-      <SelectTextField
-        key={'eventFilteringController'}
-        name={'eventFilteringController'}
-        value={calendarEventFilter}
-        options={EVENT_FILTER_OPTIONS}
-        onChange={(e) => {
-          setCalendarEventFilter(e.target.value as CalendarEventFilter);
-        }}
-        elementClassName={styles.eventFilteringControllerRoot}
-      />
-    </>
+    <SelectTextField
+      name={'eventFilteringController'}
+      value={calendarEventFilter}
+      options={EVENT_FILTER_OPTIONS}
+      onChange={(e) => {
+        setCalendarEventFilter(e.target.value as CalendarEventFilter);
+      }}
+      elementClassName={styles.eventFilteringControllerRoot}
+    />
   );
 };
 

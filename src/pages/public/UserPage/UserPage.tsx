@@ -147,9 +147,9 @@ const UserPage = () => {
   useEffect(() => {
     if (currentUser?.studyType && programNameInputValue && courseInputValue) {
       getAllGroupsOptions({
-        studyType: +currentUser.studyType,
+        studyType: +currentUser.studyType || null,
         studyProgramName: programNameInputValue,
-        course: +courseInputValue,
+        course: +courseInputValue || null,
       });
     }
   }, [courseInputValue]);
@@ -213,9 +213,9 @@ const UserPage = () => {
       email: submitInputs.email,
       studyType: 1,
       programName: submitInputs.programName,
-      course: +submitInputs.course,
-      group: +submitInputs.group,
-      subgroup: +submitInputs.subgroup,
+      course: +submitInputs.course || null,
+      group: +submitInputs.group || null,
+      subgroup: +submitInputs.subgroup || null,
       ...(submitInputs?.password && { password: submitInputs.password }),
     });
 

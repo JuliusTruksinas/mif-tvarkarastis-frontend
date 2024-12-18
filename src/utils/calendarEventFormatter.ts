@@ -1,3 +1,4 @@
+import { User } from '../domain/common';
 import {
   FetchedLectureEvent,
   FetchedUserEvent,
@@ -28,12 +29,15 @@ const getColor = (fetchedEvent: FetchedUserEvent | FetchedLectureEvent) => {
 
 export const fetchedEventToCalendarEvent = (
   fetchedEvent: FetchedUserEvent | FetchedLectureEvent,
+  currentUser: User,
 ) => {
   return {
     start: fetchedEvent.startDateTime,
     end: fetchedEvent.endDateTime,
     title: fetchedEvent.title,
-    editable: !isFetchedLectureEvent(fetchedEvent),
+    editable:
+      !isFetchedLectureEvent(fetchedEvent) &&
+      fetchedEvent.user === currentUser.id,
     backgroundColor: getColor(fetchedEvent),
     borderColor: getColor(fetchedEvent),
     textColor: '#ffffff',

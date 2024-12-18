@@ -3,7 +3,6 @@ import { ReactSVG } from 'react-svg';
 import { useNavigate } from 'react-router';
 import classNames from 'classnames';
 import notificationsIcon from '../../assets/icons/notification.svg';
-import userImage from '../../assets/images/user.png';
 import { useAuthStore } from '../../stores/auth/auth.store';
 import logoSvg from '../../assets/images/logo.svg';
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
@@ -83,7 +82,11 @@ export const TopBar = () => {
             styles.userMenuDropdownContainer,
           )}
         >
-          <img src={userImage} alt="" tabIndex={0} />
+          <img
+            src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
+            alt=""
+            tabIndex={0}
+          />
           <ul
             tabIndex={0}
             className={classNames(

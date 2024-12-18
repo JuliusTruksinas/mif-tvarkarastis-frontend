@@ -1,6 +1,14 @@
-import { User } from 'src/domain/common';
+import { User } from '../../domain/common';
 import axios, { HttpError } from '../../config/Axios/axios-instance';
 import { showToast } from '../../utils/toast';
+import { useAuthStore } from './auth.store';
+import { useCalendarControlStore } from '../calendar-control/calendarControl.store';
+import { useFriendStore } from '../friend/friend.store';
+import { useLectureEventStore } from '../lecture-event/lectureEvent.store';
+import { useNotificationStore } from '../notification/notification.store';
+import { useStudyOptionsStore } from '../study-options/studyOptions.store';
+import { useUserStore } from '../user/user.store';
+import { useUserEventStore } from '../user-event/userEvent.store';
 
 const API_URL = '/auth';
 
@@ -81,14 +89,28 @@ export const register = async (
 export const logout = (set: any, get: any): void => {
   localStorage.removeItem('token');
 
-  set({
-    isUserAuthenticated: false,
-    currentUser: null,
-    isUserAuthenticationLoading: false,
-    currentUserIsLoading: false,
-    currentUserIsSuccess: false,
-    currentUserError: null,
-  });
+  const resetAuthStore = useAuthStore.getState().resetAuthStore;
+  const resetCalendarControlStore =
+    useCalendarControlStore.getState().resetCalendarControlStore;
+  const resetFriendStore = useFriendStore.getState().resetFriendStore;
+  const resetLectureEventStore =
+    useLectureEventStore.getState().resetLectureEventStore;
+  const resetNotificationStore =
+    useNotificationStore.getState().resetNotificationsStore;
+  const resetStudyOptionsStore =
+    useStudyOptionsStore.getState().resetStudyOptionsStore;
+  const resetUserStore = useUserStore.getState().resetUserStore;
+  const resetUserEventStore = useUserEventStore.getState().resetUserEventStore;
+
+  resetAuthStore();
+  resetCalendarControlStore();
+  resetFriendStore();
+  resetLectureEventStore();
+  resetNotificationStore();
+  resetStudyOptionsStore();
+  resetUserStore();
+  resetUserEventStore();
+  set({ isUserAuthenticationLoading: false });
 };
 
 export const getCurrentUser = async (

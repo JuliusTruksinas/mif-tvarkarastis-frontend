@@ -8,6 +8,10 @@ export interface CalendarControlStore {
   setCalendarEventFilter: (calendarEventFilter: CalendarEventFilter) => void;
   includeWeekends: boolean;
   setIncludeWeekends: (includeWeekends: boolean) => void;
+  userIdCalendar: string;
+  setUserIdCalendar: (userId: string) => void;
+  setUserCalendar: (userId: string) => void;
+  resetCalendarControlStore: () => void;
 }
 
 export const useCalendarControlStore = create<CalendarControlStore>((set) => ({
@@ -20,4 +24,14 @@ export const useCalendarControlStore = create<CalendarControlStore>((set) => ({
   includeWeekends: false,
   setIncludeWeekends: (includeWeekends: boolean) =>
     set(() => ({ includeWeekends })),
+  userIdCalendar: '',
+  setUserIdCalendar: (userId: string) => set({ userIdCalendar: userId }),
+  setUserCalendar: (userId: string) => {},
+  resetCalendarControlStore: () =>
+    set({
+      calendarView: 'timeGridWeek',
+      calendarEventFilter: 'All events',
+      includeWeekends: false,
+      userIdCalendar: '',
+    }),
 }));

@@ -5,6 +5,7 @@ const API_URL = '/lecture-events';
 export interface GetUserLectureEventsRequestDto {
   startDateTime: string;
   endDateTime: string;
+  userId: string;
 }
 
 export const fetchLectureEvents = async (

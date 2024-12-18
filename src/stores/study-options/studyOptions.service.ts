@@ -34,7 +34,6 @@ export const getAllStudyTypesOptions = async (
       studyTypesOptionsIsSuccess: false,
       studyTypesOptionsError: error?.response?.data?.data,
     });
-    showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ studyTypesOptionsIsLoading: false });
   }
@@ -62,7 +61,6 @@ export const getAllProgramsOptions = async (
       programsOptionsIsSuccess: false,
       programsOptionsError: error?.response?.data?.data,
     });
-    showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ programsOptionsIsLoading: false });
   }
@@ -90,7 +88,6 @@ export const getAllCoursesOptions = async (
       coursesOptionsIsSuccess: false,
       coursesOptionsError: error?.response?.data?.data,
     });
-    showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ coursesOptionsIsLoading: false });
   }
@@ -118,7 +115,6 @@ export const getAllGroupsOptions = async (
       groupsOptionsIsSuccess: false,
       groupsOptionsError: error?.response?.data?.data,
     });
-    showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ groupsOptionsIsLoading: false });
   }
@@ -143,7 +139,6 @@ export const getAllSubgroupsOptions = async (
       subgroupsOptionsIsSuccess: false,
       subgroupsOptionsError: error?.response?.data?.data,
     });
-    showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ subgroupsOptionsIsLoading: false });
   }

@@ -1,9 +1,12 @@
 import classNames from 'classnames';
 import { ReactSVG } from 'react-svg';
+import { useNavigate } from 'react-router';
 import styles from './FriendsTableRow.module.scss';
 import threeDotsIcon from '../../../assets/icons/threedots.svg';
 import { BasicUserInfo } from '../../../domain/common';
 import { useFriendStore } from '../../../stores/friend/friend.store';
+import { routes } from '../../../config/Router/routes';
+import { useCalendarControlStore } from '../../../stores/calendar-control/calendarControl.store';
 
 type Props = {
   userInfo: BasicUserInfo;
@@ -11,7 +14,9 @@ type Props = {
 };
 
 const FriendsTableRow = ({ userInfo, action }: Props) => {
+  const navigate = useNavigate();
   const { sendFriendRequest, removeFriend } = useFriendStore();
+  const { setUserIdCalendar } = useCalendarControlStore();
 
   const handleRemove = (friendToRemoveId: string) => {
     removeFriend(friendToRemoveId);
@@ -34,7 +39,7 @@ const FriendsTableRow = ({ userInfo, action }: Props) => {
               )}
             >
               <img
-                src="https://img.daisyui.com/images/profile/demo/5@94.webp"
+                src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
                 alt="Avatar Tailwind CSS Component"
               />
             </div>
@@ -91,7 +96,12 @@ const FriendsTableRow = ({ userInfo, action }: Props) => {
               <li onClick={() => handleRemove(userInfo.id)}>
                 <p>Remove</p>
               </li>
-              <li>
+              <li
+                onClick={() => {
+                  setUserIdCalendar(userInfo.id);
+                  navigate(routes.calendar);
+                }}
+              >
                 <p>View Calendar</p>
               </li>
             </ul>
