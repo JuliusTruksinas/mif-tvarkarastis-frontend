@@ -5,7 +5,7 @@ export interface LectureEvent {
   title: string;
   programName: string;
   course: number;
-  groups: number[];
+  group: number;
   subgroup?: number;
   lecturer: string;
   lectureTypes: string[];

@@ -28,8 +28,8 @@ const LectureEventModal = ({
       )}`,
     },
     {
-      label: 'Groups:',
-      value: lectureEvent?.groups.map((group) => group.toString()).join(', '),
+      label: 'Group:',
+      value: lectureEvent?.group,
     },
     {
       label: 'Subgroup:',
