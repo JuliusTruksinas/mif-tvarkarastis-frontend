@@ -13,7 +13,7 @@ export interface FetchedLectureEvent {
   startDateTime: string;
   endDateTime: string;
   title: string;
-  groups: number[];
+  group: number;
   subgroup?: number;
   lecturer: string;
   lectureTypes: string[];
