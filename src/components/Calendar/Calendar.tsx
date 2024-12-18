@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import { DatesSetArg, EventChangeArg } from '@fullcalendar/core';
 import CalendarControllers from './CalendarControllers/CalendarControllers';
 import './CalendarOverride.scss';
 import styles from './Calendar.module.scss';
@@ -12,8 +13,8 @@ import { fetchedEventToCalendarEvent } from '../../utils/calendarEventFormatter'
 import { useLectureEventStore } from '../../stores/lecture-event/lectureEvent.store';
 import { useCalendarControlStore } from '../../stores/calendar-control/calendarControl.store';
 import { UserEvent } from '../../domain/userEvent';
-import { LectureEvent } from 'src/domain/lectureEvent';
-import { DatesSetArg, EventChangeArg } from '@fullcalendar/core';
+import { LectureEvent } from '../../domain/lectureEvent';
+import { useAuthStore } from '../../stores/auth/auth.store';
 
 const renderHeader = (args) => {
   if (args.view.type === 'timeGridWeek' || args.view.type === 'timeGridDay') {
@@ -38,6 +39,7 @@ const renderHeader = (args) => {
 type Props = {
   setSelectedUserEvent: (userEvent: UserEvent) => void;
   setIsUserEventModalOpen: (isUserEventModalOpen: boolean) => void;
+  setIsViewUserEventModalOpen: (isViewUserEventModalOpen: boolean) => void;
   setSelectedLectureEvent: (lectureEvent: LectureEvent) => void;
   setIsLectureEventModalOpen: (isLectureEventModalOpen: boolean) => void;
 };
@@ -50,6 +52,7 @@ interface ShownInterval {
 const Calendar = ({
   setSelectedUserEvent,
   setIsUserEventModalOpen,
+  setIsViewUserEventModalOpen,
   setSelectedLectureEvent,
   setIsLectureEventModalOpen,
 }: Props) => {
@@ -67,8 +70,10 @@ const Calendar = ({
     resetUserEventStore,
   } = useUserEventStore();
 
-  const { includeWeekends, calendarView, calendarEventFilter } =
+  const { includeWeekends, calendarView, calendarEventFilter, userIdCalendar } =
     useCalendarControlStore();
+
+  const { currentUser } = useAuthStore();
 
   const handleEventClick = (info) => {
     const clickedEvent = info.event;
@@ -84,6 +89,20 @@ const Calendar = ({
       setIsUserEventModalOpen(true);
       return;
     }
+
+    // TODO: think of a better way to distinguish between users and his friends custom events
+    if (eventData?.user) {
+      // another users event
+      setSelectedUserEvent({
+        ...eventData,
+        startDateTime: clickedEvent.start,
+        endDateTime: clickedEvent.end,
+      });
+      setIsViewUserEventModalOpen(true);
+      return;
+    }
+
+    // lecture event
 
     setSelectedLectureEvent(eventData);
     setIsLectureEventModalOpen(true);
@@ -111,40 +130,55 @@ const Calendar = ({
 
   const calendarEvents = useMemo(() => {
     if (calendarEventFilter === 'Lectures') {
-      return lectureEvents.map((event) => fetchedEventToCalendarEvent(event));
+      return lectureEvents.map((event) =>
+        fetchedEventToCalendarEvent(event, currentUser),
+      );
     }
 
     if (calendarEventFilter === 'Created events') {
-      return userEvents.map((event) => fetchedEventToCalendarEvent(event));
+      return userEvents.map((event) =>
+        fetchedEventToCalendarEvent(event, currentUser),
+      );
     }
 
     return [
-      ...lectureEvents.map((event) => fetchedEventToCalendarEvent(event)),
-      ...userEvents.map((event) => fetchedEventToCalendarEvent(event)),
+      ...lectureEvents.map((event) =>
+        fetchedEventToCalendarEvent(event, currentUser),
+      ),
+      ...userEvents.map((event) =>
+        fetchedEventToCalendarEvent(event, currentUser),
+      ),
     ];
   }, [lectureEvents, userEvents, calendarEventFilter]);
 
   useEffect(() => {
-    if (shownInterval) {
+    if (shownInterval && userIdCalendar) {
       fetchLectureEvents({
         startDateTime: shownInterval.startDateTime,
         endDateTime: shownInterval.endDateTime,
+        userId: userIdCalendar,
       });
       fetchUserEvents({
         startDateTime: shownInterval.startDateTime,
         endDateTime: shownInterval.endDateTime,
+        userId: userIdCalendar,
       });
     }
-  }, [shownInterval]);
+  }, [shownInterval, userIdCalendar]);
 
   useEffect(() => {
-    if (isUserEventsUpdateNeeded && shownInterval) {
+    if (
+      isUserEventsUpdateNeeded &&
+      shownInterval &&
+      (userIdCalendar || currentUser.id)
+    ) {
       fetchUserEvents({
         startDateTime: shownInterval.startDateTime,
         endDateTime: shownInterval.endDateTime,
+        userId: userIdCalendar || currentUser.id,
       });
     }
-  }, [isUserEventsUpdateNeeded, shownInterval]);
+  }, [isUserEventsUpdateNeeded, shownInterval, userIdCalendar]);
 
   useEffect(() => {
     return () => {

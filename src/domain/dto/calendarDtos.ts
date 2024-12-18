@@ -3,6 +3,7 @@ export interface FetchedUserEvent {
   endDateTime: string;
   id: string;
   title: string;
+  user: string;
   location?: string;
   note?: string;
 }

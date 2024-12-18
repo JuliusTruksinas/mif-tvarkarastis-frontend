@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import moment from 'moment-timezone';
 import Modal from '../../common/Modal/Modal';
 import TextField from '../../common/TextField/TextField';
 import { useForm } from '../../hooks/useForm';
 import styles from './UserEventModal.module.scss';
 import { useUserEventStore } from '../../stores/user-event/userEvent.store';
 import { UserEvent } from '../../domain/userEvent';
+import { extractDate, extractTime } from '../../helpers/time';
 
 type Props = {
   onClose: () => void;
@@ -27,14 +27,6 @@ const UserEventModal = ({
   userEvent,
   setSelectedUserEvent,
 }: Props) => {
-  const extractDate = (isoString: string) =>
-    moment(isoString).format('YYYY-MM-DD');
-
-  const extractTime = (isoString: string) => {
-    const userTimeZone = moment.tz.guess();
-    return moment.utc(isoString).tz(userTimeZone).format('HH:mm');
-  };
-
   const INPUTS = [
     {
       name: 'title',

@@ -3,6 +3,7 @@ export interface UserEvent {
   startDateTime: string;
   endDateTime: string;
   title: string;
+  user: string;
   note?: string;
   location?: string;
 }

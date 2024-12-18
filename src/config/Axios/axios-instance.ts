@@ -33,6 +33,7 @@ instance.interceptors.response.use(
       const { logout } = useAuthStore.getState();
       logout();
     }
+    return Promise.reject(error);
   },
 );
 

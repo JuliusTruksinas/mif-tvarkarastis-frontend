@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Calendar from '../../../components/Calendar/Calendar';
 import styles from './CalendarPage.module.scss';
@@ -9,9 +9,13 @@ import { useAuthStore } from '../../../stores/auth/auth.store';
 import { UserEvent } from '../../../domain/userEvent';
 import { LectureEvent } from '../../../domain/lectureEvent';
 import LectureEventModal from '../../../components/LectureEventModal/LectureEventModal';
+import ViewUserEventModal from '../../../components/ViewUserEventModal/ViewUserEventModal';
+import { useCalendarControlStore } from '../../../stores/calendar-control/calendarControl.store';
 
 const CalendarPage = () => {
   const [isUserEventModalOpen, setIsUserEventModalOpen] =
+    useState<boolean>(false);
+  const [isViewUserEventModalOpen, setIsViewUserEventModalOpen] =
     useState<boolean>(false);
   const [isLectureEventModalOpen, setIsLectureEventModalOpen] =
     useState<boolean>(false);
@@ -21,6 +25,13 @@ const CalendarPage = () => {
   const [selectedLectureEvent, setSelectedLectureEvent] =
     useState<LectureEvent | null>(null);
   const { currentUser } = useAuthStore();
+  const { userIdCalendar, setUserIdCalendar } = useCalendarControlStore();
+
+  useEffect(() => {
+    if (currentUser && !userIdCalendar) {
+      setUserIdCalendar(currentUser.id);
+    }
+  }, [currentUser]);
 
   return (
     <>
@@ -48,6 +59,7 @@ const CalendarPage = () => {
           setIsUserEventModalOpen={setIsUserEventModalOpen}
           setSelectedLectureEvent={setSelectedLectureEvent}
           setIsLectureEventModalOpen={setIsLectureEventModalOpen}
+          setIsViewUserEventModalOpen={setIsViewUserEventModalOpen}
         />
       </div>
       {isUserEventModalOpen && (
@@ -62,6 +74,13 @@ const CalendarPage = () => {
           onClose={() => setIsLectureEventModalOpen(false)}
           lectureEvent={selectedLectureEvent}
           setSelectedLectureEvent={setSelectedLectureEvent}
+        />
+      )}
+      {isViewUserEventModalOpen && selectedUserEvent && (
+        <ViewUserEventModal
+          onClose={() => setIsViewUserEventModalOpen(false)}
+          userEvent={selectedUserEvent}
+          setSelectedUserEvent={setSelectedUserEvent}
         />
       )}
     </>

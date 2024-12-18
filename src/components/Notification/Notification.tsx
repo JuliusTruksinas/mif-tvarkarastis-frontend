@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import styles from './Notification.module.scss';
-import userImage from '../../assets/images/user.png';
 import { NotificationType, type Notification } from '../../domain/notification';
 import { useFriendStore } from '../../stores/friend/friend.store';
 import { useNotificationStore } from '../../stores/notification/notification.store';
@@ -18,7 +17,11 @@ const Notification = ({ notification }: Props) => {
   ) {
     return (
       <div className={styles.notificationItem}>
-        <img src={userImage} alt="" tabIndex={0} />
+        <img
+          src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
+          alt=""
+          tabIndex={0}
+        />
         <div className={styles.ctaNameContainer}>
           <p
             className={styles.fullName}
@@ -63,7 +66,11 @@ const Notification = ({ notification }: Props) => {
         className={styles.notificationItem}
         onClick={() => setNotificationToSeen(notification._id)}
       >
-        <img src={userImage} alt="" tabIndex={0} />
+        <img
+          src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
+          alt=""
+          tabIndex={0}
+        />
         <p>{`${notification?.data?.user?.firstName} ${notification?.data?.user?.lastName} accepted your friend request`}</p>
       </div>
     );
@@ -78,7 +85,11 @@ const Notification = ({ notification }: Props) => {
         className={styles.notificationItem}
         onClick={() => setNotificationToSeen(notification._id)}
       >
-        <img src={userImage} alt="" tabIndex={0} />
+        <img
+          src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
+          alt=""
+          tabIndex={0}
+        />
         <p>{`${notification?.data?.user?.firstName} ${notification?.data?.user?.lastName} declined your friend request`}</p>
       </div>
     );

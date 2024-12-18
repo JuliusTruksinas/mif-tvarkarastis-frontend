@@ -1,7 +1,7 @@
-import moment from 'moment';
 import Modal from '../../common/Modal/Modal';
 import styles from './LectureEventModal.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
+import { extractDate, extractTime } from '../../helpers/time';
 
 type Props = {
   onClose: () => void;
@@ -14,11 +14,6 @@ const LectureEventModal = ({
   lectureEvent,
   setSelectedLectureEvent,
 }: Props) => {
-  const extractDate = (isoString: string) =>
-    moment(isoString).format('YYYY-MM-DD');
-
-  const extractTime = (isoString: string) => moment(isoString).format('HH:mm');
-
   const INFO = [
     {
       label: 'Start:',

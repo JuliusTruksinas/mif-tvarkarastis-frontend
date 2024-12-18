@@ -1,5 +1,7 @@
 import axios from '../../config/Axios/axios-instance';
 import { showToast } from '../../utils/toast';
+import { useAuthStore } from '../auth/auth.store';
+import { useCalendarControlStore } from '../calendar-control/calendarControl.store';
 import { useNotificationStore } from '../notification/notification.store';
 import { useUserStore } from '../user/user.store';
 
@@ -44,6 +46,9 @@ export const acceptFriendRequest = async (
 ): Promise<void> => {
   const setUnseenNotificationsIsUpdateNeeded =
     useNotificationStore.getState().setUnseenNotificationsIsUpdateNeeded;
+  const setFriendsIsUpdateNeeded =
+    useUserStore.getState().setFriendsIsUpdateNeeded;
+
   set({
     acceptFriendRequestIsLoading: true,
     declineFriendRequestIsSuccess: false,
@@ -51,11 +56,11 @@ export const acceptFriendRequest = async (
   });
   try {
     await axios.post(`${API_URL}/accept/${senderId}`);
-
     set({
       acceptFriendRequestIsSuccess: true,
     });
     setUnseenNotificationsIsUpdateNeeded(true);
+    setFriendsIsUpdateNeeded(true);
     showToast('friend request accepted successfully', 'success');
   } catch (error) {
     set({
@@ -106,6 +111,12 @@ export const removeFriend = async (
 ): Promise<void> => {
   const setFriendsIsUpdateNeeded =
     useUserStore.getState().setFriendsIsUpdateNeeded;
+
+  const currentUser = useAuthStore.getState().currentUser;
+  const setUserIdCalendar =
+    useCalendarControlStore.getState().setUserIdCalendar;
+  const userIdCalendar = useCalendarControlStore.getState().userIdCalendar;
+
   set({
     removeFriendIsLoading: true,
     removeFriendIsSuccess: false,
@@ -118,6 +129,11 @@ export const removeFriend = async (
       removeFriendIsSuccess: true,
     });
     setFriendsIsUpdateNeeded(true);
+
+    if (friendToRemoveId === userIdCalendar) {
+      setUserIdCalendar(currentUser.id);
+    }
+
     showToast('friend removed successfully', 'success');
   } catch (error) {
     set({
@@ -127,5 +143,36 @@ export const removeFriend = async (
     showToast(error?.response?.data?.message, 'error');
   } finally {
     set({ removeFriendIsLoading: false });
+  }
+};
+
+export const fetchFriendsOptions = async (
+  set: any,
+  get: any,
+): Promise<void> => {
+  const setFriendsIsUpdateNeeded =
+    useUserStore.getState().setFriendsIsUpdateNeeded;
+
+  set({
+    friendsOptionsIsLoading: true,
+    friendsOptionsIsSuccess: false,
+    friendsOptionsError: null,
+  });
+  try {
+    const response = await axios.get(`${API_URL}/options`);
+    const responseData = response.data?.data;
+
+    set({
+      friendsOptionsIsSuccess: true,
+      friendsOptions: responseData,
+    });
+    setFriendsIsUpdateNeeded(true);
+  } catch (error) {
+    set({
+      friendsOptionsIsSuccess: false,
+      friendsOptionsError: error?.response?.data?.data,
+    });
+  } finally {
+    set({ friendsOptionsIsLoading: false });
   }
 };
