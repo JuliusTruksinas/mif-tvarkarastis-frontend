@@ -19,14 +19,23 @@ export interface UpdateUserRequestDto {
   location?: string;
 }
 
-export const fetchUserEvents = async (set: any, get: any): Promise<void> => {
+export interface FetchUserEventsRequestDto {
+  startDateTime: string;
+  endDateTime: string;
+}
+
+export const fetchUserEvents = async (
+  set: any,
+  get: any,
+  inputs: FetchUserEventsRequestDto,
+): Promise<void> => {
   set({
     userEventsIsLoading: true,
     userEventsIsSuccess: false,
     userEventsFetchError: null,
   });
   try {
-    const response = await axios.get(`${API_URL}`);
+    const response = await axios.patch(`${API_URL}`, { ...inputs });
     const responseData = response.data?.data;
     set({
       userEventsIsSuccess: true,
