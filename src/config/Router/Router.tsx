@@ -4,7 +4,7 @@ import { useAuthStore } from '../../stores/auth/auth.store';
 import ProtectedRoute from '../../common/ProtectedRoute/ProtectedRoute';
 
 import { routes } from './routes';
-// import HomePage from '../../pages/public/HomePage'; TODO: create HomePage
+import HomePage from '../../pages/public/HomePage/HomePage';
 import LoginPage from '../../pages/public/LoginPage/LoginPage';
 import RegisterPage from '../../pages/public/RegisterPage/RegisterPage';
 import UserPage from '../../pages/public/UserPage/UserPage';
@@ -28,7 +28,7 @@ const getAuthenticatedRoutes = () => {
 const getUnauthenticatedRoutes = () => {
   return (
     <>
-      <Route path={routes.homePage} element={<LoginPage />} />
+      <Route path={routes.homePage} element={<HomePage />} />
       <Route path={routes.loginPage} element={<LoginPage />} />
       <Route path={routes.registerPage} element={<RegisterPage />} />
       <Route path={routes.resetPasswordPage} element={<ResetPasswordPage />} />
