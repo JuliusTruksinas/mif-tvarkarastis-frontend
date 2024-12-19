@@ -17,6 +17,7 @@ import ResetPasswordPage from '../../pages/public/ResetPasswordPage/ResetPasswor
 const getAuthenticatedRoutes = () => {
   return (
     <Route element={<ProtectedRoute />}>
+      <Route path={routes.homePage} element={<HomePage />} />
       <Route path={routes.calendar} element={<CalendarPage />} />;
       <Route path={routes.friendsPage} element={<FriendsPage />} />
       <Route path={routes.userPage} element={<UserPage />} />
@@ -28,7 +29,6 @@ const getAuthenticatedRoutes = () => {
 const getUnauthenticatedRoutes = () => {
   return (
     <>
-      <Route path={routes.homePage} element={<HomePage />} />
       <Route path={routes.loginPage} element={<LoginPage />} />
       <Route path={routes.registerPage} element={<RegisterPage />} />
       <Route path={routes.resetPasswordPage} element={<ResetPasswordPage />} />
@@ -36,7 +36,6 @@ const getUnauthenticatedRoutes = () => {
         path={routes.forgotPasswordPage}
         element={<ForgotPasswordPage />}
       />
-
       <Route path={'*'} element={<Navigate to={routes.loginPage} replace />} />
     </>
   );

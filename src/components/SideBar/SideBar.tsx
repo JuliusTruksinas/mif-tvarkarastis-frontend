@@ -31,7 +31,7 @@ const SideBar = () => {
       })}
     >
       {width > 800 && (
-        <NavLink to={routes.calendar}>
+        <NavLink to={routes.homePage}>
           <ReactSVG src={logoSvg} className={styles.logo} />
         </NavLink>
       )}

@@ -1,8 +1,4 @@
-import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
-import { routes } from '../../../config/Router/routes';
 import styles from './HomePage.module.scss';
-import juliusRimtas from '../../../assets/images/julius1.jpg';
 import Julius from '../../../assets/images/Julius.jpg';
 import Liveta from '../../../assets/images/Liveta.jpg';
 import Nika from '../../../assets/images/Nika.jpg';
@@ -17,8 +13,6 @@ import GustavasC from '../../../assets/images/GustavasCrazy.jpg';
 import BugBusterC from '../../../assets/images/BusterCrazy.jpg';
 
 const HomePage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className={styles.registerPage}>
       <h1 className={styles.title}>About us</h1>
