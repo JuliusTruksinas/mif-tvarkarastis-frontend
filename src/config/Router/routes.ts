@@ -7,5 +7,5 @@ export const routes = {
   friendsPage: '/friends',
   userPage: '/user-page',
   forgotPasswordPage: '/forgot-password',
-  resetPasswordPage: '/reset-password',
+  resetPasswordPage: '/reset-password/:resetPasswordTokenParam',
 };
