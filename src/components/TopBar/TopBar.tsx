@@ -37,7 +37,7 @@ export const TopBar = () => {
   return (
     <div className={styles.topBarContainer}>
       {width < 800 && (
-        <NavLink to={routes.calendar}>
+        <NavLink to={routes.homePage}>
           <ReactSVG src={logoSvg} />
         </NavLink>
       )}
