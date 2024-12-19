@@ -31,6 +31,16 @@ export interface GetCurrentUserDto {
   token: string;
 }
 
+export interface RemindPasswordRequestDto {
+  email: string;
+}
+
+export interface ResetPasswordRequestDto {
+  resetPasswordToken: string;
+  newPassword: string;
+  repeatedPassword: string;
+}
+
 export const login = async (
   set: any,
   get: any,
@@ -155,4 +165,86 @@ export const tryAutoLogin = async (set: any, get: any) => {
     currentUserIsLoading: false,
     currentUserIsSuccess: true,
   }));
+};
+
+export const remindPassword = async (
+  set: any,
+  get: any,
+  inputs: RemindPasswordRequestDto,
+): Promise<void> => {
+  set({
+    passwordRemindIsLoading: true,
+    passwordRemindIsSuccess: false,
+    passwordRemindError: null,
+  });
+  try {
+    await axios.post(`${API_URL}/remind-password`, { ...inputs });
+    set({ passwordRemindIsSuccess: true });
+
+    showToast(`successfully sent an email to ${inputs.email}`, 'success');
+  } catch (error) {
+    set({
+      passwordRemindIsSuccess: false,
+      passwordRemindError: error?.response?.data?.data,
+    });
+    showToast(error?.response?.data?.message, 'error');
+  } finally {
+    set({ passwordRemindIsLoading: false });
+  }
+};
+
+export const resetPassword = async (
+  set: any,
+  get: any,
+  inputs: ResetPasswordRequestDto,
+): Promise<void> => {
+  set({
+    passwordResetIsLoading: true,
+    passwordResetIsSuccess: false,
+    passwordResetError: null,
+  });
+  try {
+    await axios.post(`${API_URL}/reset-password`, { ...inputs });
+    set({ passwordResetIsSuccess: true });
+
+    showToast(`successfully reset your password`, 'success');
+  } catch (error) {
+    set({
+      passwordResetIsSuccess: false,
+      passwordResetError: error?.response?.data?.data,
+    });
+    showToast(error?.response?.data?.message, 'error');
+  } finally {
+    set({ passwordResetIsLoading: false });
+  }
+};
+
+export const checkResetPasswordToken = async (
+  set: any,
+  get: any,
+  resetPasswordToken: string,
+): Promise<void> => {
+  set({
+    resetPasswordTokenExistsIsLoading: true,
+    resetPasswordTokenExistsIsSuccess: false,
+    resetPasswordTokenExistsError: null,
+  });
+  try {
+    const response = await axios.get(
+      `${API_URL}/check-reset-password-token/${resetPasswordToken}`,
+    );
+    const responseData = response.data?.data;
+    set({
+      resetPasswordTokenExistsIsSuccess: true,
+      resetPasswordTokenExists: responseData,
+    });
+  } catch (error) {
+    set({
+      resetPasswordTokenExistsIsSuccess: false,
+      resetPasswordTokenExistsError: error?.response?.data?.data,
+      resetPasswordTokenExists: false,
+    });
+  } finally {
+    set({ resetPasswordTokenExistsIsLoading: false });
+  }
 };

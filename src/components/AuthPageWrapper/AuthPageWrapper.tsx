@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './AuthPageWrapper.module.scss';
 import logoSvg from '../../assets/images/logo.svg';
 import { ReactSVG } from 'react-svg';
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
+import { routes } from '../../config/Router/routes';
 
 type Props = {
   children: ReactNode;
@@ -17,7 +19,9 @@ const AuthPageWrapper = ({ children }: Props) => {
     <div className={styles.authPageWrapperContainer}>
       {width >= MOBILE_BREAK_POINT && (
         <div className={styles.authSideBar}>
-          <ReactSVG src={logoSvg} />
+          <NavLink to={routes.loginPage}>
+            <ReactSVG src={logoSvg} />
+          </NavLink>
         </div>
       )}
       <div className={styles.childrenContainer}>{children}</div>

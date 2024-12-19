@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { routes } from '../../../config/Router/routes';
 import styles from './LoginPage.module.scss';
 import { useForm } from '../../../hooks/useForm';
@@ -17,7 +17,7 @@ const INPUTS = [
   {
     name: 'email',
     type: 'text',
-    label: 'Email adress',
+    label: 'Email address',
     value: '',
   },
   {
@@ -66,7 +66,12 @@ const LoginPage = () => {
               options={input.options}
             />
           ))}
-          <p className={styles.forgotPasswordLabel}>Forgot password?</p>
+          <NavLink
+            to={routes.forgotPasswordPage}
+            className={styles.forgotPasswordLabel}
+          >
+            Forgot password?
+          </NavLink>
           <div className={styles.ctaContainer}>
             <button
               onClick={handleLogin}
