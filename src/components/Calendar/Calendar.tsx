@@ -70,8 +70,13 @@ const Calendar = ({
     resetUserEventStore,
   } = useUserEventStore();
 
-  const { includeWeekends, calendarView, calendarEventFilter, userIdCalendar } =
-    useCalendarControlStore();
+  const {
+    includeWeekends,
+    calendarView,
+    calendarEventFilter,
+    userIdCalendar,
+    includeSelectableLectures,
+  } = useCalendarControlStore();
 
   const { currentUser } = useAuthStore();
 
@@ -128,10 +133,25 @@ const Calendar = ({
 
   const calendarRef = useRef<FullCalendar>(null);
 
+  const filterLectures = (
+    lectures: LectureEvent[],
+    includeSelectableLectures: boolean,
+  ) => {
+    if (includeSelectableLectures) {
+      return lectures;
+    }
+
+    return lectures.filter(
+      (lecture) =>
+        lecture.lectureTypes.includes('egzaminas') ||
+        lecture.lectureTypes.includes('privalomasis'),
+    );
+  };
+
   const calendarEvents = useMemo(() => {
     if (calendarEventFilter === 'Lectures') {
-      return lectureEvents.map((event) =>
-        fetchedEventToCalendarEvent(event, currentUser),
+      return filterLectures(lectureEvents, includeSelectableLectures).map(
+        (event) => fetchedEventToCalendarEvent(event, currentUser),
       );
     }
 
@@ -142,14 +162,19 @@ const Calendar = ({
     }
 
     return [
-      ...lectureEvents.map((event) =>
+      ...filterLectures(lectureEvents, includeSelectableLectures).map((event) =>
         fetchedEventToCalendarEvent(event, currentUser),
       ),
       ...userEvents.map((event) =>
         fetchedEventToCalendarEvent(event, currentUser),
       ),
     ];
-  }, [lectureEvents, userEvents, calendarEventFilter]);
+  }, [
+    lectureEvents,
+    userEvents,
+    calendarEventFilter,
+    includeSelectableLectures,
+  ]);
 
   useEffect(() => {
     if (shownInterval && userIdCalendar) {

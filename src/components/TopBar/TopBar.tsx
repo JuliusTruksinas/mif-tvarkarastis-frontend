@@ -10,6 +10,7 @@ import styles from './TopBar.module.scss';
 import { useNotificationStore } from '../../stores/notification/notification.store';
 import Notification from '../Notification/Notification';
 import { routes } from '../../config/Router/routes';
+import { NavLink } from 'react-router-dom';
 
 export const TopBar = () => {
   const {
@@ -35,7 +36,11 @@ export const TopBar = () => {
 
   return (
     <div className={styles.topBarContainer}>
-      {width < 800 && <ReactSVG src={logoSvg} />}
+      {width < 800 && (
+        <NavLink to={routes.calendar}>
+          <ReactSVG src={logoSvg} />
+        </NavLink>
+      )}
       <div className={styles.ctaContainer}>
         <div
           className={classNames(

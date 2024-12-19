@@ -6,6 +6,7 @@ import EventFilteringController from './EventFilteringController/EventFilteringC
 import UserCalendarController from './UserCalendarController/UserCalendarController';
 import AreWeekendsIncludedController from './AreWeekendsIncludedController/AreWeekendsIncludedController';
 import styles from './CalendarControllers.module.scss';
+import AreSelectableLecturesIncludedController from './AreSelectableLecturesIncludedController/AreSelectableLecturesIncludedController';
 
 type Props = {
   calendarRef: React.RefObject<FullCalendar>;
@@ -31,6 +32,7 @@ const CalendarControlls = ({ calendarRef }: Props) => {
           calendarRef={calendarRef}
           setTitle={setTitle}
         />
+        <AreSelectableLecturesIncludedController />
       </div>
       <div className={styles.movementControllers}>
         <p className={styles.calendarTitle}>{title}</p>
