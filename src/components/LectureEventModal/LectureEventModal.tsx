@@ -51,10 +51,6 @@ const LectureEventModal = ({
       label: 'Location:',
       value: lectureEvent?.location,
     },
-    {
-      label: 'Room:',
-      value: lectureEvent?.room,
-    },
   ];
 
   return (

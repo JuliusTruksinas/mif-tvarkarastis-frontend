@@ -6,10 +6,9 @@ export interface LectureEvent {
   programName: string;
   course: number;
   group: number;
-  subgroup?: number;
   lecturer: string;
   lectureTypes: string[];
-  comment?: string;
   location: string;
-  room?: number;
+  subgroup?: number;
+  comment?: string;
 }
