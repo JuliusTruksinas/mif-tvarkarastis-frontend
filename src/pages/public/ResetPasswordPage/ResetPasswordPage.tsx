@@ -47,7 +47,6 @@ const ResetPasswordPage = () => {
   const [resetPasswordToken, setResetPasswordToken] = useState<string>('');
 
   const { resetPasswordTokenParam } = useParams();
-  console.log(resetPasswordTokenExistsIsLoading);
 
   useEffect(() => {
     if (resetPasswordTokenParam) {

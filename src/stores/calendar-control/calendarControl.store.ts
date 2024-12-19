@@ -8,6 +8,8 @@ export interface CalendarControlStore {
   setCalendarEventFilter: (calendarEventFilter: CalendarEventFilter) => void;
   includeWeekends: boolean;
   setIncludeWeekends: (includeWeekends: boolean) => void;
+  includeSelectableLectures: boolean;
+  setIncludeSelectableLectures: (includeSelectableLectures: boolean) => void;
   userIdCalendar: string;
   setUserIdCalendar: (userId: string) => void;
   setUserCalendar: (userId: string) => void;
@@ -24,6 +26,9 @@ export const useCalendarControlStore = create<CalendarControlStore>((set) => ({
   includeWeekends: false,
   setIncludeWeekends: (includeWeekends: boolean) =>
     set(() => ({ includeWeekends })),
+  includeSelectableLectures: true,
+  setIncludeSelectableLectures: (includeSelectableLectures: boolean) =>
+    set(() => ({ includeSelectableLectures })),
   userIdCalendar: '',
   setUserIdCalendar: (userId: string) => set({ userIdCalendar: userId }),
   setUserCalendar: (userId: string) => {},
