@@ -1,26 +1,24 @@
 import { User } from '../domain/common';
-import {
-  FetchedLectureEvent,
-  FetchedUserEvent,
-} from '../domain/dto/calendarDtos';
+import { UserEvent } from '../domain/userEvent';
+import { LectureEvent } from '../domain/lectureEvent';
 
-const isFetchedLectureEvent = (
-  event: FetchedUserEvent | FetchedLectureEvent,
-): event is FetchedLectureEvent => {
-  return (event as FetchedLectureEvent).lecturer !== undefined;
+const isLectureEvent = (
+  event: UserEvent | LectureEvent,
+): event is LectureEvent => {
+  return (event as LectureEvent).lecturer !== undefined;
 };
 
-const getColor = (fetchedEvent: FetchedUserEvent | FetchedLectureEvent) => {
+const getColor = (fetchedEvent: UserEvent | LectureEvent) => {
   // exam color
   if (
-    isFetchedLectureEvent(fetchedEvent) &&
+    isLectureEvent(fetchedEvent) &&
     fetchedEvent.lectureTypes.includes('egzaminas')
   ) {
     return '#bf0a30';
   }
 
   // regular lecture event
-  if (isFetchedLectureEvent(fetchedEvent)) {
+  if (isLectureEvent(fetchedEvent)) {
     return '#273469';
   }
 
@@ -28,7 +26,7 @@ const getColor = (fetchedEvent: FetchedUserEvent | FetchedLectureEvent) => {
 };
 
 export const fetchedEventToCalendarEvent = (
-  fetchedEvent: FetchedUserEvent | FetchedLectureEvent,
+  fetchedEvent: UserEvent | LectureEvent,
   currentUser: User,
 ) => {
   return {
@@ -36,8 +34,7 @@ export const fetchedEventToCalendarEvent = (
     end: fetchedEvent.endDateTime,
     title: fetchedEvent.title,
     editable:
-      !isFetchedLectureEvent(fetchedEvent) &&
-      fetchedEvent.user === currentUser.id,
+      !isLectureEvent(fetchedEvent) && fetchedEvent.user === currentUser.id,
     backgroundColor: getColor(fetchedEvent),
     borderColor: getColor(fetchedEvent),
     textColor: '#ffffff',
