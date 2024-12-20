@@ -77,6 +77,25 @@ export const useForm = <T>(
     );
   };
 
+  const onCheckboxChange = (name: string, value: string) => {
+    setInputs((prevState) => {
+      const inputs = prevState.map((prevInput) => {
+        return prevInput.name === name
+          ? {
+              ...prevInput,
+              value: value,
+            }
+          : { ...prevInput };
+      });
+
+      formBehavior?.submitOnChange &&
+        onFormSubmit &&
+        onFormSubmit(getSubmitInputs(inputs));
+
+      return inputs;
+    });
+  };
+
   return {
     inputs,
     onInputChange,
@@ -84,5 +103,6 @@ export const useForm = <T>(
     getInputByName,
     setNewInputValue,
     resetInputValues,
+    onCheckboxChange,
   };
 };

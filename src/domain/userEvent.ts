@@ -4,6 +4,7 @@ export interface UserEvent {
   endDateTime: string;
   title: string;
   user: string;
+  isPrivate: boolean;
   note?: string;
   location?: string;
 }

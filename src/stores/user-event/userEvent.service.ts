@@ -3,20 +3,22 @@ import axios from '../../config/Axios/axios-instance';
 
 const API_URL = '/user-events';
 
-export interface CreateUserRequestDto {
+export interface CreateUserEventRequestDto {
   startDateTime: string;
   endDateTime: string;
   title: string;
+  isPrivate: boolean;
   note?: string;
   location?: string;
 }
 
-export interface UpdateUserRequestDto {
+export interface UpdateUserEventRequestDto {
   startDateTime?: string;
   endDateTime?: string;
   title?: string;
   note?: string;
   location?: string;
+  isPrivate: boolean;
 }
 
 export interface FetchUserEventsRequestDto {
@@ -56,7 +58,7 @@ export const fetchUserEvents = async (
 export const createUserEvent = async (
   set: any,
   get: any,
-  inputs: CreateUserRequestDto,
+  inputs: CreateUserEventRequestDto,
 ): Promise<void> => {
   set({
     userEventCreateIsLoading: true,
@@ -88,7 +90,7 @@ export const updateUserEvent = async (
   set: any,
   get: any,
   id: string,
-  inputs: UpdateUserRequestDto,
+  inputs: UpdateUserEventRequestDto,
 ): Promise<void> => {
   set({
     userEventUpdateIsLoading: true,
