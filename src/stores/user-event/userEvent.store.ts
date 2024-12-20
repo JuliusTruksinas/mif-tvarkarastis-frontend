@@ -2,12 +2,12 @@ import { create } from 'zustand';
 import { UserEvent } from '../../domain/userEvent';
 import {
   createUserEvent,
-  CreateUserRequestDto,
+  CreateUserEventRequestDto,
   deleteUserEvent,
   fetchUserEvents,
   FetchUserEventsRequestDto,
   updateUserEvent,
-  UpdateUserRequestDto,
+  UpdateUserEventRequestDto,
 } from './userEvent.service';
 import { HttpError } from '../../config/Axios/axios-instance';
 
@@ -21,11 +21,11 @@ export interface UserEventStore {
   userEventCreateIsLoading: boolean;
   userEventCreateIsSuccess: boolean;
   userEventCreateError: HttpError;
-  createUserEvent: (inputs: CreateUserRequestDto) => void;
+  createUserEvent: (inputs: CreateUserEventRequestDto) => void;
   userEventUpdateIsLoading: boolean;
   userEventUpdateIsSuccess: boolean;
   userEventUpdateError: HttpError;
-  updateUserEvent: (id: string, inputs: UpdateUserRequestDto) => void;
+  updateUserEvent: (id: string, inputs: UpdateUserEventRequestDto) => void;
   userEventDeleteIsLoading: boolean;
   userEventDeleteIsSuccess: boolean;
   userEventDeleteError: HttpError;
@@ -56,9 +56,9 @@ const getInitialState = (set, get) => ({
   ...initialDataState,
   fetchUserEvents: (inputs: FetchUserEventsRequestDto) =>
     fetchUserEvents(set, get, inputs),
-  createUserEvent: (inputs: CreateUserRequestDto) =>
+  createUserEvent: (inputs: CreateUserEventRequestDto) =>
     createUserEvent(set, get, inputs),
-  updateUserEvent: (id: string, inputs: UpdateUserRequestDto) =>
+  updateUserEvent: (id: string, inputs: UpdateUserEventRequestDto) =>
     updateUserEvent(set, get, id, inputs),
   deleteUserEvent: (id: string) => deleteUserEvent(set, get, id),
   resetUserEventStore: () => set(initialDataState),

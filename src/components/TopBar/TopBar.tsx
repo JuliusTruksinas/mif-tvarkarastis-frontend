@@ -34,6 +34,14 @@ export const TopBar = () => {
     }
   }, [unseenNotificationsIsUpdateNeeded]);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchUnseenNotifications();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className={styles.topBarContainer}>
       {width < 800 && (

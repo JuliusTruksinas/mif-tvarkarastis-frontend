@@ -121,6 +121,9 @@ const Calendar = ({
       startDateTime: droppedEvent.start.toISOString(),
       endDateTime: droppedEvent.end.toISOString(),
       title: eventData.title,
+      note: eventData?.note,
+      location: eventData?.location,
+      isPrivate: eventData?.isPrivate,
     });
   };
 

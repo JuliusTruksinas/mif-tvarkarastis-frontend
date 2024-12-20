@@ -6,6 +6,7 @@ import TimeTextField from './TimeTextField/TimeTextField';
 import SelectTextField, {
   SelectOption,
 } from './SelectTextField/SelectTextField';
+import SwitchTextField from './SwitchTextField/SwitchTextField';
 
 type Props = {
   value: string;
@@ -19,6 +20,7 @@ type Props = {
   labelClassName?: string;
   isLoading?: boolean;
   onChange: (e: ChangeEvent) => void;
+  onCheckboxChange?: (name: string, value: string) => void;
 };
 
 const TextField = ({
@@ -33,6 +35,7 @@ const TextField = ({
   options,
   labelClassName,
   isLoading,
+  onCheckboxChange,
 }: Props) => {
   const TYPES_AND_THEIR_COMPONENTS = {
     text: (
@@ -105,6 +108,16 @@ const TextField = ({
         containerClassName={containerClassName}
         labelClassName={labelClassName}
         isLoading={isLoading}
+      />
+    ),
+    switch: (
+      <SwitchTextField
+        name={name}
+        value={value}
+        label={label}
+        containerClassName={containerClassName}
+        elementClassName={elementClassName}
+        onCheckboxChange={onCheckboxChange}
       />
     ),
   };

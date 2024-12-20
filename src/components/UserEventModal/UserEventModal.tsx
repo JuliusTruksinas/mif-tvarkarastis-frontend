@@ -20,6 +20,7 @@ type formInputs = {
   title: string;
   note?: string;
   location?: string;
+  isPrivate: string;
 };
 
 const UserEventModal = ({
@@ -68,9 +69,15 @@ const UserEventModal = ({
       label: 'Notes',
       value: userEvent?.note || '',
     },
+    {
+      name: 'isPrivate',
+      type: 'switch',
+      label: 'Private',
+      value: userEvent?.isPrivate ? '1' : '0',
+    },
   ];
 
-  const { inputs, onInputChange, getSubmitInputs } =
+  const { inputs, onInputChange, getSubmitInputs, onCheckboxChange } =
     useForm<formInputs>(INPUTS);
 
   const { createUserEvent, updateUserEvent, deleteUserEvent } =
@@ -92,6 +99,7 @@ const UserEventModal = ({
         title: submitInputs.title,
         note: submitInputs.note || null,
         location: submitInputs.location || null,
+        isPrivate: submitInputs.isPrivate === '1',
       });
       return;
     }
@@ -108,6 +116,7 @@ const UserEventModal = ({
       title: submitInputs.title,
       note: submitInputs.note || null,
       location: submitInputs.location || null,
+      isPrivate: submitInputs.isPrivate === '1',
     });
   };
 
@@ -126,7 +135,10 @@ const UserEventModal = ({
         <div className={styles.allInputsContainer}>
           {inputs
             .filter(
-              (input) => !['startTime', 'endTime', 'note'].includes(input.name),
+              (input) =>
+                !['startTime', 'endTime', 'note', 'isPrivate'].includes(
+                  input.name,
+                ),
             )
             .map((input) => (
               <TextField
@@ -163,6 +175,21 @@ const UserEventModal = ({
                 label={input.label}
                 type={input.type}
                 onChange={onInputChange}
+              />
+            ))}
+        </div>
+        <div className={styles.switchContainer}>
+          {inputs
+            .filter((input) => ['isPrivate'].includes(input.name))
+            .map((input) => (
+              <TextField
+                key={input.name}
+                name={input.name}
+                value={input.value}
+                label={input.label}
+                type={input.type}
+                onChange={onInputChange}
+                onCheckboxChange={onCheckboxChange}
               />
             ))}
         </div>
