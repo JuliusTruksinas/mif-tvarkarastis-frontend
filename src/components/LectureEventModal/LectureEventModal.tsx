@@ -1,7 +1,15 @@
+import { ReactSVG } from 'react-svg';
 import Modal from '../../common/Modal/Modal';
 import styles from './LectureEventModal.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
 import { extractDate, extractTime } from '../../helpers/time';
+import busIcon from '../../assets/icons/busIcon.svg';
+import carIcon from '../../assets/icons/carIcon.svg';
+import {
+  generateGoogleMapsLink,
+  tryGetFaculty,
+} from '../../helpers/googleMaps';
+import UserEventLocation from '../UserEventLocation/UserEventLocation';
 
 type Props = {
   onClose: () => void;
@@ -14,6 +22,8 @@ const LectureEventModal = ({
   lectureEvent,
   setSelectedLectureEvent,
 }: Props) => {
+  const faculty = tryGetFaculty(lectureEvent?.location);
+
   const INFO = [
     {
       label: 'Start:',
@@ -49,7 +59,11 @@ const LectureEventModal = ({
     },
     {
       label: 'Location:',
-      value: lectureEvent?.location,
+      value: faculty ? (
+        <UserEventLocation lectureEvent={lectureEvent} faculty={faculty} />
+      ) : (
+        lectureEvent?.location
+      ),
     },
   ];
 
@@ -67,7 +81,11 @@ const LectureEventModal = ({
           {INFO.filter((info) => info.value).map((info) => (
             <div className={styles.infoContainer}>
               <p className={styles.label}>{info.label}</p>
-              <p className={styles.value}>{info.value}</p>
+              {typeof info.value === 'string' ? (
+                <p className={styles.value}>{info.value}</p>
+              ) : (
+                info.value
+              )}
             </div>
           ))}
         </div>

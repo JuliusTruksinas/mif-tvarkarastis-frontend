@@ -1,0 +1,10 @@
+.locationClassWithIconsConteiner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.iconsForGoogleMaps {
+  max-width: 37px;
+  cursor: pointer;
+}
