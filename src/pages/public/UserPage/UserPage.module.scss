@@ -160,3 +160,44 @@
     flex-basis: 100%;
   }
 }
+
+.additionalInfoContainer {
+  max-width: 500px;
+  max-height: 60px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.googleMapsIcon {
+  max-height: 60px;
+  max-width: 60px;
+  cursor: pointer;
+}
+.googleMapsIconOutlined {
+  max-height: 60px;
+  max-width: 60px;
+  cursor: pointer;
+  border-color: black;
+  border-radius: 18%;
+  border-width: 3px;
+}
+
+.wazeIcon {
+  max-height: 60px;
+  max-width: 60px;
+  cursor: pointer;
+}
+
+.wazeIconOutlined {
+  max-height: 60px;
+  max-width: 60px;
+  cursor: pointer;
+  border-color: black;
+  border-radius: 23%;
+  border-width: 3px;
+}
+.spaceBetweenInfoContainers {
+  height: 12px;
+  width: 100%;
+}
