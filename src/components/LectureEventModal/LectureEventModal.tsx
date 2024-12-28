@@ -1,14 +1,8 @@
-import { ReactSVG } from 'react-svg';
 import Modal from '../../common/Modal/Modal';
 import styles from './LectureEventModal.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
 import { extractDate, extractTime } from '../../helpers/time';
-import busIcon from '../../assets/icons/busIcon.svg';
-import carIcon from '../../assets/icons/carIcon.svg';
-import {
-  generateGoogleMapsLink,
-  tryGetFaculty,
-} from '../../helpers/googleMaps';
+import { tryGetFaculty } from '../../helpers/Navigation';
 import UserEventLocation from '../UserEventLocation/UserEventLocation';
 
 type Props = {

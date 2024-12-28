@@ -12,12 +12,13 @@ export interface UpdateUserInfoRequestDto {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  password?: string;
   studyType: number;
   programName: string;
   course: number;
   group: number;
   subgroup: number;
+  preferredNavigationApp?: string;
 }
 
 export const findUsers = async (

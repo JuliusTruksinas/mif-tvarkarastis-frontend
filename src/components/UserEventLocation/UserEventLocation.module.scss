@@ -2,9 +2,19 @@
   display: flex;
   align-items: center;
   gap: 15px;
-}
 
-.iconsForGoogleMaps {
-  max-width: 37px;
-  cursor: pointer;
+  .iconsContainer {
+    display: flex;
+    align-items: center;
+    .icon {
+      cursor: pointer;
+      max-width: 37px;
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
 }

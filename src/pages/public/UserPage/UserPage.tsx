@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import styles from './UserPage.module.scss';
 import { useAuthStore } from '../../../stores/auth/auth.store';
@@ -6,6 +6,11 @@ import { useForm } from '../../../hooks/useForm';
 import TextField from '../../../common/TextField/TextField';
 import { useStudyOptionsStore } from '../../../stores/study-options/studyOptions.store';
 import { useUserStore } from '../../../stores/user/user.store';
+import { ReactSVG } from 'react-svg';
+import googleMapsIcon from '../../../assets/icons/googleMapsIcon.svg';
+import googleMapsIconOutlined from '../../../assets/icons/googleMapsIconOutlined.svg';
+import wazeIcon from '../../../assets/icons/wazeIcon.svg';
+import wazeIconOutlined from '../../../assets/icons/wazeIconOutlined.svg';
 
 const DEFAULT_OPTIONS = [{ label: 'select', value: '' }];
 
@@ -29,6 +34,16 @@ const UserPage = () => {
     groupsOptionsIsLoading,
     subgroupsOptionsIsLoading,
   } = useStudyOptionsStore();
+  const [preferredNavigationApp, setPreferredNavigationApp] = useState(
+    currentUser?.preferredNavigationApp,
+  );
+
+  const handleNavigationAppChange = (preferredApp) => {
+    updateUserInfo({
+      ...currentUser,
+      preferredNavigationApp: preferredApp,
+    });
+  };
 
   const { updateUserInfo } = useUserStore();
 
@@ -217,6 +232,7 @@ const UserPage = () => {
       group: +submitInputs.group || null,
       subgroup: +submitInputs.subgroup || null,
       ...(submitInputs?.password && { password: submitInputs.password }),
+      preferredNavigationApp,
     });
 
     setNewInputValue('password', { value: '' });
@@ -330,6 +346,30 @@ const UserPage = () => {
                   />
                 ))}
             </div>
+          </div>
+        </div>
+        <div className={styles.spaceBetweenInfoContainers}></div>
+        <div className={styles.myInfoContainer}>
+          <p className={styles.infoText}>Additional info</p>
+        </div>
+        <div className={styles.programContainer}>
+          <div className={styles.additionalInfoContainer}>
+            <p>Preferred mobile navigation app: </p>
+            <ReactSVG
+              src={googleMapsIcon}
+              className={classNames(styles.googleMapsIcon, {
+                [styles.googleMapsIconOutlined]:
+                  preferredNavigationApp === 'googleMaps',
+              })}
+              onClick={() => setPreferredNavigationApp('googleMaps')}
+            />
+            <ReactSVG
+              src={wazeIcon}
+              className={classNames(styles.wazeIcon, {
+                [styles.wazeIconOutlined]: preferredNavigationApp === 'waze',
+              })}
+              onClick={() => setPreferredNavigationApp('waze')}
+            />
           </div>
         </div>
       </div>

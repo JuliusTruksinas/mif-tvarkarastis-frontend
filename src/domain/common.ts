@@ -13,6 +13,7 @@ export interface User {
   course: number;
   group: number;
   subgroup: number;
+  preferredNavigationApp: 'googleMaps' | 'waze';
 }
 
 export interface BasicUserInfo {
