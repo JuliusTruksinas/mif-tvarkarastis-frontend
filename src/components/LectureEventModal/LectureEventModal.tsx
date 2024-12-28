@@ -2,7 +2,7 @@ import Modal from '../../common/Modal/Modal';
 import styles from './LectureEventModal.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
 import { extractDate, extractTime } from '../../helpers/time';
-import { tryGetFaculty } from '../../helpers/Navigation';
+import { tryGetFaculty } from '../../helpers/navigation';
 import UserEventLocation from '../UserEventLocation/UserEventLocation';
 
 type Props = {

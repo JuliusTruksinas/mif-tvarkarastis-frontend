@@ -1,3 +1,4 @@
+import { PreferredNavigationApp } from '../domain/navigation';
 import { convertToSecondsInTimezone } from './time';
 
 enum DeviceType {
@@ -59,7 +60,7 @@ export const generateNavigationLink = (
   faculty: Faculty,
   ArrivalTime: string,
   modeOfTransportation: 'bus' | 'car',
-  preferredNavigationApp: 'googleMaps' | 'waze',
+  preferredNavigationApp: PreferredNavigationApp,
 ): string => {
   const date = new Date(ArrivalTime);
   const millisecondsSinceEpoch = date.getTime();

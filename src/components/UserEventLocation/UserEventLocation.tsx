@@ -4,7 +4,7 @@ import styles from './UserEventLocation.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
 import busIcon from '../../assets/icons/busIcon.svg';
 import carIcon from '../../assets/icons/carIcon.svg';
-import { Faculty, generateNavigationLink } from '../../helpers/Navigation.ts';
+import { Faculty, generateNavigationLink } from '../../helpers/navigation.ts';
 import { useAuthStore } from '../../stores/auth/auth.store';
 
 type Props = {
@@ -16,8 +16,10 @@ const UserEventLocation = ({ lectureEvent, faculty }: Props) => {
   const { currentUser, getCurrentUser } = useAuthStore();
 
   useEffect(() => {
-    getCurrentUser();
-  }, []);
+    if (!currentUser) {
+      getCurrentUser();
+    }
+  }, [currentUser]);
 
   return (
     <div className={styles.locationClassWithIconsConteiner}>
