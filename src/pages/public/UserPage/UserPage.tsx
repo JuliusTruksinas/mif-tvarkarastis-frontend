@@ -141,8 +141,10 @@ const UserPage = () => {
   );
 
   useEffect(() => {
-    getCurrentUser();
-  }, [currentUserIsUpdateNeeded]);
+    if (!currentUser) {
+      getCurrentUser();
+    }
+  }, [currentUser, currentUserIsUpdateNeeded]);
 
   useEffect(() => {
     if (currentUser?.studyType) {
@@ -263,6 +265,8 @@ const UserPage = () => {
     for (const [key, value] of filteredEntries) {
       setNewInputValue(key, { value });
     }
+
+    setPreferredNavigationApp(currentUser.preferredNavigationApp);
   };
 
   return (
@@ -271,64 +275,23 @@ const UserPage = () => {
       <p className={styles.pageSubtitle}>
         View and manage your account settings
       </p>
-      <div className={styles.formContainer}>
-        <div className={styles.myInfoContainer}>
-          <p className={styles.infoText}>{currentUser?.firstName} info</p>
-        </div>
-        <div className={styles.programContainer}>
-          <div className={styles.profilePhotoContainer}>
-            <img
-              src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-              alt="User Avatar"
-              className={styles.profilePhoto}
-            />
+      <div className={styles.settingsSectionsContainer}>
+        <div className={styles.settingsSectionContainer}>
+          <div className={styles.settingsSectionTitleContainer}>
+            <p className={styles.infoText}>{currentUser?.firstName} info</p>
           </div>
-          <div className={styles.programBoxSection}>
-            {inputs
-              .filter((input) =>
-                ['firstName', 'lastName', 'email'].includes(input.name),
-              )
-              .map((input) => (
-                <TextField
-                  key={input.name}
-                  name={input.name}
-                  value={input.value}
-                  type={input.type}
-                  label={input.label}
-                  onChange={onInputChange}
-                  containerClassName={styles.inputContainer}
-                  elementClassName={styles.inputField}
-                  labelClassName={styles.inputLabel}
-                  options={input.options}
-                  isLoading={input.isLoading}
-                />
-              ))}
-          </div>
-          <div className={styles.programBoxSection}>
-            {inputs
-              .filter((input) =>
-                ['password', 'programName'].includes(input.name),
-              )
-              .map((input) => (
-                <TextField
-                  key={input.name}
-                  name={input.name}
-                  value={input.value}
-                  type={input.type}
-                  label={input.label}
-                  onChange={onInputChange}
-                  containerClassName={styles.inputContainer}
-                  elementClassName={styles.inputField}
-                  labelClassName={styles.inputLabel}
-                  options={input.options}
-                  isLoading={input.isLoading}
-                />
-              ))}
-
-            <div className={styles.programDetailsContainer}>
+          <div className={styles.settingsInnerSectionContainer}>
+            <div className={styles.profilePhotoContainer}>
+              <img
+                src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
+                alt="User Avatar"
+                className={styles.profilePhoto}
+              />
+            </div>
+            <div className={styles.programBoxSection}>
               {inputs
                 .filter((input) =>
-                  ['course', 'group', 'subgroup'].includes(input.name),
+                  ['firstName', 'lastName', 'email'].includes(input.name),
                 )
                 .map((input) => (
                   <TextField
@@ -338,7 +301,7 @@ const UserPage = () => {
                     type={input.type}
                     label={input.label}
                     onChange={onInputChange}
-                    containerClassName={styles.smallInputContainer}
+                    containerClassName={styles.inputContainer}
                     elementClassName={styles.inputField}
                     labelClassName={styles.inputLabel}
                     options={input.options}
@@ -346,30 +309,74 @@ const UserPage = () => {
                   />
                 ))}
             </div>
+            <div className={styles.programBoxSection}>
+              {inputs
+                .filter((input) =>
+                  ['password', 'programName'].includes(input.name),
+                )
+                .map((input) => (
+                  <TextField
+                    key={input.name}
+                    name={input.name}
+                    value={input.value}
+                    type={input.type}
+                    label={input.label}
+                    onChange={onInputChange}
+                    containerClassName={styles.inputContainer}
+                    elementClassName={styles.inputField}
+                    labelClassName={styles.inputLabel}
+                    options={input.options}
+                    isLoading={input.isLoading}
+                  />
+                ))}
+
+              <div className={styles.programDetailsContainer}>
+                {inputs
+                  .filter((input) =>
+                    ['course', 'group', 'subgroup'].includes(input.name),
+                  )
+                  .map((input) => (
+                    <TextField
+                      key={input.name}
+                      name={input.name}
+                      value={input.value}
+                      type={input.type}
+                      label={input.label}
+                      onChange={onInputChange}
+                      containerClassName={styles.smallInputContainer}
+                      elementClassName={styles.inputField}
+                      labelClassName={styles.inputLabel}
+                      options={input.options}
+                      isLoading={input.isLoading}
+                    />
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
-        <div className={styles.spaceBetweenInfoContainers}></div>
-        <div className={styles.myInfoContainer}>
-          <p className={styles.infoText}>Additional info</p>
-        </div>
-        <div className={styles.programContainer}>
-          <div className={styles.additionalInfoContainer}>
-            <p>Preferred mobile navigation app: </p>
-            <ReactSVG
-              src={googleMapsIcon}
-              className={classNames(styles.googleMapsIcon, {
-                [styles.googleMapsIconOutlined]:
-                  preferredNavigationApp === 'googleMaps',
-              })}
-              onClick={() => setPreferredNavigationApp('googleMaps')}
-            />
-            <ReactSVG
-              src={wazeIcon}
-              className={classNames(styles.wazeIcon, {
-                [styles.wazeIconOutlined]: preferredNavigationApp === 'waze',
-              })}
-              onClick={() => setPreferredNavigationApp('waze')}
-            />
+        <div className={styles.settingsSectionContainer}>
+          <div className={styles.settingsSectionTitleContainer}>
+            <p className={styles.infoText}>Additional settings</p>
+          </div>
+          <div className={styles.settingsInnerSectionContainer}>
+            <div className={styles.additionalSettingsContainer}>
+              <p>Preferred navigation app:</p>
+              <ReactSVG
+                src={googleMapsIcon}
+                className={classNames(styles.googleMapsIcon, {
+                  [styles.googleMapsIconOutlined]:
+                    preferredNavigationApp === 'googleMaps',
+                })}
+                onClick={() => setPreferredNavigationApp('googleMaps')}
+              />
+              <ReactSVG
+                src={wazeIcon}
+                className={classNames(styles.wazeIcon, {
+                  [styles.wazeIconOutlined]: preferredNavigationApp === 'waze',
+                })}
+                onClick={() => setPreferredNavigationApp('waze')}
+              />
+            </div>
           </div>
         </div>
       </div>

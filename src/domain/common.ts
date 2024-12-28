@@ -1,3 +1,5 @@
+import { PreferredNavigationApp } from './navigation';
+
 export interface SimpleOption {
   label: string;
   value: string;
@@ -13,7 +15,7 @@ export interface User {
   course: number;
   group: number;
   subgroup: number;
-  preferredNavigationApp: 'googleMaps' | 'waze';
+  preferredNavigationApp: PreferredNavigationApp;
 }
 
 export interface BasicUserInfo {
