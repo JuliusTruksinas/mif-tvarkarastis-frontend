@@ -2,8 +2,10 @@ import Modal from '../../common/Modal/Modal';
 import styles from './LectureEventModal.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
 import { extractDate, extractTime } from '../../helpers/time';
-import { tryGetFaculty } from '../../helpers/navigation';
+import { tryGetFaculty } from '../../helpers/navigationHelper';
 import UserEventLocation from '../UserEventLocation/UserEventLocation';
+import { ReactSVG } from 'react-svg';
+import popMasterrIcon from '../../assets/icons/popMasterr.svg';
 
 type Props = {
   onClose: () => void;
@@ -83,6 +85,15 @@ const LectureEventModal = ({
             </div>
           ))}
         </div>
+        {lectureEvent.title.toLowerCase().includes('anglų kalba') && (
+          <ReactSVG
+            src={popMasterrIcon}
+            className={styles.popMasterrLogoContainer}
+            onClick={() => {
+              window.open('https://popmasterr.netlify.app', '_blank');
+            }}
+          />
+        )}
       </div>
     </Modal>
   );
