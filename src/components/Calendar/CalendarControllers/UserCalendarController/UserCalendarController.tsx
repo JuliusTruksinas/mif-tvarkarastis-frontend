@@ -26,11 +26,18 @@ const UserCalendarController = () => {
   const { inputs, onInputChange, setNewInputValue } =
     useForm<FormInputs>(INPUTS);
   const { getFriends, friends, friendsIsUpdateNeeded } = useUserStore();
-  const { currentUser } = useAuthStore();
+  const { currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
+    useAuthStore();
 
   useEffect(() => {
     getFriends();
   }, []);
+
+  useEffect(() => {
+    if (!currentUser || currentUserIsUpdateNeeded) {
+      getCurrentUser();
+    }
+  }, [currentUser, currentUserIsUpdateNeeded]);
 
   useEffect(() => {
     if (friendsIsUpdateNeeded) {

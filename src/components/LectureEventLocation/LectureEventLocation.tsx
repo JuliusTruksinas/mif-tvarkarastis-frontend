@@ -1,28 +1,29 @@
 import { useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-import styles from './UserEventLocation.module.scss';
-import { LectureEvent } from '../../domain/lectureEvent';
+import styles from './LectureEventLocation.module.scss';
+import { LectureEvent } from '../../domain/lectureEvent.ts';
 import busIcon from '../../assets/icons/busIcon.svg';
 import carIcon from '../../assets/icons/carIcon.svg';
 import {
   Faculty,
   generateNavigationLink,
 } from '../../helpers/navigationHelper.ts';
-import { useAuthStore } from '../../stores/auth/auth.store';
+import { useAuthStore } from '../../stores/auth/auth.store.ts';
 
 type Props = {
   lectureEvent: LectureEvent;
   faculty: Faculty;
 };
 
-const UserEventLocation = ({ lectureEvent, faculty }: Props) => {
-  const { currentUser, getCurrentUser } = useAuthStore();
+const LectureEventLocation = ({ lectureEvent, faculty }: Props) => {
+  const { currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
+    useAuthStore();
 
   useEffect(() => {
-    if (!currentUser) {
+    if (!currentUser || currentUserIsUpdateNeeded) {
       getCurrentUser();
     }
-  }, [currentUser]);
+  }, [currentUser, currentUserIsUpdateNeeded]);
 
   return (
     <div className={styles.locationClassWithIconsConteiner}>
@@ -63,4 +64,4 @@ const UserEventLocation = ({ lectureEvent, faculty }: Props) => {
   );
 };
 
-export default UserEventLocation;
+export default LectureEventLocation;

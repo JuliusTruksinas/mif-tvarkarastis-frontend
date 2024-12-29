@@ -78,7 +78,14 @@ const Calendar = ({
     includeSelectableLectures,
   } = useCalendarControlStore();
 
-  const { currentUser } = useAuthStore();
+  const { currentUser, currentUserIsUpdateNeeded, getCurrentUser } =
+    useAuthStore();
+
+  useEffect(() => {
+    if (!currentUser || currentUserIsUpdateNeeded) {
+      getCurrentUser();
+    }
+  }, [currentUser, currentUserIsUpdateNeeded]);
 
   const handleEventClick = (info) => {
     const clickedEvent = info.event;

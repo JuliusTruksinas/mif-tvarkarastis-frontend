@@ -24,8 +24,15 @@ const CalendarPage = () => {
   );
   const [selectedLectureEvent, setSelectedLectureEvent] =
     useState<LectureEvent | null>(null);
-  const { currentUser } = useAuthStore();
+  const { currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
+    useAuthStore();
   const { userIdCalendar, setUserIdCalendar } = useCalendarControlStore();
+
+  useEffect(() => {
+    if (!currentUser || currentUserIsUpdateNeeded) {
+      getCurrentUser();
+    }
+  }, [currentUser, currentUserIsUpdateNeeded]);
 
   useEffect(() => {
     if (currentUser && !userIdCalendar) {
