@@ -3,7 +3,7 @@ import styles from './LectureEventModal.module.scss';
 import { LectureEvent } from '../../domain/lectureEvent';
 import { extractDate, extractTime } from '../../helpers/time';
 import { tryGetFaculty } from '../../helpers/navigationHelper';
-import UserEventLocation from '../UserEventLocation/UserEventLocation';
+import UserEventLocation from '../LectureEventLocation/LectureEventLocation';
 import { ReactSVG } from 'react-svg';
 import popMasterrIcon from '../../assets/icons/popMasterr.svg';
 

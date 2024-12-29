@@ -23,7 +23,8 @@ export const TopBar = () => {
   const [showDownloadApp, setShowDownloadApp] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
 
-  const { logout, currentUser } = useAuthStore();
+  const { logout, currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
+    useAuthStore();
   const { width } = useWindowSize();
 
   useEffect(() => {
@@ -47,6 +48,12 @@ export const TopBar = () => {
       );
     };
   }, []);
+
+  useEffect(() => {
+    if (!currentUser || currentUserIsUpdateNeeded) {
+      getCurrentUser();
+    }
+  }, [currentUser, currentUserIsUpdateNeeded]);
 
   useEffect(() => {
     if (currentUser) {

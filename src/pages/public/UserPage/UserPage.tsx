@@ -8,9 +8,7 @@ import { useStudyOptionsStore } from '../../../stores/study-options/studyOptions
 import { useUserStore } from '../../../stores/user/user.store';
 import { ReactSVG } from 'react-svg';
 import googleMapsIcon from '../../../assets/icons/googleMapsIcon.svg';
-import googleMapsIconOutlined from '../../../assets/icons/googleMapsIconOutlined.svg';
 import wazeIcon from '../../../assets/icons/wazeIcon.svg';
-import wazeIconOutlined from '../../../assets/icons/wazeIconOutlined.svg';
 
 const DEFAULT_OPTIONS = [{ label: 'select', value: '' }];
 
@@ -37,13 +35,6 @@ const UserPage = () => {
   const [preferredNavigationApp, setPreferredNavigationApp] = useState(
     currentUser?.preferredNavigationApp,
   );
-
-  const handleNavigationAppChange = (preferredApp) => {
-    updateUserInfo({
-      ...currentUser,
-      preferredNavigationApp: preferredApp,
-    });
-  };
 
   const { updateUserInfo } = useUserStore();
 
@@ -141,7 +132,7 @@ const UserPage = () => {
   );
 
   useEffect(() => {
-    if (!currentUser) {
+    if (!currentUser || currentUserIsUpdateNeeded) {
       getCurrentUser();
     }
   }, [currentUser, currentUserIsUpdateNeeded]);
