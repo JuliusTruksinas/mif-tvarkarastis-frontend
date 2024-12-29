@@ -37,7 +37,7 @@ const SideBar = () => {
       )}
       <div className={styles.sideBarItemsContainer}>
         {SIDEBAR_ITEMS.map((sideBarItem) => (
-          <NavLink to={sideBarItem.navLink}>
+          <NavLink to={sideBarItem.navLink} key={sideBarItem.label}>
             <div className={styles.sideBarItem}>
               <ReactSVG
                 src={sideBarItem.icon}

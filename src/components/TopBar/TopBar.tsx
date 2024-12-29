@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import { useNavigate } from 'react-router';
 import classNames from 'classnames';
@@ -19,8 +19,34 @@ export const TopBar = () => {
     unseenNotificationsIsUpdateNeeded,
   } = useNotificationStore();
   const navigate = useNavigate();
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showDownloadApp, setShowDownloadApp] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
+
   const { logout, currentUser } = useAuthStore();
   const { width } = useWindowSize();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowDownloadApp(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Check if the app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true);
+    }
+
+    return () => {
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstallPrompt,
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -41,6 +67,19 @@ export const TopBar = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const handleDownloadApp = async () => {
+    if (deferredPrompt) {
+      // Show the install prompt
+      deferredPrompt.prompt();
+
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+      }
+      setDeferredPrompt(null);
+    }
+  };
 
   return (
     <div className={styles.topBarContainer}>
@@ -107,12 +146,17 @@ export const TopBar = () => {
               styles.userMenuDropdownContentContainer,
             )}
           >
-            <li>
-              <p onClick={() => navigate(routes.userPage)}>Settings</p>
+            <li onClick={() => navigate(routes.userPage)}>
+              <p>Settings</p>
             </li>
-            <li>
-              <p onClick={logout}>Logout</p>
+            <li onClick={logout}>
+              <p>Logout</p>
             </li>
+            {!isInstalled && showDownloadApp && (
+              <li onClick={handleDownloadApp}>
+                <p>Download app</p>
+              </li>
+            )}
           </ul>
         </div>
       </div>
