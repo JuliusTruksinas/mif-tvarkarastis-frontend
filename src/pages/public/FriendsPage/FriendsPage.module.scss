@@ -1,56 +1,59 @@
 .friendsPageContainer {
   width: 100%;
+  display: flex;
   justify-content: center;
-  align-items: center;
-  max-width: 1100px;
 
-  .friendsFormContainer {
+  .pageInnerContent {
     width: 100%;
-    height: 237px;
+    max-width: 1100px;
+    .friendsFormContainer {
+      width: 100%;
+      height: 237px;
 
-    .title {
-      color: #273469;
-      font-size: 35px;
-      line-height: 32px;
-      margin-bottom: 5px;
-      font-weight: 400;
-    }
+      .title {
+        color: #273469;
+        font-size: 35px;
+        line-height: 32px;
+        margin-bottom: 5px;
+        font-weight: 400;
+      }
 
-    .pageSubtitle {
-      font-size: 14px;
-      line-height: 20px;
-      margin-top: 10px;
-      margin-bottom: 24px;
-      color: #273469;
-    }
-
-    .tabListElement {
-      width: 200px;
-      margin-bottom: 10px;
-
-      .tab {
-        font-size: 12px;
-        min-height: 40px;
-        height: 40px;
-        border-color: #ffffff;
+      .pageSubtitle {
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 10px;
+        margin-bottom: 24px;
         color: #273469;
       }
 
-      .selectedTab {
-        border-color: #e4d9ff;
-        font-weight: bold;
-      }
-    }
+      .tabListElement {
+        width: 200px;
+        margin-bottom: 10px;
 
-    .inputField {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #e4d9ff;
-      border-radius: 6px;
-      background-color: #fafaff;
-      color: #273469;
-      outline: none;
-      font-size: 14px;
+        .tab {
+          font-size: 12px;
+          min-height: 40px;
+          height: 40px;
+          border-color: #ffffff;
+          color: #273469;
+        }
+
+        .selectedTab {
+          border-color: #e4d9ff;
+          font-weight: bold;
+        }
+      }
+
+      .inputField {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e4d9ff;
+        border-radius: 6px;
+        background-color: #fafaff;
+        color: #273469;
+        outline: none;
+        font-size: 14px;
+      }
     }
   }
 }

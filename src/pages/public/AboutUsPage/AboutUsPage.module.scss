@@ -1,10 +1,12 @@
 @import '../../../styles/variables.scss';
 
-.registerPage {
+.aboutUsPage {
   width: 100%;
+  display: flex;
+  justify-content: center;
 
   .title {
-    color: #273469;
+    color: $primary-color;
     font-size: 35px;
     line-height: 32px;
     margin-bottom: 5px;
@@ -16,42 +18,34 @@
     line-height: 20px;
     margin-top: 10px;
     margin-bottom: 32px;
-    color: #273469;
+    color: $primary-color;
   }
 
-  .programContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    flex-direction: column;
-    width: 100%;
-    column-gap: 50px;
-    row-gap: 50px;
-
-    @media (min-width: $breakpoint-md) {
+  .pageInnerContent {
+    .personImgCardsContainer {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       flex-direction: column;
       width: 100%;
-      column-gap: 150px;
+      column-gap: 50px;
       row-gap: 50px;
-      max-width: 1100px;
-      padding: 50px;
-    }
-
-    .fotkyte {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      object-fit: contain;
 
       @media (min-width: $breakpoint-md) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        flex-direction: column;
+        width: 100%;
+        column-gap: 150px;
+        row-gap: 50px;
+        max-width: 1100px;
+        padding: 50px;
       }
     }
   }
 }
 
 .description {
-  color: #273468;
+  color: $primary-color;
   font-size: 14px;
   text-align: center;
 

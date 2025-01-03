@@ -1,0 +1,48 @@
+@import '../../styles/variables.scss';
+
+.buttonBase {
+  font-size: 12px;
+  min-height: 40px;
+  height: 40px;
+  width: 96px;
+  border-radius: 100px;
+  border: none;
+}
+
+.primaryButtonVariant {
+  background-color: $primary-color;
+  color: $creamy-color;
+
+  &:hover {
+    background-color: $primary-color;
+  }
+}
+
+.secondaryButtonVariant {
+  background-color: $pink-color;
+  color: $primary-color;
+
+  &:hover {
+    background-color: $pink-color;
+  }
+}
+
+.infoButtonVariant {
+  color: $primary-color;
+  background-color: $white-color;
+  border: 1px solid #dddddd;
+
+  &:hover {
+    border: 1px solid #dddddd;
+    background-color: $white-color;
+  }
+}
+
+.dangerButtonVariant {
+  color: $creamy-color;
+  background-color: $danger-color;
+
+  &:hover {
+    background-color: $danger-color;
+  }
+}

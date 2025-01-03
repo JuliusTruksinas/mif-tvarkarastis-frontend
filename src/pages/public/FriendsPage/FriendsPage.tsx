@@ -102,51 +102,53 @@ const FriendsPage = () => {
 
   return (
     <div className={styles.friendsPageContainer}>
-      <div className={styles.friendsFormContainer}>
-        <div>
-          <h1 className={styles.title}>Friends</h1>
-          <p className={styles.pageSubtitle}>
-            View your current friends and add new ones
-          </p>
-        </div>
-        <div
-          role="tablist"
-          className={classNames('tabs tabs-bordered', styles.tabListElement)}
-        >
-          {TABS.map((tab) => (
-            <p
-              key={tab.name}
-              role="tab"
-              className={classNames('tab', styles.tab, {
-                [styles.selectedTab]: tab.name === selectedTab,
-              })}
-              onClick={() => handleTabChange(tab)}
-            >
-              {tab.label}
+      <div className={styles.pageInnerContent}>
+        <div className={styles.friendsFormContainer}>
+          <div>
+            <h1 className={styles.title}>Friends</h1>
+            <p className={styles.pageSubtitle}>
+              View your current friends and add new ones
             </p>
+          </div>
+          <div
+            role="tablist"
+            className={classNames('tabs tabs-bordered', styles.tabListElement)}
+          >
+            {TABS.map((tab) => (
+              <p
+                key={tab.name}
+                role="tab"
+                className={classNames('tab', styles.tab, {
+                  [styles.selectedTab]: tab.name === selectedTab,
+                })}
+                onClick={() => handleTabChange(tab)}
+              >
+                {tab.label}
+              </p>
+            ))}
+          </div>
+          {inputs.map((input) => (
+            <TextField
+              key={input.name}
+              name={input.name}
+              value={input.value}
+              type={input.type}
+              label={input.label}
+              onChange={onInputChange}
+              elementClassName={classNames(
+                'input input-bordered w-full focus:outline-none focus:ring-0',
+                styles.inputField,
+              )}
+            />
           ))}
         </div>
-        {inputs.map((input) => (
-          <TextField
-            key={input.name}
-            name={input.name}
-            value={input.value}
-            type={input.type}
-            label={input.label}
-            onChange={onInputChange}
-            elementClassName={classNames(
-              'input input-bordered w-full focus:outline-none focus:ring-0',
-              styles.inputField,
-            )}
-          />
-        ))}
+        {selectedTab === 'allFriends' && filteredFriends?.length > 0 && (
+          <FriendsTable users={filteredFriends} selectedTab={selectedTab} />
+        )}
+        {selectedTab === 'addFriends' && foundUsers?.length > 0 && (
+          <FriendsTable users={foundUsers} selectedTab={selectedTab} />
+        )}
       </div>
-      {selectedTab === 'allFriends' && filteredFriends?.length > 0 && (
-        <FriendsTable users={filteredFriends} selectedTab={selectedTab} />
-      )}
-      {selectedTab === 'addFriends' && foundUsers?.length > 0 && (
-        <FriendsTable users={foundUsers} selectedTab={selectedTab} />
-      )}
     </div>
   );
 };

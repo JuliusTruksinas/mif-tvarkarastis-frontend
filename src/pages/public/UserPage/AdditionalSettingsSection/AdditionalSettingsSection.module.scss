@@ -1,0 +1,38 @@
+@import '../../../../styles/variables.scss';
+
+.additionalSettingsContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @media (min-width: 1000px) {
+    margin-bottom: 20px;
+  }
+
+  .preferredNavigationAppTitle {
+    color: $primary-color;
+    font-weight: 500;
+  }
+
+  .icon {
+    max-height: 60px;
+    max-width: 60px;
+    cursor: pointer;
+  }
+
+  .outlinedIcon {
+    max-height: 60px;
+    max-width: 60px;
+    cursor: pointer;
+    border-color: $black-color;
+    border-width: 3px;
+  }
+
+  .googleMapsOutlinedIcon {
+    border-radius: 18%;
+  }
+
+  .wazeOutlinedIcon {
+    border-radius: 23%;
+  }
+}

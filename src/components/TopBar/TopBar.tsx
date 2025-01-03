@@ -20,8 +20,6 @@ export const TopBar = () => {
   } = useNotificationStore();
   const navigate = useNavigate();
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [showDownloadApp, setShowDownloadApp] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
 
   const { logout, currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
     useAuthStore();
@@ -31,15 +29,9 @@ export const TopBar = () => {
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowDownloadApp(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Check if the app is already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-    }
 
     return () => {
       window.removeEventListener(
@@ -47,6 +39,14 @@ export const TopBar = () => {
         handleBeforeInstallPrompt,
       );
     };
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchUnseenNotifications();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -67,23 +67,14 @@ export const TopBar = () => {
     }
   }, [unseenNotificationsIsUpdateNeeded]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetchUnseenNotifications();
-    }, 10000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   const handleDownloadApp = async () => {
     if (deferredPrompt) {
       // Show the install prompt
       deferredPrompt.prompt();
 
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        setIsInstalled(true);
-      }
+      // if the user agrees the outcome value will be 'accepted'
+      // const { outcome } = await deferredPrompt.userChoice;
+
       setDeferredPrompt(null);
     }
   };
@@ -91,7 +82,7 @@ export const TopBar = () => {
   return (
     <div className={styles.topBarContainer}>
       {width < 800 && (
-        <NavLink to={routes.homePage}>
+        <NavLink to={routes.aboutUs}>
           <ReactSVG src={logoSvg} />
         </NavLink>
       )}
@@ -153,17 +144,16 @@ export const TopBar = () => {
               styles.userMenuDropdownContentContainer,
             )}
           >
-            <li onClick={() => navigate(routes.userPage)}>
+            <li onClick={() => navigate(routes.userSettingsPage)}>
               <p>Settings</p>
             </li>
             <li onClick={logout}>
               <p>Logout</p>
             </li>
-            {!isInstalled && showDownloadApp && (
-              <li onClick={handleDownloadApp}>
-                <p>Download app</p>
-              </li>
-            )}
+
+            <li onClick={handleDownloadApp}>
+              <p>Download app</p>
+            </li>
           </ul>
         </div>
       </div>
