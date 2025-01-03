@@ -1,7 +1,7 @@
 @import '../../../styles/variables.scss';
 
 .calendarControllersContainer {
-  @media (min-width: $breakpoint-lg) {
+  @media (min-width: 1500px) {
     display: flex;
     justify-content: space-between;
   }

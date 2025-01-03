@@ -1,11 +1,11 @@
 export const routes = {
-  homePage: '/home',
+  aboutUs: '/about-us',
   loginPage: '/login',
   registerPage: '/register',
   examplePage: '/example',
   calendar: '/calendar',
   friendsPage: '/friends',
-  userPage: '/user-page',
+  userSettingsPage: '/settings',
   forgotPasswordPage: '/forgot-password',
   resetPasswordPage: '/reset-password/:resetPasswordTokenParam',
 };

@@ -1,14 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import classNames from 'classnames';
-import styles from './UserPage.module.scss';
+import styles from './UserSettingsPage.module.scss';
 import { useAuthStore } from '../../../stores/auth/auth.store';
 import { useForm } from '../../../hooks/useForm';
-import TextField from '../../../common/TextField/TextField';
 import { useStudyOptionsStore } from '../../../stores/study-options/studyOptions.store';
 import { useUserStore } from '../../../stores/user/user.store';
-import { ReactSVG } from 'react-svg';
-import googleMapsIcon from '../../../assets/icons/googleMapsIcon.svg';
-import wazeIcon from '../../../assets/icons/wazeIcon.svg';
+import AdditionalSettingsSection from './AdditionalSettingsSection/AdditionalSettingsSection';
+import UserInfoSettingsSection from './UserInfoSettingsSection/UserInfoSettingsSection';
+import Button from '../../../common/Button/Button';
 
 const DEFAULT_OPTIONS = [{ label: 'select', value: '' }];
 
@@ -261,129 +259,24 @@ const UserPage = () => {
   };
 
   return (
-    <div className={styles.userPage}>
+    <div className={styles.userSettingsPage}>
       <h1 className={styles.title}>Settings</h1>
       <p className={styles.pageSubtitle}>
         View and manage your account settings
       </p>
       <div className={styles.settingsSectionsContainer}>
-        <div className={styles.settingsSectionContainer}>
-          <div className={styles.settingsSectionTitleContainer}>
-            <p className={styles.infoText}>{currentUser?.firstName} info</p>
-          </div>
-          <div className={styles.settingsInnerSectionContainer}>
-            <div className={styles.profilePhotoContainer}>
-              <img
-                src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-                alt="User Avatar"
-                className={styles.profilePhoto}
-              />
-            </div>
-            <div className={styles.programBoxSection}>
-              {inputs
-                .filter((input) =>
-                  ['firstName', 'lastName', 'email'].includes(input.name),
-                )
-                .map((input) => (
-                  <TextField
-                    key={input.name}
-                    name={input.name}
-                    value={input.value}
-                    type={input.type}
-                    label={input.label}
-                    onChange={onInputChange}
-                    containerClassName={styles.inputContainer}
-                    elementClassName={styles.inputField}
-                    labelClassName={styles.inputLabel}
-                    options={input.options}
-                    isLoading={input.isLoading}
-                  />
-                ))}
-            </div>
-            <div className={styles.programBoxSection}>
-              {inputs
-                .filter((input) =>
-                  ['password', 'programName'].includes(input.name),
-                )
-                .map((input) => (
-                  <TextField
-                    key={input.name}
-                    name={input.name}
-                    value={input.value}
-                    type={input.type}
-                    label={input.label}
-                    onChange={onInputChange}
-                    containerClassName={styles.inputContainer}
-                    elementClassName={styles.inputField}
-                    labelClassName={styles.inputLabel}
-                    options={input.options}
-                    isLoading={input.isLoading}
-                  />
-                ))}
-
-              <div className={styles.programDetailsContainer}>
-                {inputs
-                  .filter((input) =>
-                    ['course', 'group', 'subgroup'].includes(input.name),
-                  )
-                  .map((input) => (
-                    <TextField
-                      key={input.name}
-                      name={input.name}
-                      value={input.value}
-                      type={input.type}
-                      label={input.label}
-                      onChange={onInputChange}
-                      containerClassName={styles.smallInputContainer}
-                      elementClassName={styles.inputField}
-                      labelClassName={styles.inputLabel}
-                      options={input.options}
-                      isLoading={input.isLoading}
-                    />
-                  ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.settingsSectionContainer}>
-          <div className={styles.settingsSectionTitleContainer}>
-            <p className={styles.infoText}>Additional settings</p>
-          </div>
-          <div className={styles.settingsInnerSectionContainer}>
-            <div className={styles.additionalSettingsContainer}>
-              <p>Preferred navigation app:</p>
-              <ReactSVG
-                src={googleMapsIcon}
-                className={classNames(styles.googleMapsIcon, {
-                  [styles.googleMapsIconOutlined]:
-                    preferredNavigationApp === 'googleMaps',
-                })}
-                onClick={() => setPreferredNavigationApp('googleMaps')}
-              />
-              <ReactSVG
-                src={wazeIcon}
-                className={classNames(styles.wazeIcon, {
-                  [styles.wazeIconOutlined]: preferredNavigationApp === 'waze',
-                })}
-                onClick={() => setPreferredNavigationApp('waze')}
-              />
-            </div>
-          </div>
-        </div>
+        <UserInfoSettingsSection
+          inputs={inputs}
+          onInputChange={onInputChange}
+        />
+        <AdditionalSettingsSection
+          preferredNavigationApp={preferredNavigationApp}
+          setPreferredNavigationApp={setPreferredNavigationApp}
+        />
       </div>
       <div className={styles.ctaContainer}>
-        <button
-          className={classNames('btn', styles.cancelBtn)}
-          onClick={handleCancel}
-        >
-          Cancel
-        </button>
-        <button
-          className={classNames('btn', styles.saveBtn)}
-          onClick={handleSubmit}
-        >
-          Save
-        </button>
+        <Button label="Cancel" variant="secondary" onClick={handleCancel} />
+        <Button label="Save" variant="primary" onClick={handleSubmit} />
       </div>
     </div>
   );

@@ -1,0 +1,66 @@
+@import '../../../../styles/variables.scss';
+
+.settingsInnerSectionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 32px;
+
+  @media (min-width: 1335px) {
+    flex-direction: row;
+  }
+
+  .profilePhotoContainer {
+    display: flex;
+    justify-content: center;
+    min-width: 250px;
+
+    @media (min-width: 1000px) {
+      align-items: center;
+    }
+
+    .profilePhoto {
+      width: 250px;
+      height: 250px;
+      border-radius: 12px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+.programBoxSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-basis: 100%;
+  gap: 32px;
+}
+
+.programDetailsContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .smallInputContainer {
+    width: 100%;
+    flex-basis: 100%;
+  }
+}
+
+.inputLabel {
+  color: $primary-color;
+  font-size: 14px;
+}
+
+.inputField {
+  height: 48px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid $pink-color;
+  border-radius: 6px;
+  background-color: $creamy-color;
+  color: $primary-color;
+  outline: none;
+  font-size: 14px;
+}

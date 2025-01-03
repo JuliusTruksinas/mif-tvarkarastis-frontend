@@ -1,6 +1,9 @@
 @import '../../../styles/variables.scss';
 
 .selectTextFieldContainerRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .selectRoot {

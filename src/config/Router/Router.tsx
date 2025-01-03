@@ -4,10 +4,10 @@ import { useAuthStore } from '../../stores/auth/auth.store';
 import ProtectedRoute from '../../common/ProtectedRoute/ProtectedRoute';
 
 import { routes } from './routes';
-import HomePage from '../../pages/public/HomePage/HomePage';
+import AboutUsPage from '../../pages/public/AboutUsPage/AboutUsPage';
 import LoginPage from '../../pages/public/LoginPage/LoginPage';
 import RegisterPage from '../../pages/public/RegisterPage/RegisterPage';
-import UserPage from '../../pages/public/UserPage/UserPage';
+import UserSettingsPage from '../../pages/public/UserPage/UserSettingsPage';
 import CalendarPage from '../../pages/public/CalendarPage/CalendarPage';
 import FriendsPage from '../../pages/public/FriendsPage/FriendsPage';
 import LoadingPage from '../../pages/public/LoadingPage/LoadingPage';
@@ -17,10 +17,10 @@ import ResetPasswordPage from '../../pages/public/ResetPasswordPage/ResetPasswor
 const getAuthenticatedRoutes = () => {
   return (
     <Route element={<ProtectedRoute />}>
-      <Route path={routes.homePage} element={<HomePage />} />
+      <Route path={routes.aboutUs} element={<AboutUsPage />} />
       <Route path={routes.calendar} element={<CalendarPage />} />;
       <Route path={routes.friendsPage} element={<FriendsPage />} />
-      <Route path={routes.userPage} element={<UserPage />} />
+      <Route path={routes.userSettingsPage} element={<UserSettingsPage />} />
       <Route path={'*'} element={<Navigate to={routes.calendar} replace />} />
     </Route>
   );

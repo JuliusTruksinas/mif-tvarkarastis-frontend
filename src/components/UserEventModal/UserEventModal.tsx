@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import Modal from '../../common/Modal/Modal';
 import TextField from '../../common/TextField/TextField';
 import { useForm } from '../../hooks/useForm';
@@ -6,6 +5,7 @@ import styles from './UserEventModal.module.scss';
 import { useUserEventStore } from '../../stores/user-event/userEvent.store';
 import { UserEvent } from '../../domain/userEvent';
 import { extractDate, extractTime } from '../../helpers/time';
+import Button from '../../common/Button/Button';
 
 type Props = {
   onClose: () => void;
@@ -196,37 +196,26 @@ const UserEventModal = ({
       </div>
       <div className={styles.modalFooter}>
         {userEvent && (
-          <button
-            className={classNames(
-              'btn',
-              styles.eventModalBtn,
-              styles.deleteBtn,
-            )}
+          <Button
+            label="Delete"
+            variant="danger"
             onClick={() => {
               deleteUserEvent(userEvent?.id);
               setSelectedUserEvent?.(null);
               onClose();
             }}
-          >
-            Delete
-          </button>
+          />
         )}
-        <button
-          className={classNames('btn', styles.eventModalBtn, styles.cancelBtn)}
-          onClick={onClose}
-        >
-          Cancel
-        </button>
-        <button
+        <Button label="Cancel" variant="info" onClick={onClose} />
+        <Button
+          label={userEvent ? 'Update' : 'Add'}
+          variant="primary"
           onClick={() => {
             handleSubmit();
             setSelectedUserEvent?.(null);
             onClose();
           }}
-          className={classNames('btn', styles.eventModalBtn, styles.addBtn)}
-        >
-          {userEvent ? 'Update' : 'Add'}
-        </button>
+        />
       </div>
     </Modal>
   );

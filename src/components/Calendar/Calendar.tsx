@@ -258,6 +258,7 @@ const Calendar = ({
         eventChange={handleEventChange}
         timeZone="local"
         datesSet={handleDatesSet}
+        locale="en"
       />
     </>
   );

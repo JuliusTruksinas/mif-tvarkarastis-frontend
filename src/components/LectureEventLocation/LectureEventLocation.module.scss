@@ -8,7 +8,8 @@
     align-items: center;
     .icon {
       cursor: pointer;
-      max-width: 37px;
+      width: 37px;
+      height: auto;
 
       div {
         display: flex;

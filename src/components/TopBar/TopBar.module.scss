@@ -54,8 +54,21 @@
       max-width: 45px;
       border-radius: 100px;
     }
+
+    .userMenuDropdownContentContainer {
+      color: $primary-color;
+
+      p {
+        &:hover,
+        &:active {
+          color: inherit;
+          background-color: $pink-color;
+        }
+      }
+    }
   }
 }
+
 .menuDropdown {
   width: 250px;
   max-height: 200px;

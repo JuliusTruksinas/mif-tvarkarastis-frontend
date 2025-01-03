@@ -1,0 +1,35 @@
+@import '../../styles/variables.scss';
+
+.settingsSectionTitleContainer {
+  width: 100%;
+  margin-bottom: 20px;
+
+  @media (min-width: 1000px) {
+    border-radius: 16px 16px 0 0;
+    padding: 22px;
+    border: 1px solid #dddddd;
+    flex-direction: row;
+    margin-bottom: 0;
+  }
+
+  .settingsSectionTitle {
+    color: $primary-color;
+    font-size: 27px;
+    line-height: 32px;
+    font-weight: 400;
+    text-align: center;
+
+    @media (min-width: 1000px) {
+      text-align: left;
+    }
+  }
+}
+
+.settingsInnerSectionContainer {
+  @media (min-width: 1000px) {
+    border: 1px solid #dddddd;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 20px;
+  }
+}
