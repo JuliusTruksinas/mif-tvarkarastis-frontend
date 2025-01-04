@@ -26,7 +26,7 @@ export const useCalendarControlStore = create<CalendarControlStore>((set) => ({
   includeWeekends: false,
   setIncludeWeekends: (includeWeekends: boolean) =>
     set(() => ({ includeWeekends })),
-  includeSelectableLectures: true,
+  includeSelectableLectures: false,
   setIncludeSelectableLectures: (includeSelectableLectures: boolean) =>
     set(() => ({ includeSelectableLectures })),
   userIdCalendar: '',

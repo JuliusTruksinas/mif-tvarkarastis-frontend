@@ -7,6 +7,7 @@ import SelectTextField, {
   SelectOption,
 } from './SelectTextField/SelectTextField';
 import SwitchTextField from './SwitchTextField/SwitchTextField';
+import CheckBoxTextField from './CheckBoxTextField/CheckBoxTextField';
 
 type Props = {
   value: string;
@@ -112,6 +113,16 @@ const TextField = ({
     ),
     switch: (
       <SwitchTextField
+        name={name}
+        value={value}
+        label={label}
+        containerClassName={containerClassName}
+        elementClassName={elementClassName}
+        onCheckboxChange={onCheckboxChange}
+      />
+    ),
+    checkbox: (
+      <CheckBoxTextField
         name={name}
         value={value}
         label={label}

@@ -6,6 +6,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
     }
 
     .textContainer {
@@ -24,19 +25,41 @@
       }
     }
 
-    .addEventBtn {
+    .btnContainer {
       display: flex;
-      justify-content: start;
-      color: $white-color;
-      width: 100%;
-      margin-bottom: 19px;
-      font-weight: 600;
-      background-color: $primary-color;
-      border-radius: 100px;
-      text-align: left;
+      flex-direction: column;
+      min-width: 260px;
 
       @media (min-width: $breakpoint-md) {
-        max-width: 142px;
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .calendarBtn {
+        margin-bottom: 19px;
+        font-weight: 600;
+        width: 100%;
+        outline: none;
+        border: none;
+
+        @media (min-width: $breakpoint-md) {
+          width: 142px;
+        }
+      }
+
+      .exportBtn {
+        background-color: $pink-color;
+        color: $primary-color;
+      }
+
+      .addEventBtn {
+        color: $white-color;
+        background-color: $primary-color;
+      }
+
+      .exportIcon {
+        width: 18px;
+        height: auto;
       }
     }
   }
