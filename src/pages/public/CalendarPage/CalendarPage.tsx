@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Calendar from '../../../components/Calendar/Calendar';
 import styles from './CalendarPage.module.scss';
 import addIcon from '../../../assets/icons/add.svg';
+import exportIcon from '../../../assets/icons/export-icon.svg';
 import { ReactSVG } from 'react-svg';
 import UserEventModal from '../../../components/UserEventModal/UserEventModal';
 import { useAuthStore } from '../../../stores/auth/auth.store';
@@ -11,6 +12,7 @@ import { LectureEvent } from '../../../domain/lectureEvent';
 import LectureEventModal from '../../../components/LectureEventModal/LectureEventModal';
 import ViewUserEventModal from '../../../components/ViewUserEventModal/ViewUserEventModal';
 import { useCalendarControlStore } from '../../../stores/calendar-control/calendarControl.store';
+import ExportCalendarModal from '../../../components/ExportCalendarModal/ExportCalendarModal';
 
 const CalendarPage = () => {
   const [isUserEventModalOpen, setIsUserEventModalOpen] =
@@ -18,6 +20,8 @@ const CalendarPage = () => {
   const [isViewUserEventModalOpen, setIsViewUserEventModalOpen] =
     useState<boolean>(false);
   const [isLectureEventModalOpen, setIsLectureEventModalOpen] =
+    useState<boolean>(false);
+  const [isExportCalendarModalOpen, setIsExportCalendarModalOpen] =
     useState<boolean>(false);
   const [selectedUserEvent, setSelectedUserEvent] = useState<UserEvent | null>(
     null,
@@ -53,13 +57,30 @@ const CalendarPage = () => {
               events
             </p>
           </div>
-          <button
-            className={classNames('btn', styles.addEventBtn)}
-            onClick={() => setIsUserEventModalOpen(true)}
-          >
-            <ReactSVG src={addIcon} />
-            <p>Add event</p>
-          </button>
+          <div className={styles.btnContainer}>
+            <button
+              className={classNames(
+                'btn',
+                styles.calendarBtn,
+                styles.exportBtn,
+              )}
+              onClick={() => setIsExportCalendarModalOpen(true)}
+            >
+              <ReactSVG src={exportIcon} className={styles.exportIcon} />
+              <p>Export</p>
+            </button>
+            <button
+              className={classNames(
+                'btn',
+                styles.calendarBtn,
+                styles.addEventBtn,
+              )}
+              onClick={() => setIsUserEventModalOpen(true)}
+            >
+              <ReactSVG src={addIcon} />
+              <p>Add event</p>
+            </button>
+          </div>
         </div>
         <Calendar
           setSelectedUserEvent={setSelectedUserEvent}
@@ -88,6 +109,11 @@ const CalendarPage = () => {
           onClose={() => setIsViewUserEventModalOpen(false)}
           userEvent={selectedUserEvent}
           setSelectedUserEvent={setSelectedUserEvent}
+        />
+      )}
+      {isExportCalendarModalOpen && (
+        <ExportCalendarModal
+          onClose={() => setIsExportCalendarModalOpen(false)}
         />
       )}
     </>
