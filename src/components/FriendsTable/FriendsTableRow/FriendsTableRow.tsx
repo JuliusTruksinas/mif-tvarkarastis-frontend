@@ -7,6 +7,7 @@ import { BasicUserInfo } from '../../../domain/common';
 import { useFriendStore } from '../../../stores/friend/friend.store';
 import { routes } from '../../../config/Router/routes';
 import { useCalendarControlStore } from '../../../stores/calendar-control/calendarControl.store';
+import { FALLBACK_PROFILE_PHOTO_URL } from '../../../constants';
 
 type Props = {
   userInfo: BasicUserInfo;
@@ -39,8 +40,11 @@ const FriendsTableRow = ({ userInfo, action }: Props) => {
               )}
             >
               <img
-                src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-                alt="Avatar Tailwind CSS Component"
+                src={userInfo.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
+                alt=""
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_PROFILE_PHOTO_URL;
+                }}
               />
             </div>
           </div>

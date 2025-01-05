@@ -19,6 +19,7 @@ type FormInputs = {
   course: number;
   group: number;
   subgroup: number;
+  profilePhotoUrl?: string;
 };
 
 const DEFAULT_OPTIONS = [{ label: 'select', value: '' }];
@@ -85,6 +86,12 @@ const INPUTS = [
     type: 'select',
     options: DEFAULT_OPTIONS,
     label: 'Subgroup',
+    value: '',
+  },
+  {
+    name: 'profilePhotoUrl',
+    type: 'text',
+    label: 'Profile photo URL',
     value: '',
   },
 ];
@@ -223,6 +230,7 @@ const RegisterPage = () => {
       course: +formInputs.course || null,
       group: +formInputs.group || null,
       subgroup: +formInputs.subgroup || null,
+      profilePhotoUrl: formInputs.profilePhotoUrl || null,
     });
 
     resetInputValues();
@@ -242,8 +250,15 @@ const RegisterPage = () => {
             Bug Busters
           </h1>
           {inputs
-            .filter(
-              (input) => !['course', 'group', 'subgroup'].includes(input.name),
+            .filter((input) =>
+              [
+                'firstName',
+                'lastName',
+                'email',
+                'password',
+                'studyType',
+                'programName',
+              ].includes(input.name),
             )
             .map((input) => (
               <TextField
@@ -279,7 +294,24 @@ const RegisterPage = () => {
                 />
               ))}
           </div>
-
+          <div className={styles.profilePhotoUrlInputContainer}>
+            {inputs
+              .filter((input) => ['profilePhotoUrl'].includes(input.name))
+              .map((input) => (
+                <TextField
+                  key={input.name}
+                  name={input.name}
+                  value={input.value}
+                  type={input.type}
+                  label={input.label}
+                  onChange={onInputChange}
+                  containerClassName={styles.inputContainer}
+                  labelClassName={styles.inputLabel}
+                  elementClassName={styles.inputField}
+                  options={input.options}
+                />
+              ))}
+          </div>
           <div className={styles.ctaContainer}>
             <button
               onClick={handleRegister}

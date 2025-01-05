@@ -1,8 +1,10 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { FormInput } from '../../../../domain/form';
 import SettingsSection from '../../../../components/SettingsSection/SettingsSection';
 import styles from './UserInfoSettingsSection.module.scss';
 import TextField from '../../../../common/TextField/TextField';
+import { useAuthStore } from '../../../../stores/auth/auth.store';
+import { FALLBACK_PROFILE_PHOTO_URL } from '../../../../constants';
 
 type Props = {
   inputs: FormInput[];
@@ -10,20 +12,35 @@ type Props = {
 };
 
 const UserInfoSettingsSection = ({ inputs, onInputChange }: Props) => {
+  const { currentUser, getCurrentUser, currentUserIsUpdateNeeded } =
+    useAuthStore();
+
+  useEffect(() => {
+    if (!currentUser || currentUserIsUpdateNeeded) {
+      getCurrentUser();
+    }
+  }, [currentUser, currentUserIsUpdateNeeded]);
+
   return (
     <SettingsSection title="Personal info">
       <div className={styles.settingsInnerSectionContainer}>
         <div className={styles.profilePhotoContainer}>
           <img
-            src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
+            src={currentUser.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
             alt="User Avatar"
             className={styles.profilePhoto}
+            onError={(e) => {
+              e.currentTarget.src = FALLBACK_PROFILE_PHOTO_URL;
+            }}
           />
         </div>
+
         <div className={styles.programBoxSection}>
           {inputs
             .filter((input) =>
-              ['firstName', 'lastName', 'email'].includes(input.name),
+              ['firstName', 'lastName', 'email', 'profilePhotoUrl'].includes(
+                input.name,
+              ),
             )
             .map((input) => (
               <TextField

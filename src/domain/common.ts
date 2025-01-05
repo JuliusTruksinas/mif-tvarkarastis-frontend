@@ -16,6 +16,7 @@ export interface User {
   group: number;
   subgroup: number;
   preferredNavigationApp: PreferredNavigationApp;
+  profilePhotoUrl?: string | null;
 }
 
 export interface BasicUserInfo {
@@ -25,6 +26,7 @@ export interface BasicUserInfo {
   lastName: string;
   programName: string;
   course: number;
+  profilePhotoUrl?: string | null;
 }
 
 export interface Tab {

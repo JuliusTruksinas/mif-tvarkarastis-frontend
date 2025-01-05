@@ -19,6 +19,7 @@ type FormInputs = {
   course: string;
   group: string;
   subgroup: string;
+  profilePhotoUrl: string;
 };
 
 const UserPage = () => {
@@ -95,6 +96,12 @@ const UserPage = () => {
       isLoading: subgroupsOptionsIsLoading,
       label: 'Subgroup',
       value: currentUser?.subgroup?.toString() || '',
+    },
+    {
+      name: 'profilePhotoUrl',
+      type: 'text',
+      label: 'Profile photo URL',
+      value: currentUser?.profilePhotoUrl || '',
     },
   ];
 
@@ -222,8 +229,9 @@ const UserPage = () => {
       course: +submitInputs.course || null,
       group: +submitInputs.group || null,
       subgroup: +submitInputs.subgroup || null,
-      ...(submitInputs?.password && { password: submitInputs.password }),
       preferredNavigationApp,
+      profilePhotoUrl: submitInputs.profilePhotoUrl || null,
+      ...(submitInputs?.password && { password: submitInputs.password }),
     });
 
     setNewInputValue('password', { value: '' });
