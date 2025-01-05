@@ -4,6 +4,7 @@ import { showToast } from '../../utils/toast';
 const API_URL = '/calendar';
 
 export interface ExportCalendarRequestDto {
+  userId: string;
   fromDate: string;
   toDate: string;
   areUserEventsIncluded: boolean;

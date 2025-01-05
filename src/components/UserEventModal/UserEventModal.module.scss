@@ -43,9 +43,22 @@
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  padding: 16px 24px;
+  padding: 25px 24px;
 }
 
 .switchContainer {
   margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.repeatableDetailsContainer {
+  display: flex;
+  gap: 20px;
+
+  .repeatableDetailsInputContainer {
+    width: 50%;
+    flex-basis: 100%;
+  }
 }

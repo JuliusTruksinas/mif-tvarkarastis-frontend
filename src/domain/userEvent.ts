@@ -7,4 +7,5 @@ export interface UserEvent {
   isPrivate: boolean;
   note?: string;
   location?: string;
+  repeatableUserEventsGroupId?: string;
 }
