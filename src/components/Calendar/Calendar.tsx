@@ -131,6 +131,7 @@ const Calendar = ({
       note: eventData?.note,
       location: eventData?.location,
       isPrivate: eventData?.isPrivate,
+      repeatableUserEventUpdateType: 'single',
     });
   };
 

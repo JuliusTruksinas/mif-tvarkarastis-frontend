@@ -4,6 +4,7 @@ import {
   createUserEvent,
   CreateUserEventRequestDto,
   deleteUserEvent,
+  DeleteUserEventOptions,
   fetchUserEvents,
   FetchUserEventsRequestDto,
   updateUserEvent,
@@ -29,7 +30,7 @@ export interface UserEventStore {
   userEventDeleteIsLoading: boolean;
   userEventDeleteIsSuccess: boolean;
   userEventDeleteError: HttpError;
-  deleteUserEvent: (id: string) => void;
+  deleteUserEvent: (id: string, options: DeleteUserEventOptions) => void;
   isUserEventsUpdateNeeded: boolean;
   resetUserEventStore: () => void;
 }
@@ -60,7 +61,8 @@ const getInitialState = (set, get) => ({
     createUserEvent(set, get, inputs),
   updateUserEvent: (id: string, inputs: UpdateUserEventRequestDto) =>
     updateUserEvent(set, get, id, inputs),
-  deleteUserEvent: (id: string) => deleteUserEvent(set, get, id),
+  deleteUserEvent: (id: string, options: DeleteUserEventOptions) =>
+    deleteUserEvent(set, get, id, options),
   resetUserEventStore: () => set(initialDataState),
 });
 

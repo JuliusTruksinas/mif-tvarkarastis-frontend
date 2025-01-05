@@ -1,5 +1,10 @@
 import { showToast } from '../../utils/toast';
 import axios from '../../config/Axios/axios-instance';
+import {
+  OccurrenceType,
+  RepeatableUserEventUpdateType,
+} from '../../components/UserEventModal/UserEventModal';
+import { convertObjectToQueryParams } from '../../helpers/url';
 
 const API_URL = '/user-events';
 
@@ -8,8 +13,11 @@ export interface CreateUserEventRequestDto {
   endDateTime: string;
   title: string;
   isPrivate: boolean;
+  isRepeatable: boolean;
   note?: string;
   location?: string;
+  occurrenceType?: OccurrenceType;
+  repeatableUntil?: string;
 }
 
 export interface UpdateUserEventRequestDto {
@@ -19,12 +27,17 @@ export interface UpdateUserEventRequestDto {
   note?: string;
   location?: string;
   isPrivate: boolean;
+  repeatableUserEventUpdateType: RepeatableUserEventUpdateType;
 }
 
 export interface FetchUserEventsRequestDto {
   startDateTime: string;
   endDateTime: string;
   userId: string;
+}
+
+export interface DeleteUserEventOptions {
+  repeatableUserEventUpdateType: RepeatableUserEventUpdateType;
 }
 
 export const fetchUserEvents = async (
@@ -122,6 +135,7 @@ export const deleteUserEvent = async (
   set: any,
   get: any,
   id: string,
+  options: DeleteUserEventOptions,
 ): Promise<void> => {
   set({
     userEventDeleteIsLoading: true,
@@ -129,7 +143,8 @@ export const deleteUserEvent = async (
     userEventDeleteError: null,
   });
   try {
-    await axios.delete(`${API_URL}/${id}`);
+    const queryParams = convertObjectToQueryParams(options);
+    await axios.delete(`${API_URL}/${id}?${queryParams}`);
 
     set({ userEventDeleteIsSuccess: true, isUserEventsUpdateNeeded: true });
     showToast('Successfully deleted the event', 'success');
