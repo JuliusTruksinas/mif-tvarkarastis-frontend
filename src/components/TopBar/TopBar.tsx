@@ -11,6 +11,7 @@ import { useNotificationStore } from '../../stores/notification/notification.sto
 import Notification from '../Notification/Notification';
 import { routes } from '../../config/Router/routes';
 import { NavLink } from 'react-router-dom';
+import { FALLBACK_PROFILE_PHOTO_URL } from '../../constants';
 
 export const TopBar = () => {
   const {
@@ -132,11 +133,19 @@ export const TopBar = () => {
             styles.userMenuDropdownContainer,
           )}
         >
-          <img
-            src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-            alt=""
-            tabIndex={0}
-          />
+          <div className="avatar">
+            <div className="mask mask-circle h-11 w-11">
+              <img
+                className="object-cover object-center"
+                src={currentUser.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
+                alt=""
+                tabIndex={0}
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_PROFILE_PHOTO_URL;
+                }}
+              />
+            </div>
+          </div>
           <ul
             tabIndex={0}
             className={classNames(

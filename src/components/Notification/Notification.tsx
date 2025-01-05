@@ -3,6 +3,7 @@ import styles from './Notification.module.scss';
 import { NotificationType, type Notification } from '../../domain/notification';
 import { useFriendStore } from '../../stores/friend/friend.store';
 import { useNotificationStore } from '../../stores/notification/notification.store';
+import { FALLBACK_PROFILE_PHOTO_URL } from '../../constants';
 
 type Props = {
   notification: Notification;
@@ -17,11 +18,23 @@ const Notification = ({ notification }: Props) => {
   ) {
     return (
       <div className={styles.notificationItem}>
-        <img
-          src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-          alt=""
-          tabIndex={0}
-        />
+        <div className="avatar">
+          <div className="mask mask-circle h-11 w-11">
+            <img
+              className="object-cover object-center"
+              src={
+                notification.data?.user?.profilePhotoUrl ||
+                FALLBACK_PROFILE_PHOTO_URL
+              }
+              alt=""
+              tabIndex={0}
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_PROFILE_PHOTO_URL;
+              }}
+            />
+          </div>
+        </div>
+
         <div className={styles.ctaNameContainer}>
           <p
             className={styles.fullName}
@@ -66,11 +79,22 @@ const Notification = ({ notification }: Props) => {
         className={styles.notificationItem}
         onClick={() => setNotificationToSeen(notification._id)}
       >
-        <img
-          src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-          alt=""
-          tabIndex={0}
-        />
+        <div className="avatar">
+          <div className="mask mask-circle h-11 w-11">
+            <img
+              className="object-cover object-center"
+              src={
+                notification.data?.user?.profilePhotoUrl ||
+                FALLBACK_PROFILE_PHOTO_URL
+              }
+              alt=""
+              tabIndex={0}
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_PROFILE_PHOTO_URL;
+              }}
+            />
+          </div>
+        </div>
         <p>{`${notification?.data?.user?.firstName} ${notification?.data?.user?.lastName} accepted your friend request`}</p>
       </div>
     );
@@ -85,11 +109,22 @@ const Notification = ({ notification }: Props) => {
         className={styles.notificationItem}
         onClick={() => setNotificationToSeen(notification._id)}
       >
-        <img
-          src="https://th.bing.com/th/id/R.9002144c9ad458b687e5aeb4bdb4e0bf?rik=s4enLQDyyN6m7A&pid=ImgRaw&r=0"
-          alt=""
-          tabIndex={0}
-        />
+        <div className="avatar">
+          <div className="mask mask-circle h-11 w-11">
+            <img
+              className="object-cover object-center"
+              src={
+                notification.data?.user?.profilePhotoUrl ||
+                FALLBACK_PROFILE_PHOTO_URL
+              }
+              alt=""
+              tabIndex={0}
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_PROFILE_PHOTO_URL;
+              }}
+            />
+          </div>
+        </div>
         <p>{`${notification?.data?.user?.firstName} ${notification?.data?.user?.lastName} declined your friend request`}</p>
       </div>
     );

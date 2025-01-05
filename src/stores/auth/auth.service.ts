@@ -25,6 +25,7 @@ export interface RegisterRequestDto extends LoginRequestDto {
   course: number;
   group: number;
   subgroup: number;
+  profilePhotoUrl?: string | null;
 }
 
 export interface GetCurrentUserDto {

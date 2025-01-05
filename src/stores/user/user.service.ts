@@ -19,6 +19,7 @@ export interface UpdateUserInfoRequestDto {
   group: number;
   subgroup: number;
   preferredNavigationApp?: string;
+  profilePhotoUrl?: string | null;
 }
 
 export const findUsers = async (
