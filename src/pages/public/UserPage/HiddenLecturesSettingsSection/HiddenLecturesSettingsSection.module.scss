@@ -1,0 +1,15 @@
+@import '../../../../styles/variables.scss';
+
+.HiddenLecturesSettingsContainer {
+  .checkboxesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .checkboxContainer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}

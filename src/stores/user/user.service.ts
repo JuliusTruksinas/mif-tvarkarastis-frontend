@@ -18,6 +18,7 @@ export interface UpdateUserInfoRequestDto {
   course: number;
   group: number;
   subgroup: number;
+  hiddenLectureTitles: string[];
   preferredNavigationApp?: string;
   profilePhotoUrl?: string | null;
 }

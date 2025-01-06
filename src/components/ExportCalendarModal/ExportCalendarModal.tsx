@@ -17,7 +17,7 @@ type formInputs = {
   fromDate: string;
   toDate: string;
   areUserEventsIncluded: string;
-  areSelectableLecturesIncluded: string;
+  areHiddenLecturesExcluded: string;
 };
 
 const ExportCalendarModal = ({ onClose }: Props) => {
@@ -41,10 +41,10 @@ const ExportCalendarModal = ({ onClose }: Props) => {
       value: '1',
     },
     {
-      name: 'areSelectableLecturesIncluded',
+      name: 'areHiddenLecturesExcluded',
       type: 'checkbox',
-      label: 'Include selectable lectures? (not recommended)',
-      value: '0',
+      label: 'Exclude hidden lectures?',
+      value: '1',
     },
   ];
   const { inputs, onInputChange, getSubmitInputs, onCheckboxChange } =
@@ -71,8 +71,8 @@ const ExportCalendarModal = ({ onClose }: Props) => {
       fromDate: submitInputs?.fromDate,
       toDate: submitInputs?.toDate,
       areUserEventsIncluded: submitInputs?.areUserEventsIncluded === '1',
-      areSelectableLecturesIncluded:
-        submitInputs?.areSelectableLecturesIncluded === '1',
+      areHiddenLecturesExcluded:
+        submitInputs?.areHiddenLecturesExcluded === '1',
     });
   };
 
@@ -104,10 +104,9 @@ const ExportCalendarModal = ({ onClose }: Props) => {
           </div>
           {inputs
             .filter((input) =>
-              [
-                'areUserEventsIncluded',
-                'areSelectableLecturesIncluded',
-              ].includes(input.name),
+              ['areUserEventsIncluded', 'areHiddenLecturesExcluded'].includes(
+                input.name,
+              ),
             )
             .map((input) => (
               <TextField

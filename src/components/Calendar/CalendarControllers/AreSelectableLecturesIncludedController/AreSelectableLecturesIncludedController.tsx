@@ -6,7 +6,7 @@ const AreSelectableLecturesIncludedController = () => {
     useCalendarControlStore();
 
   return (
-    <div className={styles.areSelectableLecturesIncludedContainer}>
+    <div className={styles.areHiddenLecturesExcludedContainer}>
       <label>Include selectable lectures?</label>
       <input
         type="checkbox"
