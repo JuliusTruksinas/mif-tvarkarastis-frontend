@@ -7,6 +7,7 @@ import { useUserStore } from '../../../stores/user/user.store';
 import AdditionalSettingsSection from './AdditionalSettingsSection/AdditionalSettingsSection';
 import UserInfoSettingsSection from './UserInfoSettingsSection/UserInfoSettingsSection';
 import Button from '../../../common/Button/Button';
+import HiddenLecturesSettingsSection from './HiddenLecturesSettingsSection/HiddenLecturesSettingsSection';
 
 const DEFAULT_OPTIONS = [{ label: 'select', value: '' }];
 
@@ -34,6 +35,10 @@ const UserPage = () => {
   const [preferredNavigationApp, setPreferredNavigationApp] = useState(
     currentUser?.preferredNavigationApp,
   );
+
+  const [selectedLecturesToBeHidden, setSelectedLecturesToBeHidden] = useState<
+    string[]
+  >(currentUser?.hiddenLectureTitles || []);
 
   const { updateUserInfo } = useUserStore();
 
@@ -143,6 +148,10 @@ const UserPage = () => {
   }, [currentUser, currentUserIsUpdateNeeded]);
 
   useEffect(() => {
+    setSelectedLecturesToBeHidden(currentUser?.hiddenLectureTitles || []);
+  }, [currentUser]);
+
+  useEffect(() => {
     if (currentUser?.studyType) {
       getAllProgramsOptions({ studyType: currentUser.studyType });
     }
@@ -231,6 +240,7 @@ const UserPage = () => {
       subgroup: +submitInputs.subgroup || null,
       preferredNavigationApp,
       profilePhotoUrl: submitInputs.profilePhotoUrl || null,
+      hiddenLectureTitles: selectedLecturesToBeHidden,
       ...(submitInputs?.password && { password: submitInputs.password }),
     });
 
@@ -263,7 +273,9 @@ const UserPage = () => {
       setNewInputValue(key, { value });
     }
 
-    setPreferredNavigationApp(currentUser.preferredNavigationApp);
+    setSelectedLecturesToBeHidden(currentUser?.hiddenLectureTitles || []);
+
+    setPreferredNavigationApp(currentUser?.preferredNavigationApp);
   };
 
   return (
@@ -280,6 +292,10 @@ const UserPage = () => {
         <AdditionalSettingsSection
           preferredNavigationApp={preferredNavigationApp}
           setPreferredNavigationApp={setPreferredNavigationApp}
+        />
+        <HiddenLecturesSettingsSection
+          selectedLectures={selectedLecturesToBeHidden}
+          setSelectedLectures={setSelectedLecturesToBeHidden}
         />
       </div>
       <div className={styles.ctaContainer}>

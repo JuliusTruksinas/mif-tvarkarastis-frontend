@@ -25,7 +25,6 @@ const CheckBoxTextField = ({
         containerClassName,
       )}
     >
-      <p className="label-text">{label}</p>
       <input
         name={name}
         type="checkbox"
@@ -36,6 +35,7 @@ const CheckBoxTextField = ({
         }}
         value={value}
       />
+      <p className="label-text">{label}</p>
     </div>
   );
 };

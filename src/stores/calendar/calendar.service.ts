@@ -8,7 +8,7 @@ export interface ExportCalendarRequestDto {
   fromDate: string;
   toDate: string;
   areUserEventsIncluded: boolean;
-  areSelectableLecturesIncluded: boolean;
+  areHiddenLecturesExcluded: boolean;
 }
 
 export const exportCalendar = async (

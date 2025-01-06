@@ -32,3 +32,31 @@ export const fetchLectureEvents = async (
     set({ lectureEventsIsLoading: false });
   }
 };
+
+export const fetchUniqueLectureTitles = async (
+  set: any,
+  get: any,
+  userId: string,
+): Promise<void> => {
+  set({
+    uniqueLectureTitlesIsLoading: true,
+    uniqueLectureTitlesIsSuccess: false,
+    uniqueLectureTitlesError: null,
+  });
+  try {
+    const response = await axios.get(`${API_URL}/unique-titles/${userId}`);
+    const responseData = response.data?.data;
+
+    set({
+      uniqueLectureTitlesIsSuccess: true,
+      uniqueLectureTitles: responseData,
+    });
+  } catch (error) {
+    set({
+      uniqueLectureTitlesError: error?.response?.data?.data,
+      uniqueLectureTitlesIsSuccess: false,
+    });
+  } finally {
+    set({ uniqueLectureTitlesIsLoading: false });
+  }
+};

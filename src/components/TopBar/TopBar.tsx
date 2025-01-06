@@ -137,7 +137,7 @@ export const TopBar = () => {
             <div className="mask mask-circle h-11 w-11">
               <img
                 className="object-cover object-center"
-                src={currentUser.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
+                src={currentUser?.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
                 alt=""
                 tabIndex={0}
                 onError={(e) => {

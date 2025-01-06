@@ -26,7 +26,7 @@ const UserInfoSettingsSection = ({ inputs, onInputChange }: Props) => {
       <div className={styles.settingsInnerSectionContainer}>
         <div className={styles.profilePhotoContainer}>
           <img
-            src={currentUser.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
+            src={currentUser?.profilePhotoUrl || FALLBACK_PROFILE_PHOTO_URL}
             alt="User Avatar"
             className={styles.profilePhoto}
             onError={(e) => {

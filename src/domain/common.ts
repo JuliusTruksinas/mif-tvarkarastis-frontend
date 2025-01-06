@@ -16,6 +16,7 @@ export interface User {
   group: number;
   subgroup: number;
   preferredNavigationApp: PreferredNavigationApp;
+  hiddenLectureTitles: string[];
   profilePhotoUrl?: string | null;
 }
 
